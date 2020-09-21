@@ -1,6 +1,6 @@
 <?php
-include_once(dirname(__FILE__)."/../common/_public.php");
-require_once(dirname(__FILE__)."/../vendor/autoload.php");
+include_once(dirname(__FILE__)."/../../common/_public.php");
+require_once(dirname(__FILE__)."/../../vendor/autoload.php");
 use Elliptic\EC;
 use kornrunner\Keccak;
 
@@ -70,7 +70,7 @@ if ($result->num_rows > 0) {
 
 
   }
-} else {echo '{"success":false,"error":"Trying to hack us?"}';}
+} else {echo '{"success":true,"data":{"authenticated":false}}';}
 
 $conn->close();
 ?>

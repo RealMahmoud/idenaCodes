@@ -20,7 +20,7 @@
       <a class="navbar-brand" href="#">
         <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png"
           width="30" height="30" alt="logo">
-        BootstrapBay
+        IdenaCodes
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-SignIN"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,21 +46,24 @@
 <script>
   function makeLogged(address) {
     document.getElementById("navbar-SignIN").innerHTML = '<ul class="navbar-nav ml-auto">' +
-    '<li class="nav-item dropdown">' +
-    '<a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
-    '<img src="https://robohash.org/' + address + '" width="40" height="40" style="background-color:#00000057;"class="rounded-circle">' +
+      '<li class="nav-item dropdown">' +
+      '<a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+      '<img src="https://robohash.org/' + address +
+      '" width="40" height="40" style="background-color:#00000057;"class="rounded-circle">' +
       '</a>' +
-      '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">' +
-      '<a class="dropdown-item" href="#">Dashboard</a>' +
-      '<a class="dropdown-item" href="#">Edit Profile</a>' +
-      '<a class="dropdown-item" href="#">Log Out</a>' +
+      '<div style="left: -200%;" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">' +
+        '<a class="dropdown-item" >Balance : 5 iDNA</a>' +
+      '<a class="dropdown-item" href="#invite">Invite</a>' +
+      '<a class="dropdown-item" href="#profile">Edit Profile</a>' +
+      '<a class="dropdown-item" href="#support">Support</a>' +
+      '<a class="dropdown-item" href="#home"onclick="logout();">Log Out</a>' +
       '</div>' +
       '</li>   ' +
       '</ul>';
   }
 
   function makeNotLogged() {
-    document.getElementById("navbar-SignIN").innerHTML = '<a class="btn btn-signin" onclick="openIdena();">' +
+    document.getElementById("navbar-SignIN").innerHTML = '<a class="btn btn-signin ml-auto" onclick="openIdena();">' +
       '<img alt="signin" class="icon icon-logo-white-small"' +
       ' src="https://scan.idena.io/static/images/idena_white_small.svg" width="24px">' +
       ' <span style="color: #fff;">Sign-in</span>' +
@@ -68,7 +71,7 @@
   }
 
   function checkLoggedStatus() {
-    ajax_get('./services/checkLogin.php', function (data) {
+    ajax_get('./services/auth/checkLogin.php', function (data) {
       if (data['Logged'] == true) {
         makeLogged(data['Address']);
       } else {
@@ -78,7 +81,7 @@
   }
 
   function openIdena() {
-    ajax_get('./services/getToken.php', function (data) {
+    ajax_get('./services/auth/getToken.php', function (data) {
       var urlofwebsite = window.location.origin + window.location.pathname;
       var url = 'dna://signin/v1?nonce_endpoint=' + urlofwebsite + 'services/start-session.php&token=' + data[
           'Token'] +
@@ -93,7 +96,7 @@
   }
 
   function logout() {
-    ajax_get('./services/logout.php', function (data) {
+    ajax_get('./services/auth/logout.php', function (data) {
       makeNotLogged();
     });
 

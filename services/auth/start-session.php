@@ -1,15 +1,11 @@
 <?php
-include_once(dirname(__FILE__)."/../common/_public.php");
-
-// Take the raw data from the request
+include_once(dirname(__FILE__)."/../../common/_public.php");
 $json = file_get_contents('php://input');
-
-// Converts it into a PHP object
 $data = (array) json_decode($json);
 $nonce = GUID();
 if ($data['token'] == ''){die();};
 if ($data['address'] == ''){die();};
-$sql = "INSERT INTO auth (nonce,token, address)
+$sql = "INSERT INTO auth_idena (nonce,token, address)
 VALUES ('".'signin-'.$nonce."', '".$data['token']."', '".$data['address']."')";
 $conn->query($sql);
 $conn->close();
