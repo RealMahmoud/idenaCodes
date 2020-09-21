@@ -8,12 +8,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
   <meta name="description"
     content="Idena.Codes helps verify new users, give out invitation codes to new users and add a layer of trust to network security " />
-  <link href="./css/toggle-bootstrap-dark.min.css" rel="stylesheet" />
-  <link href="./css/toggle-bootstrap.min.css" rel="stylesheet" />
+ 
+
+  <link rel="stylesheet" href="./css/bootstrap-dark.min.css" />
+  <link rel="stylesheet" href="./css/toggle-bootstrap-print.min.css" />
+  <link rel="stylesheet" href="./css/toastr.min.css"  />
   <link href="./css/fa.css" rel="stylesheet" />
+
 </head>
 
-<body class="bootstrap-dark">
+<body>
 
   <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
     <div class="container">
@@ -40,10 +44,27 @@
 
 
 <script src="./js/jquery-3.1.1.min.js"></script>
-<script src="./js/bootstrap.bundle.min.js"></script>
+<script src="./js/toastr.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
 <script src="./js/moment.min.js"></script>
 <script src="./js/ajax-utils.js"></script>
+
 <script>
+  toastr.options = {
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-bottom-right",
+    "preventDuplicates": false,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  };
+
   function makeLogged(address) {
     document.getElementById("navbar-SignIN").innerHTML = '<ul class="navbar-nav ml-auto">' +
       '<li class="nav-item dropdown">' +
@@ -52,7 +73,7 @@
       '" width="40" height="40" style="background-color:#00000057;"class="rounded-circle">' +
       '</a>' +
       '<div style="left: -200%;" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">' +
-        '<a class="dropdown-item" >Balance : 5 iDNA</a>' +
+      '<a class="dropdown-item" >Balance : 5 iDNA</a>' +
       '<a class="dropdown-item" href="#invite">Invite</a>' +
       '<a class="dropdown-item" href="#profile">Edit Profile</a>' +
       '<a class="dropdown-item" href="#support">Support</a>' +
