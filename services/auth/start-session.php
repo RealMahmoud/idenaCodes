@@ -5,7 +5,7 @@ $data = (array) json_decode($json);
 $nonce = GUID();
 if ($data['token'] == ''){die();};
 if ($data['address'] == ''){die();};
-$sql = "INSERT INTO auth_idena (nonce,token, address)
+$sql = "INSERT INTO `auth_idena` (nonce,token, address)
 VALUES ('".'signin-'.$nonce."', '".$data['token']."', '".$data['address']."')";
 $conn->query($sql);
 $conn->close();

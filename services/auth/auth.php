@@ -46,7 +46,7 @@ $dataSig = $conn->real_escape_string($data['signature']);
 
 
 
-$sql = "SELECT * FROM `auth` WHERE `token` = '".$dataToken."' LIMIT 1;";
+$sql = "SELECT * FROM `auth_idena` WHERE `token` = '".$dataToken."' LIMIT 1;";
 $result = $conn->query($sql);
 header('Content-Type: application/json');
 
