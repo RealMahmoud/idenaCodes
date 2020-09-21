@@ -58,7 +58,7 @@ if ($result->num_rows > 0) {
     $signature = $data['signature'];
 
     if (verifySignature($message, $signature, $address)) {
-      $sql = "UPDATE `auth` SET `sig` = '".$dataSig."', `authenticated` = 1 , `pubkey` = '".getPubKey($message, $signature)."' WHERE `token` = '".$dataToken."' LIMIT 1;";
+      $sql = "UPDATE `auth_idena` SET `sig` = '".$dataSig."', `authenticated` = 1 , `pubkey` = '".getPubKey($message, $signature)."' WHERE `token` = '".$dataToken."' LIMIT 1;";
 
       $conn->query($sql);
 
