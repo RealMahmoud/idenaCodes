@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charSet="UTF-8" />
+  <title id="title">Idena Codes</Title>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <meta name="description"
+    content="Idena.Codes helps verify new users, give out invitation codes to new users and add a layer of trust to network security " />
+  <link href="./css/toggle-bootstrap-dark.min.css" rel="stylesheet" />
+  <link href="./css/toggle-bootstrap.min.css" rel="stylesheet" />
+  <link href="./css/fa.css" rel="stylesheet" />
+</head>
+
+<body class="bootstrap-dark">
+
+  <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png"
+          width="30" height="30" alt="logo">
+        BootstrapBay
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-SignIN"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-SignIN">
+
+      </div>
+    </div>
+  </nav>
+
+
+  <div id="content">
+  </div>
+</body>
+
+
+
+<script src="./js/jquery-3.1.1.min.js"></script>
+<script src="./js/bootstrap.bundle.min.js"></script>
+<script src="./js/moment.min.js"></script>
+<script src="./js/ajax-utils.js"></script>
+<script>
+  function makeLogged(address) {
+    document.getElementById("navbar-SignIN").innerHTML = '<ul class="navbar-nav ml-auto">' +
+    '<li class="nav-item dropdown">' +
+    '<a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+    '<img src="https://robohash.org/' + address + '" width="40" height="40" style="background-color:#00000057;"class="rounded-circle">' +
+      '</a>' +
+      '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">' +
+      '<a class="dropdown-item" href="#">Dashboard</a>' +
+      '<a class="dropdown-item" href="#">Edit Profile</a>' +
+      '<a class="dropdown-item" href="#">Log Out</a>' +
+      '</div>' +
+      '</li>   ' +
+      '</ul>';
+  }
+
+  function makeNotLogged() {
+    document.getElementById("navbar-SignIN").innerHTML = '<a class="btn btn-signin" onclick="openIdena();">' +
+      '<img alt="signin" class="icon icon-logo-white-small"' +
+      ' src="https://scan.idena.io/static/images/idena_white_small.svg" width="24px">' +
+      ' <span style="color: #fff;">Sign-in</span>' +
+      '  </a>';
+  }
+
+  function checkLoggedStatus() {
+    ajax_get('./services/checkLogin.php', function (data) {
+      if (data['Logged'] == true) {
+        makeLogged(data['Address']);
+      } else {
+        makeNotLogged();
+      }
+    });
+  }
+
+  function openIdena() {
+    ajax_get('./services/getToken.php', function (data) {
+      var urlofwebsite = window.location.origin + window.location.pathname;
+      var url = 'dna://signin/v1?nonce_endpoint=' + urlofwebsite + 'services/start-session.php&token=' + data[
+          'Token'] +
+        '&callback_url=' +
+        urlofwebsite +
+        '&authentication_endpoint=' +
+        urlofwebsite +
+        'services/auth.php';
+      window.open(encodeURI(url), '_self');
+      console.log(encodeURI(url));
+    });
+  }
+
+  function logout() {
+    ajax_get('./services/logout.php', function (data) {
+      makeNotLogged();
+    });
+
+  }
+  window.addEventListener("load", function () {
+    checkLoggedStatus();
+  });
+</script>
+<script src="./js/nav.js"></script>
+<script src="./scripts/index.js"></script>
+
+
+</html>
