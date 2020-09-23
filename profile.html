@@ -1,90 +1,132 @@
 <div class="container mt-3">
-
-    <div class="row">
+    <div id="pageLoading">
+        <div class="mt-5 text-center">
+            <h3 id="pageLoadingText">Loading</h3>
+        </div>
+    </div>
+    <div id="pageContent" class="row d-none">
         <div class="col-8">
             <div class="card card-body w-100">
                 <div class="row">
                     <div class="col-3">
-                        <img class="rounded-circle border  " style="height: 150px; width: 150px;"
-                            src="https://robohash.org/0xb3034881da79e1c46fba4dca5a2d8" />
+                        <img class="rounded-circle border " style="background-color:#00000057; height: 150px; width: 150px;" id="content-image"
+                            src="" />
                     </div>
                     <div class="col-5 ">
-                        <p class="m-0">ID : 134</p>
-                        <p class="m-0">Status : Killed himself</p>
-                        <p class="m-0">Referred by : <a href="#">@134</a></p>
-                        <p class="m-0">Joined : Today</p>
-                        <p class="m-0">Reports : 1</p>
+                        <p class="m-0">ID : <span id="content-id"></span></p>
+                        <p class="m-0">Status : <span id="content-status"></span></p>
+                        <p class="m-0">Referred by : <a href="#">@<span id="content-referredBy"></span></a></p>
+                        <p class="m-0">Joined : <span id="content-joined"></span></p>
+                        <p class="m-0">Reports : <span id="content-reports"></span></p>
                     </div>
                     <div class="col-4">
-                        <p class="m-0">Flip Challenge Score : 95.3%</p>
-                        <p class="m-0">Qualification Score : 50</p>
-                        <p class="m-0">Quiz Score : 80%</p>
-                        <p class="m-0">Social Score : 0</p>
+                        <p class="m-0">Flip Challenge Score : <span id="content-flipChallengeScore"></span></p>
+                        <p class="m-0">Quiz Score : <span id="content-quizScore"></span></p>
+                        <p class="m-0">Social Score : <span id="content-socialScore"></span></p>
                     </div>
                 </div>
 
             </div>
             <hr>
             <div class="card card-body w-100">
-                <p class="m-0">Any fool can write code that a computer can understand. Good programmers write code that humans can understand.</p>
+                <p class="m-0"> <span id="content-bio"></span></p>
             </div>
             <hr>
             <div class="card card-body">
                 <div class="row">
-                    <div class="col border-right">
+                    <div class="col border-right" id="content-contactList">
                         <h5 class="m-0">Contact at</h5>
                         <p class="m-0">Discord : <span>@RealMahmoud</span></p>
                         <p class="m-0">Twitter : <span>@RealMahmoud</span></p>
                         <p class="m-0">Telegram : <span>@RealMahmoud</span></p>
-                       
+
                     </div>
-                    <div class="col border-left">
+                    <div class="col border-left" id="content-accountsList">
                         <h5 class="m-0">Accounts verified</h5>
                         <p class="m-0">Discord</span></p>
                         <p class="m-0">Twitter</span></p>
                         <p class="m-0">Telegram</span></p>
-                       
+
                     </div>
                 </div>
-              
-                
+
+
             </div>
         </div>
         <div class="col-4">
             <div class="card card-body ">
                 <p class="m-0">Invite Panel <span class="float-right">Paste</span></p>
-                <input type="text" class="form-control m-1" id="input-invite" placeholder="invite">
-                <input class="form-control m-1 " type="datetime-local" value="2020-09-20T13:45:00"
-                    id="example-datetime-local-input">
+                <input type="text" class="form-control m-1" id="content-inviteCode" placeholder="invite">
+                <input class="form-control m-1 " type="datetime-local" id="content-inviteTime"
+                    value="2020-09-20T13:45:00" id="example-datetime-local-input">
                 <button type="button" class="btn btn-outline-success btn-sm w-50 m-auto" onclick="">Send</button>
             </div>
             <hr>
             <div class="card card-body pt-0">
                 <p class="m-2 text-center">Trust Score</p>
                 <div class="row mt-0">
-                    <button type="button" class="btn btn-outline-success btn-sm m-auto" onclick=""><i class="fa fa-arrow-up"></i></button>
-                    <p class="m-0">0</p>
-                    <button type="button" class="btn btn-outline-danger btn-sm  m-auto" onclick=""><i class="fa fa-arrow-down"></i></button>
+                    <button type="button" class="btn btn-outline-success btn-sm m-auto" onclick=""><i
+                            class="fa fa-arrow-up"></i></button>
+                    <p class="m-0" id="content-trustScore">0</p>
+                    <button type="button" class="btn btn-outline-danger btn-sm  m-auto" onclick=""><i
+                            class="fa fa-arrow-down"></i></button>
                 </div>
-               
+
             </div>
             <hr>
             <div class="card card-body">
-                <button type="button" class="btn btn-outline-danger btn-block" onclick="">Report</button>
+                <button type="button" class="btn btn-outline-danger btn-block" id="content-" onclick="">Report</button>
             </div>
         </div>
     </div>
 </div>
 <script>
     function findGetParameter(parameterName) {
-    var result = null,
-        tmp = [];
-    var items = location.search.substr(1).split("&");
-    for (var index = 0; index < items.length; index++) {
-        tmp = items[index].split("=");
-        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+        var result = null,
+            tmp = [];
+        var items = location.search.substr(1).split("&");
+        for (var index = 0; index < items.length; index++) {
+            tmp = items[index].split("=");
+            if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+        }
+        return result;
     }
-    return result;
-}
-toastr.success(findGetParameter("id"));
+
+
+    function loadPage(data) {
+
+    }
+
+    function changeContent(id, text) {
+        document.getElementById('content-' + id).innerHTML = text;
+    }
+
+    if (findGetParameter('id') > 0) {
+        ajax_get('./services/app/checkID.php?id=' + findGetParameter('id'), function (data) {
+            if (data.error == false) {
+                changeContent('id', data.id);
+                changeContent('status', data.status);
+                changeContent('referredBy', data.referredBy);
+                changeContent('joined', data.joined);
+                changeContent('reports', data.reports);
+
+                changeContent('flipChallengeScore', data.flipChallengeScore);
+                changeContent('quizScore', data.quizScore);
+                changeContent('socialScore', data.socialScore);
+                changeContent('bio', data.bio);
+                changeContent('trustScore', data.trustScore);
+                document.getElementById('content-image').src = 'https://robohash.org/' + data.image;
+
+
+
+                document.getElementById('pageLoading').classList.add('d-none');
+                document.getElementById('pageContent').classList.remove('d-none');
+            } else {
+                document.getElementById('pageLoadingText').innerHTML = 'Error';
+            }
+
+        });
+    } else {
+
+    }
 </script>
