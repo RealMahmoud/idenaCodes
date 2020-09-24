@@ -39,8 +39,8 @@ function getPubKey($message, $signature)
 
 function getstatus($address)
 {
-    if(strlen($address) < 20){
-    return 'Undefined';
+    if (strlen($address) < 20) {
+        return 'Undefined';
     }
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -48,15 +48,11 @@ function getstatus($address)
     $result = curl_exec($ch);
     curl_close($ch);
     $resultJSON = json_decode($result, true);
-    if (isset($resultJSON['result']['state']))
-    {
+    if (isset($resultJSON['result']['state'])) {
         return $resultJSON['result']['state'];
-    }
-    else
-    {
+    } else {
         return 'Undefined';
     }
-
 }
 $json = file_get_contents('php://input');
 $data = (array) json_decode($json);
@@ -90,9 +86,9 @@ if ($result->num_rows > 0) {
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
-                $sql = "UPDATE `users` SET `status` = '".getstatus($address)."' , `lastseen` = '".date("Y-m-d H:i:s",time())."' WHERE `users`.`address` = '".$address."';";
+                $sql = "UPDATE `users` SET `status` = '".getstatus($address)."' , `lastseen` = '".date("Y-m-d H:i:s", time())."' WHERE `users`.`address` = '".$address."';";
                 $conn->query($sql);
-            }else{
+            } else {
                 $sql = "INSERT INTO `users`( `address`, `status`, `pubKey`) VALUES ('".$address."','".getstatus($address)."','".$pubKey."')";
                 
 
@@ -108,4 +104,3 @@ if ($result->num_rows > 0) {
 }
 
 $conn->close();
-?>
