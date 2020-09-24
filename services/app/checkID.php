@@ -35,7 +35,7 @@ if($row[0] == null){
 
 
   $contacts = (object)array();
-  $contacts->Discord='@RealMahmoud';
+  $contacts->Discord='RealMahmoud';
   $result->contacts=$contacts;
 
   $connected = array();
