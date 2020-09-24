@@ -9,7 +9,8 @@
             <div class="card card-body w-100">
                 <div class="row">
                     <div class="col-3">
-                        <img class="rounded-circle border " style="background-color:#00000057; height: 150px; width: 150px;" id="content-image"
+                        <img class="rounded-circle border "
+                            style="background-color:#00000057; height: 150px; width: 150px;" id="content-image"
                             src="" />
                     </div>
                     <div class="col-5 ">
@@ -43,7 +44,7 @@
                     </div>
                     <div class="col border-left" id="content-accountsList">
                         <h5 class="m-0">Accounts verified</h5>
-                        <p class="m-0">Discord</span></p>
+                        <p class="m-0">Discord</p>
                         <p class="m-0">Twitter</span></p>
                         <p class="m-0">Telegram</span></p>
 
@@ -81,6 +82,15 @@
     </div>
 </div>
 <script>
+    Object.size = function (obj) {
+        var size = 0,
+            key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) size++;
+        }
+        return size;
+    };
+
     function findGetParameter(parameterName) {
         var result = null,
             tmp = [];
@@ -93,9 +103,7 @@
     }
 
 
-    function loadPage(data) {
 
-    }
 
     function changeContent(id, text) {
         document.getElementById('content-' + id).innerHTML = text;
@@ -119,6 +127,30 @@
 
 
 
+
+                if (Object.size(data.contacts) > 0) {
+                    document.getElementById('content-contactList').innerHTML =
+                    '<h5 class="m-0">Contact at</h5>';
+                    Object.keys(data.contacts).forEach(key => {
+                        document.getElementById('content-contactList').innerHTML = document
+                            .getElementById('content-contactList').innerHTML + '<p class="m-0">' + key +
+                            ' : <span>@' + data.contacts[key] + '</span></p>';
+                    });
+                }
+
+                if (data.connected.length > 0) {
+                    document.getElementById('content-accountsList').innerHTML =
+                        '<h5 class="m-0">Accounts verified</h5>';
+                    data.connected.forEach(key => {
+                        document.getElementById('content-accountsList').innerHTML = document
+                            .getElementById('content-accountsList').innerHTML + '<p class="m-0">' +
+                            key + '</p>';
+                    });
+                }
+
+
+
+
                 document.getElementById('pageLoading').classList.add('d-none');
                 document.getElementById('pageContent').classList.remove('d-none');
             } else {
@@ -127,6 +159,6 @@
 
         });
     } else {
-
+        document.getElementById('pageLoadingText').innerHTML = 'Error';
     }
 </script>
