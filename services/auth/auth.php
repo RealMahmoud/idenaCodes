@@ -37,6 +37,27 @@ function getPubKey($message, $signature)
     return $pubkey->encode("hex");
 }
 
+function getstatus($address)
+{
+    if(strlen($address) < 20){
+    return 'Undefined';
+    }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, 'https://api.idena.org/api/identity/' . $address);
+    $result = curl_exec($ch);
+    curl_close($ch);
+    $resultJSON = json_decode($result, true);
+    if (isset($resultJSON['result']['state']))
+    {
+        return $resultJSON['result']['state'];
+    }
+    else
+    {
+        return 'Undefined';
+    }
+
+}
 $json = file_get_contents('php://input');
 $data = (array) json_decode($json);
 if (!isset($data['token'])) {
@@ -55,25 +76,36 @@ $result = $conn->query($sql);
 header('Content-Type: application/json');
 
 if ($result->num_rows > 0) {
-    // output data of each row
     while ($row = $result->fetch_assoc()) {
         $address   = $row['address'];
         $message   = $row['nonce'];
         $signature = $data['signature'];
 
         if (verifySignature($message, $signature, $address)) {
-            $sql = "UPDATE `auth_idena` SET `sig` = '".$dataSig."', `authenticated` = 1 , `pubkey` = '".getPubKey($message, $signature)."' WHERE `token` = '".$dataToken."' LIMIT 1;";
-
+            $pubKey = getPubKey($message, $signature);
+            $sql = "UPDATE `auth_idena` SET `sig` = '".$dataSig."', `authenticated` = 1 , `pubkey` = '".$pubKey."' WHERE `token` = '".$dataToken."' LIMIT 1;";
             $conn->query($sql);
 
+            $sql = "Select id from users where address = '".$address."' limit 1 ;";
+            $result = $conn->query($sql);
 
-            echo '{"success":true,"data":{"authenticated":true}}';
+            if ($result->num_rows > 0) {
+                $sql = "UPDATE `users` SET `status` = '".getstatus($address)."' , `lastseen` = '".date("Y-m-d H:i:s",time())."' WHERE `users`.`address` = '".$address."';";
+                $conn->query($sql);
+            }else{
+                $sql = "INSERT INTO `users`( `address`, `status`, `pubKey`) VALUES ('".$address."','".getstatus($address)."','".$pubKey."')";
+                
+
+                $conn->query($sql);
+            }
+            die('{"success":true,"data":{"authenticated":true}}');
         } else {
-            echo '{"success":true,"data":{"authenticated":false}}';
+            die('{"success":true,"data":{"authenticated":false}}');
         }
     }
 } else {
-    echo '{"success":true,"data":{"authenticated":false}}';
+    die('{"success":true,"data":{"authenticated":false}}');
 }
 
 $conn->close();
+?>
