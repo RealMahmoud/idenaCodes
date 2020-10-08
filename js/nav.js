@@ -46,12 +46,12 @@ function resolvePathAndTitle(path) {
                 htmlPath: '/html/invite.html', title: 'invite'
             }
             break;
-            case '/profile':
-                return {
-                    htmlPath: '/html/profile.html', title: 'profile'
-                }
-                break;
-                case '/quiz':
+        case '/profile':
+            return {
+                htmlPath: '/html/profile.html', title: 'profile'
+            }
+            break;
+        case '/quiz':
             return {
                 htmlPath: '/html/quiz.html', title: 'quiz'
             }
