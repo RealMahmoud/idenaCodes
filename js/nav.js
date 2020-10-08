@@ -68,6 +68,7 @@ function navigate(path) {
     if (partialsCache[PF]) {
 
         document.getElementById("content").innerHTML = partialsCache[PF];
+        
         document.title = resolvePathAndTitle(PF).title;
         window.history.pushState({
             "html": partialsCache[PF],
