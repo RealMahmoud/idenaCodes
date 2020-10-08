@@ -34,7 +34,10 @@ function resolvePathAndTitle(path) {
               return {
                   htmlPath: '/html/flip-challenge.html', title: 'Flip Challenge'
               }
-  
+              case '/admin':
+                return {
+                    htmlPath: '/html/admin.html', title: 'admin'
+                }
           default:
               return {
                   htmlPath: '/html/home.html', title: 'Home'
