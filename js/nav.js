@@ -26,32 +26,32 @@ var partialsCache = {}
 
 function resolvePathAndTitle(path) {
     switch (path) {
-        case '/':
+        case '':
             return {
                 htmlPath: '/html/home.html', title: 'Home'
             }
             break;
-        case '/Flip-Challenge':
+        case 'Flip-Challenge':
             return {
                 htmlPath: '/html/flip-challenge.html', title: 'Flip Challenge'
             }
             break;
-        case '/admin':
+        case 'admin':
             return {
                 htmlPath: '/html/admin.html', title: 'admin'
             }
             break;
-        case '/invite':
+        case 'invite':
             return {
                 htmlPath: '/html/invite.html', title: 'invite'
             }
             break;
-        case '/profile':
+        case 'profile':
             return {
                 htmlPath: '/html/profile.html', title: 'profile'
             }
             break;
-        case '/quiz':
+        case 'quiz':
             return {
                 htmlPath: '/html/quiz.html', title: 'quiz'
             }
@@ -68,21 +68,21 @@ function navigate(path) {
     if (partialsCache[PF]) {
 
         document.getElementById("content").innerHTML = partialsCache[PF];
-        document.title = resolvePathAndTitle(path).title;
+        document.title = resolvePathAndTitle(PF).title;
         window.history.pushState({
             "html": partialsCache[PF],
-            "pageTitle": resolvePathAndTitle(path).title
+            "pageTitle": resolvePathAndTitle(PF).title
         }, "", path);
         return
     } else {
 
-        ajax_get(resolvePathAndTitle(path).htmlPath, function (data) {
+        ajax_get(resolvePathAndTitle(PF).htmlPath, function (data) {
             partialsCache[PF] = data;
             document.getElementById("content").innerHTML = data;
-            document.title = resolvePathAndTitle(path).title;
+            document.title = resolvePathAndTitle(PF).title;
             window.history.pushState({
                 "html": data,
-                "pageTitle": resolvePathAndTitle(path).title
+                "pageTitle": resolvePathAndTitle(PF).title
             }, "", path);
         })
     }
@@ -90,7 +90,7 @@ function navigate(path) {
 
 }
 navigate(currentPath);
-
+console.log(currentPath.split('/')[1]);
 
 window.onpopstate = function (e) {
     if (e.state) {

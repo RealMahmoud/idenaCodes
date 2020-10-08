@@ -110,7 +110,7 @@
     }
 
     if (findGetParameter('id') > 0) {
-        ajax_get('./api/app/checkID.php?id=' + findGetParameter('id'), function (data) {
+        ajax_get('/api/app/checkID.php?id=' + findGetParameter('id'), function (data) {
             if (data.error == false) {
                 changeContent('id', data.id);
                 changeContent('status', data.status);
