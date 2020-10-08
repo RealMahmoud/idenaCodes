@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="en">
 
 <head>
@@ -10,9 +9,9 @@
     content="Idena.Codes helps verify new users, give out invitation codes to new users and add a layer of trust to network security " />
 
 
-  <link rel="stylesheet" href="./css/bootstrap-dark.min.css" />
-  <link rel="stylesheet" href="./css/toastr.min.css" />
-  <link href="./css/fa.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/bootstrap-dark.min.css" />
+  <link rel="stylesheet" href="/css/toastr.min.css" />
+  <link href="/css/fa.css" rel="stylesheet" />
 
 </head>
 
@@ -42,11 +41,10 @@
 
 
 
-<script src="./js/jquery-3.1.1.min.js"></script>
-<script src="./js/toastr.min.js"></script>
-<script src="./js/bootstrap.min.js"></script>
-<script src="./js/moment.min.js"></script>
-<script src="./js/ajax-utils.js"></script>
+<script src="/js/jquery-3.1.1.min.js"></script>
+<script src="/js/toastr.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/moment.min.js"></script>
 
 <script>
   toastr.options = {
@@ -74,9 +72,9 @@
       '<div style="left: -200%;" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">' +
       '<a class="dropdown-item" >Balance : 5 Votes</a>' +
       '<a class="dropdown-item" href="#invite">Invite</a>' +
-      '<a class="dropdown-item" href="./#profile">Edit Profile</a>' +
-      '<a class="dropdown-item" href="./#support">Support</a>' +
-      '<a class="dropdown-item" href="./#home"onclick="logout();">Log Out</a>' +
+      '<a class="dropdown-item" href="/#profile">Edit Profile</a>' +
+      '<a class="dropdown-item" href="/#support">Support</a>' +
+      '<a class="dropdown-item" href="/#home"onclick="logout();">Log Out</a>' +
       '</div>' +
       '</li>   ' +
       '</ul>';
@@ -91,9 +89,9 @@
   }
 
   function checkLoggedStatus() {
-    ajax_get('./services/auth/checkLogin.php', function (data) {
-      if (data['Logged'] == true) {
-        makeLogged(data['Address']);
+    ajax_get('/api/auth/checkLogin.php', function (data) {
+      if (JSON.parse(data)['Logged'] == true) {
+        makeLogged(JSON.parse(data)['Address']);
       } else {
         makeNotLogged();
       }
@@ -101,22 +99,21 @@
   }
 
   function openIdena() {
-    ajax_get('./services/auth/getToken.php', function (data) {
+    ajax_get('/api/auth/getToken.php', function (data) {
       var urlofwebsite = window.location.origin + window.location.pathname;
-      var url = 'dna://signin/v1?nonce_endpoint=' + urlofwebsite + 'services/auth/start-session.php&token=' + data[
-          'Token'] +
+      var url = 'dna://signin/v1?nonce_endpoint=' + urlofwebsite + 'api/auth/start-session.php&token=' + JSON.parse(data)['token'] +
         '&callback_url=' +
         urlofwebsite +
         '&authentication_endpoint=' +
         urlofwebsite +
-        'services/auth/auth.php';
+        'api/auth/auth.php';
       window.open(encodeURI(url), '_self');
       console.log(encodeURI(url));
     });
   }
 
   function logout() {
-    ajax_get('./services/auth/logout.php', function (data) {
+    ajax_get('/api/auth/logout.php', function (data) {
       makeNotLogged();
     });
 
@@ -125,8 +122,8 @@
     checkLoggedStatus();
   });
 </script>
-<script src="./js/nav.js"></script>
-<script src="./scripts/index.js"></script>
+<script src="/js/nav.js"></script>
+<script src="/scripts/index.js"></script>
 
 
 </html>
