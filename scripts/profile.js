@@ -44,6 +44,8 @@ if (Number(window.location.pathname.split('/')[2]) > 0) {
                         .getElementById('content-contactList').innerHTML + '<p class="m-0">' + key +
                         ' : <span>@' + data.contacts[key] + '</span></p>';
                 });
+            }else{
+                document.getElementById('content-contactList').innerHTML = '';
             }
 
             if (data.connected.length > 0) {
@@ -54,6 +56,8 @@ if (Number(window.location.pathname.split('/')[2]) > 0) {
                         .getElementById('content-accountsList').innerHTML + '<p class="m-0">' +
                         key + '</p>';
                 });
+            }else{
+                document.getElementById('content-accountsList').innerHTML = '';
             }
 
 
@@ -67,5 +71,5 @@ if (Number(window.location.pathname.split('/')[2]) > 0) {
 
     });
 } else {
-    document.getElementById('pageLoadingText').innerHTML = 'Error';
+    document.getElementById('pageLoadingText').innerHTML = 'Error - ID missing';
 }}
