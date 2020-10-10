@@ -22,7 +22,6 @@ if (Number(window.location.pathname.split('/')[2]) > 0) {
         if (!data.error) {
             changeContent('id', data.id);
             changeContent('status', data.status);
-            changeContent('referredBy', data.referredBy);
             changeContent('joined', data.joined);
             changeContent('reports', data.reports);
 
@@ -32,10 +31,7 @@ if (Number(window.location.pathname.split('/')[2]) > 0) {
             changeContent('bio', data.bio);
             changeContent('trustScore', data.trustScore);
             document.getElementById('content-image').src = 'https://robohash.org/' + data.image;
-
-
-
-
+            
             if (Object.size(data.contacts) > 0) {
                 document.getElementById('content-contactList').innerHTML =
                 '<h5 class="m-0">Contact at</h5>';
