@@ -10,27 +10,26 @@ $id = htmlspecialchars($id);
 
 $result = (object)array();
 
-  $resultSQL = $conn->query("SELECT * FROM users where id = '".$id."' LIMIT 1;");
+  $resultSQL = $conn->query("SELECT id,status,joined,image,bio FROM users where id = '".$id."' LIMIT 1;");
   $row = $resultSQL->fetch_row();
 if ($row == null) {
     $result->error=true;
     echo json_encode($result);
 } else {
     $result->error=false;
-    $result->id=1;
-    $result->status='Human';
-    $result->referredBy='None';
-    $result->joined=date("Y-m-d");
+    $result->id=$row[0];
+    $result->status=$row[1];
+    $result->joined=$row[2];
+    $result->image=$row[3];
+    $result->bio=$row[4];
+
     $result->reports=0;
-    $result->image='00000x0x0x0x0x0x00x0x00x';
     $result->flipChallengeScore=0.95;
     $result->quizScore=0.50;
     $result->socialScore=0.913;
-    $result->bio='Hey WTF ?';
     $result->inviteAbility=false;
     $result->trustScore=100;
     $result->trustAbility=false;
-    $result->address='000';
 
 
     $contacts = (object)array();
