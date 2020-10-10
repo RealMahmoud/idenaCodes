@@ -12,7 +12,7 @@ $result = (object)array();
 
   $resultSQL = $conn->query("SELECT * FROM users where id = '".$id."' LIMIT 1;");
   $row = $resultSQL->fetch_row();
-if ($row[0] == null) {
+if ($row == null) {
     $result->error=true;
     echo json_encode($result);
 } else {
@@ -34,11 +34,11 @@ if ($row[0] == null) {
 
 
     $contacts = (object)array();
-    $contacts->Discord='RealMahmoud';
+    //$contacts->Discord='RealMahmoud';
     $result->contacts=$contacts;
 
     $connected = array();
-    array_push($connected, "Discord");
+    // array_push($connected, "Discord");
     $result->connected=$connected;
 
 

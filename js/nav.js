@@ -20,7 +20,9 @@ function ajax_get(url, callback) {
 var currentPath = window.location.pathname;
 
 
+function loadHomePage(){
 
+}
 
 var partialsCache = {}
 
@@ -28,37 +30,37 @@ function resolvePathAndTitle(path) {
     switch (path) {
         case '':
             return {
-                htmlPath: '/html/home.html', title: 'Home'
+                htmlPath: '/html/home.html', title: 'Home' , callback:loadHomePage
             }
             break;
         case 'Flip-Challenge':
             return {
-                htmlPath: '/html/flip-challenge.html', title: 'Flip Challenge'
+                htmlPath: '/html/flip-challenge.html', title: 'Flip Challenge', callback:loadHomePage
             }
             break;
         case 'admin':
             return {
-                htmlPath: '/html/admin.html', title: 'admin'
+                htmlPath: '/html/admin.html', title: 'admin', callback:loadHomePage
             }
             break;
         case 'invite':
             return {
-                htmlPath: '/html/invite.html', title: 'invite'
+                htmlPath: '/html/invite.html', title: 'invite', callback:loadHomePage
             }
             break;
         case 'profile':
             return {
-                htmlPath: '/html/profile.html', title: 'profile'
+                htmlPath: '/html/profile.html', title: 'profile', callback:loadProfilePage
             }
             break;
         case 'quiz':
             return {
-                htmlPath: '/html/quiz.html', title: 'quiz'
+                htmlPath: '/html/quiz.html', title: 'quiz', callback:loadHomePage
             }
             break;
         default:
             return {
-                htmlPath: '/html/home.html', title: 'Home'
+                htmlPath: '/html/home.html', title: 'Home', callback:loadHomePage
             }
     }
 }
@@ -74,6 +76,7 @@ function navigate(path) {
             "html": partialsCache[PF],
             "pageTitle": resolvePathAndTitle(PF).title
         }, "", path);
+
         return
     } else {
 
@@ -85,6 +88,7 @@ function navigate(path) {
                 "html": data,
                 "pageTitle": resolvePathAndTitle(PF).title
             }, "", path);
+            resolvePathAndTitle(PF).callback();
         })
     }
 
