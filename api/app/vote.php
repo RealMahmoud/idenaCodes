@@ -20,27 +20,27 @@ if ($loggedUserAddress == null) {
 
 
 
-if(!isset($_POST['id']) || !isset($_POST['type'])){
+if(!isset($_POST['forID']) || !isset($_POST['type'])){
   $result->error=true;
   die(json_encode($result));
 }
-$forid = htmlspecialchars($conn->real_escape_string($_POST['id']));
+$forID = htmlspecialchars($conn->real_escape_string($_POST['forID']));
 $type = htmlspecialchars($conn->real_escape_string($_POST['type']));
-$forid = (int)$forid;
+$forID = (int)$forID;
 $type = (int)$type;
-$row = $conn->query("SELECT id FROM `users` where `id` = '".$forid."' LIMIT 1 ;")->fetch_row();
+$row = $conn->query("SELECT id FROM `users` where `id` = '".$forID."' LIMIT 1 ;")->fetch_row();
 if(!isset($row)){
   $result->error=true;
   die(json_encode($result));
 }
 
 
-$conn->query("DELETE FROM `votes` WHERE `voterID` = '".$loggedUserID."' AND `forID` = '".$forid."' LIMIT 1;");
-$conn->query("INSERT INTO `votes`(`voterID`, `type`, `forID`) VALUES ('".$loggedUserID."','".$type."','".$forid."');");
+$conn->query("DELETE FROM `votes` WHERE `voterID` = '".$loggedUserID."' AND `forID` = '".$forID."' LIMIT 1;");
+$conn->query("INSERT INTO `votes`(`voterID`, `type`, `forID`) VALUES ('".$loggedUserID."','".$type."','".$forID."');");
 
 
-$countUp = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '".$forid."' AND `type` =  1;")->fetch_row()[0];
-$countDown = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '".$forid."' AND `type` =  0;")->fetch_row()[0];
+$countUp = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '".$forID."' AND `type` =  1;")->fetch_row()[0];
+$countDown = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '".$forID."' AND `type` =  0;")->fetch_row()[0];
 
 $result->error=false;
 $result->trustScore=(int)$countUp-(int)$countDown;
