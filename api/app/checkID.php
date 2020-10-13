@@ -5,12 +5,11 @@ header('Content-Type: application/json');
 
 $id = $conn->real_escape_string($_GET['id']);
 $id = htmlspecialchars($id);
-
-// id make it number
+$id = (int)$id;
 
 $result = (object)array();
 
-  $resultSQL = $conn->query("SELECT id,status,joined,image,bio FROM users where id = '".$id."' LIMIT 1;");
+  $resultSQL = $conn->query("SELECT id,status,joined,image,bio,lastseen FROM users where id = '".$id."' LIMIT 1;");
   $row = $resultSQL->fetch_row();
 if ($row == null) {
     $result->error=true;
@@ -22,22 +21,22 @@ if ($row == null) {
     $result->joined=$row[2];
     $result->image=$row[3];
     $result->bio=$row[4];
-
+    $result->lastseen=$row[5];
     $result->reports=0;
     $result->flipChallengeScore=0.95;
     $result->quizScore=0.50;
     $result->socialScore=0.913;
     $result->inviteAbility=false;
-    $result->trustScore=100;
+    $result->trustScore=-1;
     $result->trustAbility=false;
-
+   
 
     $contacts = (object)array();
-    //$contacts->Discord='RealMahmoud';
+    $contacts->Discord='RealMahmoud';
     $result->contacts=$contacts;
 
     $connected = array();
-    // array_push($connected, "Discord");
+     array_push($connected, "Discord");
     $result->connected=$connected;
 
 
