@@ -29,7 +29,6 @@ function loadProfilePage() {
                 changeContent('flipChallengeScore', data.flipChallengeScore);
                 changeContent('quizScore', data.quizScore);
                 changeContent('socialScore', data.socialScore);
-                changeContent('bio', data.bio);
                 changeContent('trustScore', data.trustScore);
                 document.getElementById('content-image').src = 'https://robohash.org/' + data.image;
 
