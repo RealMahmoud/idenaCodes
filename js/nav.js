@@ -20,7 +20,7 @@ function ajax_get(url, callback) {
 var currentPath = window.location.pathname;
 
 
-function loadHomePage(){
+function loadHomePage() {
 
 }
 
@@ -30,37 +30,42 @@ function resolvePathAndTitle(path) {
     switch (path) {
         case '':
             return {
-                htmlPath: '/html/home.html', title: 'Home' , callback:loadHomePage
+                htmlPath: '/html/home.html', title: 'Home', callback: loadHomePage
             }
             break;
         case 'Flip-Challenge':
             return {
-                htmlPath: '/html/flip-challenge.html', title: 'Flip Challenge', callback:loadHomePage
+                htmlPath: '/html/flip-challenge.html', title: 'Flip Challenge', callback: loadHomePage
             }
             break;
         case 'admin':
             return {
-                htmlPath: '/html/admin.html', title: 'admin', callback:loadHomePage
+                htmlPath: '/html/admin.html', title: 'admin', callback: loadHomePage
             }
             break;
         case 'invite':
             return {
-                htmlPath: '/html/invite.html', title: 'invite', callback:loadHomePage
+                htmlPath: '/html/invite.html', title: 'invite', callback: loadHomePage
             }
             break;
         case 'profile':
             return {
-                htmlPath: '/html/profile.html', title: 'profile', callback:loadProfilePage
+                htmlPath: '/html/profile.html', title: 'profile', callback: loadProfilePage
             }
             break;
         case 'quiz':
             return {
-                htmlPath: '/html/quiz.html', title: 'quiz', callback:loadHomePage
+                htmlPath: '/html/quiz.html', title: 'quiz', callback: loadHomePage
+            }
+            break;
+        case 'connect':
+            return {
+                htmlPath: '/html/connect.html', title: 'connect', callback: loadConnectPage
             }
             break;
         default:
             return {
-                htmlPath: '/html/home.html', title: 'Home', callback:loadHomePage
+                htmlPath: '/html/home.html', title: 'Home', callback: loadHomePage
             }
     }
 }
@@ -70,7 +75,7 @@ function navigate(path) {
     if (partialsCache[PF]) {
 
         document.getElementById("content").innerHTML = partialsCache[PF];
-        
+
         document.title = resolvePathAndTitle(PF).title;
         window.history.pushState({
             "html": partialsCache[PF],
