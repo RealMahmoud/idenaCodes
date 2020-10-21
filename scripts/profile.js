@@ -46,7 +46,7 @@ function loadProfilePage() {
 
                 if (data.connected.length > 0) {
                     document.getElementById('content-accountsList').innerHTML =
-                        '<h5 class="m-0">Accounts verified</h5>';
+                        '<h5 class="m-0">Accounts Connected</h5>';
                     data.connected.forEach(key => {
                         document.getElementById('content-accountsList').innerHTML = document
                             .getElementById('content-accountsList').innerHTML + '<p class="m-0">' +
