@@ -30,21 +30,17 @@ if ($row == null) {
     $result->trustAbility=false;
    
 
-    $contacts = (object)array();
-    $contacts->Discord='RealMahmoud';
-    $result->contacts=$contacts;
+
 
     $connected = array();
-
-
     if($conn->query("SELECT id FROM auth_telegram where userID = '".$id."' LIMIT 1;")->fetch_row()[0]){
-      array_push($connected, "Telegram");
+      $service = (object)array();
+      $service->name='Telegram';
+      $service->creationTime='After 15/5/2020';
+      $service->available =false;
+      array_push($connected, $service);
     }
      
-
-
-
-
 
     $result->connected=$connected;
 
