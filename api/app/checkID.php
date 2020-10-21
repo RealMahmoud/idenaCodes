@@ -9,8 +9,8 @@ $id = (int)$id;
 
 $result = (object)array();
 
-  $resultSQL = $conn->query("SELECT id,status,joined,image,bio,lastseen FROM users where id = '".$id."' LIMIT 1;");
-  $row = $resultSQL->fetch_row();
+$row =  $conn->query("SELECT id,status,joined,image,bio,lastseen FROM users where id = '".$id."' LIMIT 1;")->fetch_row();
+
 if ($row == null) {
     $result->error=true;
     echo json_encode($result);
@@ -20,7 +20,6 @@ if ($row == null) {
     $result->status=$row[1];
     $result->joined=$row[2];
     $result->image=$row[3];
-    $result->bio=$row[4];
     $result->lastseen=$row[5];
     $result->reports=0;
     $result->flipChallengeScore=0.95;
@@ -36,7 +35,17 @@ if ($row == null) {
     $result->contacts=$contacts;
 
     $connected = array();
-     array_push($connected, "Discord");
+
+
+    if($conn->query("SELECT id FROM auth_telegram where userID = '".$id."' LIMIT 1;")->fetch_row()[0]){
+      array_push($connected, "Telegram");
+    }
+     
+
+
+
+
+
     $result->connected=$connected;
 
 
