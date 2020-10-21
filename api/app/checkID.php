@@ -32,17 +32,17 @@ if ($row == null) {
 
 
 
-    $connected = array();
+    $accounts = array();
     if($conn->query("SELECT id FROM auth_telegram where userID = '".$id."' LIMIT 1;")->fetch_row()[0]){
       $service = (object)array();
       $service->name='Telegram';
       $service->creationTime='After 15/5/2020';
       $service->available =false;
-      array_push($connected, $service);
+      array_push($accounts, $service);
     }
      
 
-    $result->connected=$connected;
+    $result->accounts=$accounts;
 
 
 
