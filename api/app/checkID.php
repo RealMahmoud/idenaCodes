@@ -33,7 +33,7 @@ if ($row == null) {
 
 
     $accounts = array();
-    if($conn->query("SELECT id FROM auth_telegram where userID = '".$id."' LIMIT 1;")->fetch_row()[0]){
+    if(isset($conn->query("SELECT id FROM auth_telegram where userID = '".$id."' LIMIT 1;")->fetch_row()[0])){
       $service = (object)array();
       $service->name='Telegram';
       $service->creationTime='After 15/5/2020';
