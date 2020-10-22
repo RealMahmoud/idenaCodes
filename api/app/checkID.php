@@ -21,24 +21,41 @@ if ($row == null) {
     $result->joined=$row[2];
     $result->image=$row[3];
     $result->lastseen=$row[5];
+
     $result->reports=0;
-    $result->flipChallengeScore=0.95;
-    $result->quizScore=0.50;
     $result->socialScore=0.913;
     $result->inviteAbility=false;
-    $result->trustScore=-1;
-    $result->trustAbility=false;
    
+    $result->trustAbility=false;
+    $votesCount = $conn->query("SELECT COUNT(*) FROM votes where forID = '".$id."';")->fetch_row()[0];
+    if (isset($votesCount)) {
+        $result->trustScore=$votesCount;
+    } else {
+        $result->trustScore=0;
+    }
 
+    $quizScore = $conn->query("SELECT `score` FROM `test_questions` where userID = '".$id."';")->fetch_row();
+    if (isset($quizScore[0])) {
+        $result->quizScore= $quizScore[0].'%';
+    } else {
+        $result->quizScore= ' - ';
+    }
+
+    $flipChallengeScore = $conn->query("SELECT score FROM `test_flips` where userID = '".$id."';")->fetch_row();
+    if (isset($flipChallengeScore[0])) {
+        $result->flipChallengeScore= $flipChallengeScore[0].' %';
+    } else {
+        $result->flipChallengeScore= ' - ';
+    }
 
 
     $accounts = array();
-    if(isset($conn->query("SELECT id FROM auth_telegram where userID = '".$id."' LIMIT 1;")->fetch_row()[0])){
-      $service = (object)array();
-      $service->name='Telegram';
-      $service->creationTime='After 15/5/2020';
-      $service->available =false;
-      array_push($accounts, $service);
+    if (isset($conn->query("SELECT id FROM auth_telegram where userID = '".$id."' LIMIT 1;")->fetch_row()[0])) {
+        $service = (object)array();
+        $service->name='Telegram';
+        $service->creationTime='After 15/5/2020';
+        $service->available =false;
+        array_push($accounts, $service);
     }
      
 
