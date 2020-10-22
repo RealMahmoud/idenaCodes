@@ -3,7 +3,9 @@ include_once(dirname(__FILE__)."/../../common/_public.php");
 // private
 header('Content-Type: application/json');
 session_start();
-
+if($conn->query("SELECT id FROM `auth_telegram` where userID = (SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '".$_SESSION['CODES-Token']."'))")->fetch_row()){
+die('Already exist');
+}
 $keys = array("id", "first_name", "last_name", "username", "photo_url", "auth_date");
 
 
