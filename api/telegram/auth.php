@@ -40,11 +40,10 @@ if (isset($_GET['hash'])) {
 		die($_GET['auth_date']);
 	  }
 	if (hash_equals($hash, $_GET['hash'])) {
-		$conn->query("INSERT INTO `auth_telegram`( `userID`, `tg_ID`, `tg_Username`, `tg_photo_url`, `time`,`creationDate`) VALUES (
+		$conn->query("INSERT INTO `auth_telegram`( `userID`, `tg_ID`, `tg_Username`, `time`,`tg_creationDate`) VALUES (
 			(SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '".$_SESSION['CODES-Token']."')),
 			'".$_GET['id']."',
 			'".$_GET['username']."',
-			'".$_GET['photo_url']."',
 			'".$_GET['auth_date']."',
 			'".getClosest($_GET['id'],$datesArr)."'
 		);");
