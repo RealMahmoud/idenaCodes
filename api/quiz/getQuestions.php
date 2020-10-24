@@ -4,12 +4,12 @@ include(dirname(__FILE__) . "/../../common/_public.php");
 header('Content-Type: application/json');
 
  $userID = $conn->query("SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '".$_SESSION['CODES-Token']."');")->fetch_row()[0];
-
-$oldQuestions = $conn->query("SELECT questions,answers FROM `test_questions` WHERE userID = '" . $userID . "' LIMIT 1;")->fetch_assoc();
+//only users access
+$oldQuestions = $conn->query("SELECT questions FROM `test_questions` WHERE userID = '" . $userID . "' LIMIT 1;")->fetch_assoc();
 
 if ($oldQuestions) {
     
-    if (isset($oldQuestions["answers"])) {
+    if (isset($oldQuestions["flips"])) {
         
         $result        = (object) array();
         $result->error = true;
