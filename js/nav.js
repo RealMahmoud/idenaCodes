@@ -16,6 +16,24 @@ function ajax_get(url, callback) {
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
 }
+function ajax_post(url, form_Data, callback) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+            try {
+                var data = xmlhttp.responseText;
+            } catch(err) {
+                console.log(err.message + " in " + xmlhttp.responseText);
+                return;
+            }
+            callback(data);
+        }
+    };
+
+    xmlhttp.open("POST", url, true);
+    xmlhttp.send(form_Data);
+}
 
 var currentPath = window.location.pathname;
 
@@ -58,11 +76,12 @@ function resolvePathAndTitle(path) {
                 htmlPath: '/html/quiz.html', title: 'quiz', callback: loadHomePage
             }
             break;
-        case 'connect':
+        case 'settings':
             return {
-                htmlPath: '/html/connect.html', title: 'connect', callback: loadConnectPage
+                htmlPath: '/html/settings.html', title: 'settings', callback: loadSettingsPage
             }
             break;
+        
         default:
             return {
                 htmlPath: '/html/home.html', title: 'Home', callback: loadHomePage
