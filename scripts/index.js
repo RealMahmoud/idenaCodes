@@ -23,7 +23,7 @@ toastr.options = {
       '<div style="left: -200%;" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">' +
       '<a class="dropdown-item" >Balance : 5 Votes</a>' +
       '<a class="dropdown-item"href="#" onclick="'+"navigate('/invite');"+'">Invite</a>' +
-      '<a class="dropdown-item" href="#" onclick="'+"navigate('/profile');"+'">Edit Profile</a>' +
+      '<a class="dropdown-item" href="#" onclick="'+"navigate('/settings');"+'">Settings</a>' +
       '<a class="dropdown-item" href="#" onclick="'+"navigate('/support');"+'">Support</a>' +
       '<a class="dropdown-item" href="#"onclick="logout(); '+"navigate('/home');"+'">Log Out</a>' +
       '</div>' +
