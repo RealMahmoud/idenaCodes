@@ -3,9 +3,13 @@ session_start();
 include(dirname(__FILE__) . "/../../common/_public.php");
 header('Content-Type: application/json');
 
- $userID = $conn->query("SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '".$_SESSION['CODES-Token']."');")->fetch_row()[0];
-//only users access
-$oldQuestions = $conn->query("SELECT questions FROM `test_questions` WHERE userID = '" . $userID . "' LIMIT 1;")->fetch_assoc();
+if (isset($_SESSION['CODES-Token'])) {
+    $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '".$_SESSION['CODES-Token']."' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row()[0];
+} else {
+    $result->error=true;
+    die(json_encode($result));
+}
+$oldQuestions = $conn->query("SELECT questions FROM `test_questions` WHERE userID = '" . $loggedUserID . "' LIMIT 1;")->fetch_assoc();
 
 if ($oldQuestions) {
     
@@ -62,7 +66,7 @@ while ($row = $resultSQL->fetch_assoc()) {
     
 }
 
-$conn->query("INSERT INTO `test_questions`( `userID`, `questions`) VALUES ('" . $userID . "','" . json_encode($questionsIDArray) . "')");
+$conn->query("INSERT INTO `test_questions`( `userID`, `questions`) VALUES ('" . $loggedUserID . "','" . json_encode($questionsIDArray) . "')");
 
 if (count($questionsArray) == 0) {
     $result->error = true;

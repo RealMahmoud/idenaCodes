@@ -5,16 +5,19 @@ session_start();
 include(dirname(__FILE__) . "/../../common/_public.php");
 header('Content-Type: application/json');
 //todo : prevent sumbitting twice
- $userID = $conn->query("SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '".$_SESSION['CODES-Token']."');")->fetch_row()[0];
-
-
+if (isset($_SESSION['CODES-Token'])) {
+    $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '".$_SESSION['CODES-Token']."' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row()[0];
+} else {
+    $result->error=true;
+    die(json_encode($result));
+}
 
 
 $answers = json_decode(file_get_contents('php://input'), true);
 
 
 
-$resultSQL = $conn->query("SELECT flips FROM `test_flips` WHERE userID = '" . $userID . "' LIMIT 1;")->fetch_assoc()["flips"];
+$resultSQL = $conn->query("SELECT flips FROM `test_flips` WHERE userID = '" . $loggedUserID . "' LIMIT 1;")->fetch_assoc()["flips"];
 
 
 $rightAnswers = 0;

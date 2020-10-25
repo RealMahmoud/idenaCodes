@@ -3,6 +3,13 @@ include_once(dirname(__FILE__)."/../../common/_public.php");
 // private
 header('Content-Type: application/json');
 session_start();
+if (isset($_SESSION['CODES-Token'])) {
+    $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '".$_SESSION['CODES-Token']."' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row()[0];
+} else {
+    $result->error=true;
+    die(json_encode($result));
+}
+
 if($conn->query("SELECT id FROM `auth_telegram` where userID = (SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '".$_SESSION['CODES-Token']."'))")->fetch_row()){
 die('Already exist');
 }
