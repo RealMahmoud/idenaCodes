@@ -4,18 +4,13 @@ include(dirname(__FILE__)."/../../common/_public.php");
 header('Content-Type: application/json');
 $result = (object)array();
 if (isset($_SESSION['CODES-Token'])) {
-    $loggedUserAddress = $conn->query("SELECT address FROM `auth_idena` where `token` = '".$_SESSION['CODES-Token']."' AND `authenticated` = '1'  LIMIT 1 ;")->fetch_row()[0];
+  $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '".$_SESSION['CODES-Token']."' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row()[0];
+
 }else{
   $result->error=true;
   die(json_encode($result));
 }
 
-if ($loggedUserAddress == null) {
-    $result->error=true;
-    die(json_encode($result));
-} else {
-    $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = '".$loggedUserAddress."' LIMIT 1 ;")->fetch_row()[0];
-}
 
 
 
