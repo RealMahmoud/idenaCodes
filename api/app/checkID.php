@@ -5,11 +5,11 @@ header('Content-Type: application/json');
 
 
 if (isset($_SESSION['CODES-Token'])) {
-  $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '".$_SESSION['CODES-Token']."' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row()[0];
-
-}else{
-  $result->error=true;
-  die(json_encode($result));
+    $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '".$_SESSION['CODES-Token']."' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row()[0];
+} else {
+    $result = (object)array();
+    $result->error=true;
+    die(json_encode($result));
 }
 
 
@@ -36,12 +36,16 @@ if ($row == null) {
     $result->socialScore=0.913;
     $result->inviteAbility=false;
    
-    $result->trustAbility=false;
-    $votesCount = $conn->query("SELECT COUNT(*) FROM votes where forID = '".$id."';")->fetch_row()[0];
+    $result->voteAbility=false;
+
+
+    $countUp = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '".$id."' AND `type` =  1;")->fetch_row()[0];
+    $countDown = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '".$id."' AND `type` =  0;")->fetch_row()[0];
+    $votesCount = (int)$countUp-(int)$countDown;
     if (isset($votesCount)) {
-        $result->trustScore=$votesCount;
+        $result->votes=$votesCount;
     } else {
-        $result->trustScore=0;
+        $result->votes=0;
     }
 
     $quizScore = $conn->query("SELECT `score` FROM `test_questions` where userID = '".$id."';")->fetch_row();
