@@ -19,7 +19,7 @@ $result->success=true;
 $data =(object)array();
 $data->nonce='signin-'.$nonce;
 $result->data=$data;
-echo json_encode($result);
+die(json_encode($result));
 ?>
 
 

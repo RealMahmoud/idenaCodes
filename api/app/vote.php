@@ -4,29 +4,29 @@ include(dirname(__FILE__)."/../../common/_public.php");
 header('Content-Type: application/json');
 $result = (object)array();
 if (isset($_SESSION['CODES-Token'])) {
-  $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '".$_SESSION['CODES-Token']."' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row()[0];
-
-}else{
-  $result->error=true;
-  die(json_encode($result));
+    $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '".$_SESSION['CODES-Token']."' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row()[0];
+} else {
+    $result = (object)array();
+    $result->error=true;
+    die(json_encode($result));
 }
 
 
 
 
 
-if(!isset($_POST['forID']) || !isset($_POST['type'])){
-  $result->error=true;
-  die(json_encode($result));
+if (!isset($_POST['forID']) || !isset($_POST['type'])) {
+    $result->error=true;
+    die(json_encode($result));
 }
 $forID = htmlspecialchars($conn->real_escape_string($_POST['forID']));
 $type = htmlspecialchars($conn->real_escape_string($_POST['type']));
 $forID = (int)$forID;
 $type = (int)$type;
 $row = $conn->query("SELECT id FROM `users` where `id` = '".$forID."' LIMIT 1 ;")->fetch_row();
-if(!isset($row)){
-  $result->error=true;
-  die(json_encode($result));
+if (!isset($row)) {
+    $result->error=true;
+    die(json_encode($result));
 }
 
 

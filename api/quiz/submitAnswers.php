@@ -6,6 +6,7 @@ header('Content-Type: application/json');
 if (isset($_SESSION['CODES-Token'])) {
     $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '".$_SESSION['CODES-Token']."' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row()[0];
 } else {
+    $result = (object)array();
     $result->error=true;
     die(json_encode($result));
 }
@@ -23,13 +24,13 @@ $totalQuestions = 0;
 foreach (json_decode($resultSQL) as $questionID) {
     $answer = $conn->query("SELECT answer FROM `questions` WHERE id = '" . $questionID . "' LIMIT 1;")->fetch_assoc()['answer'];
     
-    if(!is_bool(array_search($questionID, array_column($answers, 'id')))){
+    if (!is_bool(array_search($questionID, array_column($answers, 'id')))) {
         if ($answer == $answers[array_search($questionID, array_column($answers, 'id'))]["answer"]) {
             $rightAnswers +=1;
-         }
+        }
     }
 
-$totalQuestions +=1; 
+    $totalQuestions +=1;
 }
 
 
