@@ -2,6 +2,13 @@
 session_start();
 include(dirname(__FILE__)."/../../common/_public.php");
 header('Content-Type: application/json');
+if (isset($_SESSION['CODES-Token'])) {
+  $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '".$_SESSION['CODES-Token']."' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row()[0];
+} else {
+  $result->error=true;
+  die(json_encode($result));
+}
+
 if(isset($_GET['skip'])){
   $skip = $conn->real_escape_string($_GET['skip']);
   $skip = htmlspecialchars($skip);
@@ -20,9 +27,20 @@ $result = (object)array();
         $user->id = (int)$row['id'];
         $user->score = 5;
         $user->image =$row['image'];
-        $connected = array();
-        array_push($connected, "Discord");
-        $user->connected=$connected;
+        $accounts = array();
+        if (isset($conn->query("SELECT id FROM auth_telegram where userID = '".(int)$row['id']."' LIMIT 1;")->fetch_row()[0])) {
+         
+          array_push($accounts, "telegram");
+        }
+        if (isset($conn->query("SELECT id FROM auth_discord where userID = '".(int)$row['id']."' LIMIT 1;")->fetch_row()[0])) {
+         
+          array_push($accounts, "discord");
+        }
+     /*   if (isset($conn->query("SELECT id FROM auth_twitter where userID = '".(int)$row['id']."' LIMIT 1;")->fetch_row()[0])) {
+         
+          array_push($accounts, "twitter");
+        }*/
+        $user->accounts=$accounts;
         array_push($usersArray, $user);
     }
 
