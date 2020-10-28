@@ -89,7 +89,7 @@ function resolvePathAndTitle(path) {
     }
 }
 
-function navigate(path) {
+function navigate(path,hash = window.location.hash) {
     let PF = path.split('/')[1];
     if (partialsCache[PF]) {
 
@@ -99,7 +99,7 @@ function navigate(path) {
         window.history.pushState({
             "html": partialsCache[PF],
             "pageTitle": resolvePathAndTitle(PF).title
-        }, "", path);
+        }, "", path+hash);
 
         return
     } else {
@@ -111,15 +111,16 @@ function navigate(path) {
             window.history.pushState({
                 "html": data,
                 "pageTitle": resolvePathAndTitle(PF).title
-            }, "", path);
+            }, "", path+hash);
             resolvePathAndTitle(PF).callback();
         })
     }
 
 
 }
+
 navigate(currentPath);
-console.log(currentPath.split('/')[1]);
+
 
 window.onpopstate = function (e) {
     if (e.state) {

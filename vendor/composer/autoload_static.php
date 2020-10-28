@@ -23,10 +23,18 @@ class ComposerStaticInitf4c1ce772059189868f2fc87080cc4d4
         array (
             'Elliptic\\' => 9,
         ),
+        'C' => 
+        array (
+            'Composer\\CaBundle\\' => 18,
+        ),
         'B' => 
         array (
             'BN\\' => 3,
             'BI\\' => 3,
+        ),
+        'A' => 
+        array (
+            'Abraham\\TwitterOAuth\\' => 21,
         ),
     );
 
@@ -43,6 +51,10 @@ class ComposerStaticInitf4c1ce772059189868f2fc87080cc4d4
         array (
             0 => __DIR__ . '/..' . '/simplito/elliptic-php/lib',
         ),
+        'Composer\\CaBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/ca-bundle/src',
+        ),
         'BN\\' => 
         array (
             0 => __DIR__ . '/..' . '/simplito/bn-php/lib',
@@ -50,6 +62,10 @@ class ComposerStaticInitf4c1ce772059189868f2fc87080cc4d4
         'BI\\' => 
         array (
             0 => __DIR__ . '/..' . '/simplito/bigint-wrapper-php/lib',
+        ),
+        'Abraham\\TwitterOAuth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/abraham/twitteroauth/src',
         ),
     );
 
