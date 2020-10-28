@@ -9,6 +9,9 @@ if (isset($_SESSION['CODES-Token'])) {
     $result->error=true;
     die(json_encode($result));
 }
-
+if ($conn->query("SELECT id FROM `auth_discord` where userID = (SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '".$_SESSION['CODES-Token']."'))")->fetch_row()) {
+    header("location: /index.html");
+    die('Already exist');
+}
  $state = $_SESSION['state'] = bin2hex(openssl_random_pseudo_bytes(12));
  header('location: '.'https://discordapp.com/oauth2/authorize?response_type=code&client_id=' . DISCORD_CLIENT . '&redirect_uri=' . DISCORD_CALLBACK . '&scope=' . DISCORD_SCOPE . "&state=" . $state);
