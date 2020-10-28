@@ -10,6 +10,7 @@ if (isset($_SESSION['CODES-Token'])) {
 }
 
 if ($conn->query("SELECT id FROM `auth_discord` where userID = (SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '".$_SESSION['CODES-Token']."'))")->fetch_row()) {
+    header("location: /index.html");
     die('Already exist');
 }
 
@@ -55,16 +56,20 @@ if(isset($results['access_token'])){
     curl_close($curl);
     $results = json_decode($response, true);
     $_SESSION['user'] = $results;
-    $_SESSION['username'] = $results['username'];
-    $_SESSION['discrim'] = $results['discriminator'];
-    $_SESSION['user_id'] = $results['id'];
-    $_SESSION['user_avatar'] = $results['avatar'];
-    $_SESSION['user_email'] = $results['email'];
-echo $results['email'];
+
+  
 
 
+    $conn->query("INSERT INTO `auth_discord`( `userID`, `dc_creationDate`, `dc_username`, `dc_ID`) VALUES (
+        '".$loggedUserID."',
+        '".substr(bindec(substr(decbin($results['id']), 0, -22)) + 1420070400000, 0, -3)."',
+        '".$results['username']."#".$results['discriminator']."',
+        '".$results['id']."'
+    )");
+
+header("location: /index.html");
 }else{
-
+    die('error');
 }
 
 
@@ -86,4 +91,4 @@ function check_state($state)
 
 
 
-header("location ./index.php");
+
