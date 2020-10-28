@@ -73,12 +73,6 @@ header("location: /index.html");
 }
 
 
-
-
-
-    //
-
-
   
 function check_state($state)
 {
