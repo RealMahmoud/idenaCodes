@@ -64,10 +64,27 @@ if ($row == null) {
 
 
     $accounts = array();
-    if (isset($conn->query("SELECT id FROM auth_telegram where userID = '".$id."' LIMIT 1;")->fetch_row()[0])) {
+    $tgResult = $conn->query("SELECT id,tg_creationDate FROM auth_telegram where userID = '".$id."' LIMIT 1;")->fetch_row();
+    if (isset($tgResult[0])) {
         $service = (object)array();
         $service->name='Telegram';
-        $service->creationTime='After 15/5/2020';
+        $service->creationTime=$tgResult[1];
+        $service->available =false;
+        array_push($accounts, $service);
+    }
+    $dcResult = $conn->query("SELECT id,dc_creationDate FROM auth_discord where userID = '".$id."' LIMIT 1;")->fetch_row();
+    if (isset($dcResult[0])) {
+        $service = (object)array();
+        $service->name='Discord';
+        $service->creationTime=$dcResult[1];
+        $service->available =false;
+        array_push($accounts, $service);
+    }
+    $twResult = $conn->query("SELECT id,tw_creationDate FROM auth_twitter where userID = '".$id."' LIMIT 1;")->fetch_row();
+    if (isset($twResult[0])) {
+        $service = (object)array();
+        $service->name='Twitter';
+        $service->creationTime=$twResult[1];
         $service->available =false;
         array_push($accounts, $service);
     }
