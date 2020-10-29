@@ -28,7 +28,10 @@ if (!isset($row)) {
     $result->error=true;
     die(json_encode($result));
 }
-
+if($conn->query("SELECT COUNT(*) FROM `votes` WHERE `voterID` = '".$loggedUserID."';")->fetch_row()[0] >= 5){
+    $result->error=true;
+    die(json_encode($result));
+}
 
 $conn->query("DELETE FROM `votes` WHERE `voterID` = '".$loggedUserID."' AND `forID` = '".$forID."' LIMIT 1;");
 $conn->query("INSERT INTO `votes`(`voterID`, `type`, `forID`) VALUES ('".$loggedUserID."','".$type."','".$forID."');");

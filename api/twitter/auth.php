@@ -23,8 +23,6 @@ if ($conn->query("SELECT id FROM `auth_twitter` where userID = (SELECT id FROM `
        
     
      
-    
-
 
         $url = $connection->url('oauth/authorize', array( 'oauth_token' => $request_token['oauth_token'] ));
         header("location: ".$url);
