@@ -47,10 +47,9 @@ $result = (object)array();
         if (isset($conn->query("SELECT id FROM auth_discord where userID = '".(int)$row['id']."' LIMIT 1;")->fetch_row()[0])) {
             array_push($accounts, "discord");
         }
-        /*   if (isset($conn->query("SELECT id FROM auth_twitter where userID = '".(int)$row['id']."' LIMIT 1;")->fetch_row()[0])) {
-
-             array_push($accounts, "twitter");
-           }*/
+        if (isset($conn->query("SELECT id FROM auth_twitter where userID = '".(int)$row['id']."' LIMIT 1;")->fetch_row()[0])) {
+            array_push($accounts, "twitter");
+        }
         $user->accounts=$accounts;
         array_push($usersArray, $user);
     }
