@@ -36,7 +36,7 @@ if ($conn->query("SELECT id FROM `auth_twitter` where userID = (SELECT id FROM `
         } else {
             $conn->query("INSERT INTO `auth_twitter`(`userID`, `tw_creationDate`, `tw_ID`, `tw_username`) VALUES (
              '".$loggedUserID."',
-             '".$user->created_at."',
+             '".strtotime($user->created_at)."',
              '".$user->id."',
              '".$user->screen_name."'   
             );");

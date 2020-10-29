@@ -35,4 +35,4 @@ $conn->query("INSERT INTO `reports_tickets`( `userID`, `report`, `reporterID`) V
 
 
 $result->error=false;
-echo json_encode($result);
+die(json_encode($result));
