@@ -38,7 +38,7 @@ function loadProfilePage() {
                     data.accounts.forEach(key => {
                         document.getElementById('content-accountsList').innerHTML += '<dl>';
                         document.getElementById('content-accountsList').innerHTML += '<dt class="">' + key.name + '</dt>';
-                        document.getElementById('content-accountsList').innerHTML += '<dd> - Creation Date : ' + key['creationTime'] + '</dd>';
+                        document.getElementById('content-accountsList').innerHTML += '<dd> - Creation Date : ' + timeConverter(key['creationTime']) + '</dd>';
                         document.getElementById('content-accountsList').innerHTML += '</dl>';
 
                     });
