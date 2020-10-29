@@ -21,10 +21,7 @@ if ($conn->query("SELECT id FROM `auth_twitter` where userID = (SELECT id FROM `
         $connection = new TwitterOAuth(TWITTER_KEY, TWITTER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
         $access_token = $connection->oauth("oauth/access_token", array( "oauth_verifier" => $_GET['oauth_verifier'] ));
         $_SESSION['twitter_access_token'] = $access_token;
-        
-
-
-
+    
         $oauthToken = $_SESSION['twitter_access_token']['oauth_token'];
         $oauthTokenSecret = $_SESSION['twitter_access_token']['oauth_token_secret'];
         $connection = new TwitterOAuth(TWITTER_KEY, TWITTER_SECRET, $oauthToken, $oauthTokenSecret);
