@@ -16,11 +16,11 @@ if ($conn->query("SELECT id FROM `auth_twitter` where userID = (SELECT id FROM `
     require_once(dirname(__FILE__)."/../../vendor/autoload.php");
     use Abraham\TwitterOAuth\TwitterOAuth;
 
-    $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
-        $request_token = $connection->oauth('oauth/request_token', array( 'oauth_callback' => OAUTH_CALLBACK ));
+    $connection = new TwitterOAuth(TWITTER_KEY, TWITTER_SECRET);
+        $request_token = $connection->oauth('oauth/request_token', array( 'oauth_callback' => TWITTER_CALLBACK ));
         $_SESSION['oauth_token'] = $request_token['oauth_token'];
         $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
-        $isLoggedIn = false;
+       
     
      
     

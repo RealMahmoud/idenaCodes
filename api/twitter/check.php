@@ -1,41 +1,47 @@
 <?php
 include_once(dirname(__FILE__)."/../../common/_public.php");
 session_start();
+if (isset($_SESSION['CODES-Token'])) {
+    $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '".$_SESSION['CODES-Token']."' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row()[0];
+} else {
+    $result = (object)array();
+    $result->error=true;
+    die(json_encode($result));
+}
+
+if ($conn->query("SELECT id FROM `auth_twitter` where userID = (SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '".$_SESSION['CODES-Token']."'))")->fetch_row()) {
+    header("location: /index.html");
+    die('Already exist');
+}
+
     require_once(dirname(__FILE__)."/../../vendor/autoload.php");
     use Abraham\TwitterOAuth\TwitterOAuth;
 
-    if (isset($_SESSION['twitter_access_token']) && $_SESSION['twitter_access_token']) { // we have an access token
-        $isLoggedIn = true;
-    } elseif (isset($_GET['oauth_verifier']) && isset($_GET['oauth_token']) && isset($_SESSION['oauth_token']) && $_GET['oauth_token'] == $_SESSION['oauth_token']) { // coming from twitter callback url
-        // setup connection to twitter with request token
-        $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
-        
-        // get an access token
+    if (isset($_GET['oauth_verifier']) && isset($_GET['oauth_token']) && isset($_SESSION['oauth_token']) && $_GET['oauth_token'] == $_SESSION['oauth_token']) {
+        $connection = new TwitterOAuth(TWITTER_KEY, TWITTER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
         $access_token = $connection->oauth("oauth/access_token", array( "oauth_verifier" => $_GET['oauth_verifier'] ));
-
-        // save access token to the session
         $_SESSION['twitter_access_token'] = $access_token;
+        
 
-        // user is logged in
-        $isLoggedIn = true;
-    }
 
-    if ($isLoggedIn) { // logged in
-        // get token info from session
+
         $oauthToken = $_SESSION['twitter_access_token']['oauth_token'];
         $oauthTokenSecret = $_SESSION['twitter_access_token']['oauth_token_secret'];
-
-        // setup connection
-        $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $oauthToken, $oauthTokenSecret);
-
-        // user twitter connection to get user info
+        $connection = new TwitterOAuth(TWITTER_KEY, TWITTER_SECRET, $oauthToken, $oauthTokenSecret);
         $user = $connection->get("account/verify_credentials", ['include_email' => 'true']);
 
-        if (property_exists($user, 'errors')) { // errors, clear session so user has to re-authorize with our app
+        if (property_exists($user, 'errors')) {
             $_SESSION = array();
-            header('Refresh:0');
-        } else { 
-      $user->profile_image_url; 
- echo print_r($user, true); 
+            die('ERROR');
+        } else {
+            $conn->query("INSERT INTO `auth_twitter`(`userID`, `tw_creationDate`, `tw_ID`, `tw_username`) VALUES (
+             '".$loggedUserID."',
+             '".$user->created_at."',
+             '".$user->id."',
+             '".$user->screen_name."'   
+            );");
+            header("location: /index.html");
         }
+    } else {
+        die('ERROR');
     }
