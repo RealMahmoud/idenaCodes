@@ -16,16 +16,16 @@ toastr.options = {
   function makeLogged(address) {
     document.getElementById("navbar-SignIN").innerHTML = '<ul class="navbar-nav ml-auto">' +
       '<li class="nav-item dropdown">' +
-      '<a class="nav-link dropdown-toggle p-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+      '<a class="nav-link dropdown-toggle p-0 pointer"  id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
       '<img src="https://robohash.org/' + address +
       '" width="40" height="40" style="background-color:#00000057;"class="rounded-circle">' +
       '</a>' +
       '<div style="left: -200%;" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">' +
       '<a class="dropdown-item" >Balance : 5 Votes</a>' +
-      '<a class="dropdown-item"href="#" onclick="'+"navigate('/invite');"+'">Invite</a>' +
-      '<a class="dropdown-item" href="#" onclick="'+"navigate('/settings');"+'">Settings</a>' +
-      '<a class="dropdown-item" href="#" onclick="'+"navigate('/support');"+'">Support</a>' +
-      '<a class="dropdown-item" href="#"onclick="logout(); '+"navigate('/home');"+'">Log Out</a>' +
+      '<a class="dropdown-item pointer" onclick="navigate(`/invite`);">Invite</a>' +
+      '<a class="dropdown-item pointer" onclick="navigate(`/settings`);">Settings</a>' +
+      '<a class="dropdown-item pointer" onclick=""navigate(`/support`);">Support</a>' +
+      '<a class="dropdown-item pointer" onclick="logout(); navigate(`/home`);">Log Out</a>' +
       '</div>' +
       '</li>   ' +
       '</ul>';
