@@ -32,8 +32,10 @@ if($conn->query("SELECT COUNT(*) FROM `votes` WHERE `voterID` = '".$loggedUserID
     $result->error=true;
     die(json_encode($result));
 }
-if(!$type == 1 || !$type == 0){
+
+if(!$type == 1 && !$type == 0){
     $result->error=true;
+    
     die(json_encode($result));
 }
 $conn->query("DELETE FROM `votes` WHERE `voterID` = '".$loggedUserID."' AND `forID` = '".$forID."' LIMIT 1;");
@@ -44,5 +46,5 @@ $countUp = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '".$forID.
 $countDown = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '".$forID."' AND `type` =  0;")->fetch_row()[0];
 
 $result->error=false;
-$result->trustScore=(int)$countUp-(int)$countDown;
+$result->votes=(int)$countUp-(int)$countDown;
 echo json_encode($result);

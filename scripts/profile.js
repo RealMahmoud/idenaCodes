@@ -24,6 +24,7 @@ function loadProfilePage() {
                 changeContent('id', data.id);
                 changeContent('status', data.status);
                 changeContent('joined', data.joined);
+                changeContent('lastSeen', data.lastSeen);
                 changeContent('reports', data.reports);
 
                 changeContent('flipChallengeScore', data.flipChallengeScore);
@@ -56,4 +57,30 @@ function loadProfilePage() {
     } else {
         document.getElementById('pageLoadingText').innerHTML = 'Error - ID missing';
     }
+}
+
+function vote(type) {
+    if (!type == 'up' || !type == 'down') {
+
+        return
+    }
+    if (type == 'up') {
+        type = 1;
+    }
+    if (type == 'down') {
+        type = 0;
+    }
+    var formData = new FormData();
+    formData.append('type', type);
+    formData.append('forID',  Number(window.location.pathname.split('/')[2]));
+    ajax_post('/api/app/vote.php', formData, function (data) {
+        data = JSON.parse(data);
+        if (data.error) {
+            toastr.success('Voting Error');
+        } else {
+            
+            changeContent('votes', data.votes);
+            toastr.success('Vote successfully broadcasted');
+        }
+    })
 }
