@@ -90,7 +90,7 @@ function resolvePathAndTitle(path) {
             break;
         case 'profile':
             return {
-                htmlPath: '/html/profile.html', title: 'profile', callback: loadProfilePage
+                htmlPath: '/html/profile.html', title: 'Profile', callback: loadProfilePage
             }
             break;
         case 'quiz':
@@ -100,7 +100,7 @@ function resolvePathAndTitle(path) {
             break;
         case 'settings':
             return {
-                htmlPath: '/html/settings.html', title: 'settings', callback: loadSettingsPage
+                htmlPath: '/html/settings.html', title: 'Settings', callback: loadSettingsPage
             }
             break;
 
@@ -115,11 +115,11 @@ function navigate(path) {
     let PF = path.split('/')[1];
     if (partialsCache[PF]) {
         document.getElementById("content").innerHTML = partialsCache[PF];
-        document.title = resolvePathAndTitle(PF).title;  
+        document.title = resolvePathAndTitle(PF).title;
         window.history.pushState({
             "html": partialsCache[PF],
             "pageTitle": resolvePathAndTitle(PF).title,
-            "PF":PF
+            "PF": PF
         }, "", path);
         resolvePathAndTitle(PF).callback();
         return
@@ -131,8 +131,8 @@ function navigate(path) {
             window.history.pushState({
                 "html": data,
                 "pageTitle": resolvePathAndTitle(PF).title,
-                "PF":PF
-            }, "", path );
+                "PF": PF
+            }, "", path);
             resolvePathAndTitle(PF).callback();
         })
     }
