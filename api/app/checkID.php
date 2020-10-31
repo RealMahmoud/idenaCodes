@@ -30,12 +30,15 @@ if ($row == null) {
     $result->status=$row[1];
     $result->joined=$row[2];
     $result->image=$row[3];
-    $result->lastseen=$row[5];
+    $result->lastSeen=$row[5];
+
+
 
     $result->reports=0;
     $result->socialScore=0.913;
+
+    
     $result->inviteAbility=false;
-   
     $result->voteAbility=false;
 
 
