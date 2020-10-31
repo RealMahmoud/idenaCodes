@@ -85,7 +85,7 @@ function resolvePathAndTitle(path) {
             break;
         case 'invite':
             return {
-                htmlPath: '/html/invite.html', title: 'invite', callback: loadHomePage
+                htmlPath: '/html/invite.html', title: 'invite', callback: loadInvitePage
             }
             break;
         case 'profile':
@@ -111,29 +111,28 @@ function resolvePathAndTitle(path) {
     }
 }
 
-function navigate(path, hash = window.location.hash) {
+function navigate(path) {
     let PF = path.split('/')[1];
     if (partialsCache[PF]) {
-
         document.getElementById("content").innerHTML = partialsCache[PF];
-
-        document.title = resolvePathAndTitle(PF).title;
+        document.title = resolvePathAndTitle(PF).title;  
         window.history.pushState({
             "html": partialsCache[PF],
-            "pageTitle": resolvePathAndTitle(PF).title
-        }, "", path + hash);
-
+            "pageTitle": resolvePathAndTitle(PF).title,
+            "PF":PF
+        }, "", path);
+        resolvePathAndTitle(PF).callback();
         return
     } else {
-
         ajax_get(resolvePathAndTitle(PF).htmlPath, function (data) {
             partialsCache[PF] = data;
             document.getElementById("content").innerHTML = data;
             document.title = resolvePathAndTitle(PF).title;
             window.history.pushState({
                 "html": data,
-                "pageTitle": resolvePathAndTitle(PF).title
-            }, "", path + hash);
+                "pageTitle": resolvePathAndTitle(PF).title,
+                "PF":PF
+            }, "", path );
             resolvePathAndTitle(PF).callback();
         })
     }
@@ -141,12 +140,11 @@ function navigate(path, hash = window.location.hash) {
 
 }
 
-navigate(currentPath);
-
-
 window.onpopstate = function (e) {
     if (e.state) {
         document.getElementById("content").innerHTML = e.state.html;
         document.title = e.state.pageTitle;
+        resolvePathAndTitle(e.state.PF).callback();
     }
 };
+navigate(currentPath);
