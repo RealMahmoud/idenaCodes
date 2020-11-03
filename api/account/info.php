@@ -30,7 +30,7 @@ if ($row == null) {
     $result->balance=$row[3];
     $result->address=$row[4];
     $result->reports=$conn->query("SELECT COUNT(*) FROM `reports` where `userID` = '".$loggedUserID."' ;")->fetch_row()[0];
-    $result->invitesSent=$conn->query("SELECT COUNT(*) FROM `invites` where `inviterID` = '".$loggedUserID."' ;")->fetch_row()[0];
+    $result->invitesSent=$conn->query("SELECT COUNT(*) FROM `invites` where `userID` = '".$loggedUserID."' ;")->fetch_row()[0];
 
     $countUp = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '".$loggedUserID."' AND `type` =  1;")->fetch_row()[0];
     $countDown = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '".$loggedUserID."' AND `type` =  0;")->fetch_row()[0];
