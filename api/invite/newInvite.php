@@ -20,7 +20,7 @@ if ($loggedUserAddress == null) {
     $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = '".$loggedUserAddress."' LIMIT 1 ;")->fetch_row()[0];
 }
 
-if (!isset($_POST['forID']) || !isset($_POST['report'])) {
+if (!isset($_POST['forID']) || !isset($_POST['rawTx']) || !isset($_POST['sendTime'])) {
     $result->error=true;
     die(json_encode($result));
 }
