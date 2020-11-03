@@ -11,12 +11,6 @@ if (isset($_SESSION['CODES-Token'])) {
     die(json_encode($result));
 }
 
-if ($loggedUserAddress == null) {
-    $result->error=true;
-    die(json_encode($result));
-} else {
-    $loggedUserID = $conn->query("SELECT id FROM `users` where `address` = '".$loggedUserAddress."' LIMIT 1 ;")->fetch_row()[0];
-}
 
 if (!isset($_POST['forID']) || !isset($_POST['report'])) {
     $result->error=true;
