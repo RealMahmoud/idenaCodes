@@ -11,10 +11,6 @@ if (isset($_SESSION['CODES-Token'])) {
     die(json_encode($result));
 }
 
-
-
-
-
 if (!isset($_POST['forID']) || !isset($_POST['type'])) {
     $result->error=true;
     die(json_encode($result));
