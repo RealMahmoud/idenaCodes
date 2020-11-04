@@ -4,8 +4,8 @@
         <div class="col-3">
 
             <div class="w-75 ml-auto">
-                <img class="rounded-circle border w-100" style="background-color:#00000057;"
-                    src="https://robohash.org/0xb30348813590e02907da79e1c46fba4edca5a2d8">
+                <img class="rounded-circle border w-100" style="background-color:#00000057;" id="content-image"
+                    src="https://robohash.org/xx">
 
             </div>
         </div>
@@ -13,11 +13,12 @@
             <br>
             <br>
 
-            <p class="m-auto font-weight-bold">ID : 8</p>
-            <p class="m-auto">Username : RealMahmoud</p>
-            <p class="m-auto">Addr : 0xb30348813590e02907da79e1c46fba4edca5a2d8</p>
-            <p class="m-auto">Balance : 50 iDNA</p>
-            <p class="m-auto">InvitesCount : 20</p>
+            <p class="m-auto font-weight-bold">ID : <span id="content-id"></p>
+            <p class="m-auto">Username : <span id="content-username"></p>
+            <p class="m-auto">Address : <span id="content-address"></p>
+            <p class="m-auto">Balance : <span id="content-balance"> iDNA</p>
+            <p class="m-auto">Status : <span id="content-status"></p>
+            <p class="m-auto">Invites Sent : <span id="content-invitesSent"></p>
 
         </div>
     </div>
@@ -38,18 +39,17 @@
 
 
                 <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                    id="list-home-list" data-toggle="list" href="#list-payments" role="tab"
-                    aria-controls="payments">Payments<span
-                        class="badge badge-primary badge-pill ml-auto">6</span></a>
+                    id="list-home-list" data-toggle="list" href="#list-invoices" role="tab"
+                    aria-controls="invoices">Invoices<span class="badge badge-primary badge-pill ml-auto"><span id="content-invoicesCount"></span></a>
 
                 <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                     id="list-home-list" data-toggle="list" href="#list-reports" role="tab"
-                    aria-controls="reports">Reports<span class="badge badge-primary badge-pill ml-auto">1</span></a>
+                    aria-controls="reports">Reports<span class="badge badge-primary badge-pill ml-auto"><span id="content-reportsCount"></span></a>
 
 
                 <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                     id="list-home-list" data-toggle="list" href="#list-history" role="tab"
-                    aria-controls="history">History<span class="badge badge-primary badge-pill ml-auto">14</span></a>
+                    aria-controls="history">History<span class="badge badge-primary badge-pill ml-auto"><span id="content-historyCount"></span></a>
 
             </div>
         </div>
@@ -66,7 +66,7 @@
                                 <div class="col-8">
                                     Telegram :
                                 </div>
-                                <div class="col-4">
+                                <div class="col-4" id="telegramLoginButton">
                                     <script async data-userpic="false" data-telegram-login="IdenaCodesBot"
                                         data-size="medium" data-onauth="onTelegramAuth(user)"
                                         data-request-access="write"></script>
@@ -83,9 +83,10 @@
                                 <div class="col-8">
                                     Discord :
                                 </div>
-                                <div class="col-4">
+                                <div class="col-4" id="discordLoginButton">
                                     <a type="button" class="btn btn-outline-light btn-sm"
-                                        style="background-color:6c89e0; border:0;"href="/api/discord/auth.php"><i class="fab fa-discord m-1"></i>
+                                        style="background-color:6c89e0; border:0;" href="/api/discord/auth.php"><i
+                                            class="fab fa-discord m-1"></i>
                                         Connect to Discord</a>
                                 </div>
                             </div>
@@ -98,9 +99,10 @@
                                 <div class="col-8">
                                     Twitter :
                                 </div>
-                                <div class="col-4">
+                                <div class="col-4" id="twitterLoginButton">
                                     <a type="button" class="btn btn-outline-light btn-sm"
-                                        style="background-color:5bc0de; border:0;"href="/api/twitter/auth.php"><i class="fab fa-twitter m-1"></i>
+                                        style="background-color:5bc0de; border:0;" href="/api/twitter/auth.php"><i
+                                            class="fab fa-twitter m-1"></i>
                                         Connect to Twitter</a>
 
 
@@ -110,9 +112,39 @@
                     </div>
 
                 </div>
-                <div class="tab-pane fade" id="list-payments" role="tabpanel" aria-labelledby="list-payments-list">3
+                <div class="tab-pane fade" id="list-invoices" role="tabpanel" aria-labelledby="list-invoices-list">
+                    <div class="card">
+                        <div class="card-body table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">info</th>
+                                        <th scope="col">amount</th>
+                                        <th scope="col">epoch</th>
+                                        <th scope="col">options</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="content-invoicesTable">
+                                    
+                                   
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="list-reports" role="tabpanel" aria-labelledby="list-reports-list">4
+                <div class="tab-pane fade" id="list-reports" role="tabpanel" aria-labelledby="list-reports-list">
+                    <div class="card">
+                        <div class="card-body table-responsive">
+                            <ul class="list-group"id="content-reportsList">
+                                
+
+                            </ul>
+                            
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="list-history" role="tabpanel" aria-labelledby="list-history-list">
                     <div class="card">
@@ -121,31 +153,16 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Event</th>
                                         <th scope="col">Time</th>
 
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
+                                <tbody id="content-historyTable">
 
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>@twitter</td>
-                                    </tr>
                                 </tbody>
                             </table>
-                            <nav aria-label="Page navigation example">
+                           <!-- <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-center mb-0">
                                     <li class="page-item disabled">
                                         <a class="page-link" href="#" tabindex="-1">Previous</a>
@@ -157,7 +174,7 @@
                                         <a class="page-link" href="#">Next</a>
                                     </li>
                                 </ul>
-                            </nav>
+                            </nav> -->
                         </div>
                     </div>
                 </div>
