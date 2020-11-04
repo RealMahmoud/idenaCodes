@@ -35,7 +35,6 @@ if ($row == null) {
 
 
     $result->reports=$conn->query("SELECT COUNT(*) FROM `reports` where `userID` = '".$id."' ;")->fetch_row()[0];
-    $result->socialScore=0.913;
 
 
     $result->inviteAbility=false;
