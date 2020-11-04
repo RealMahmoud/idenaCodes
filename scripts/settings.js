@@ -1,5 +1,119 @@
-function loadSettingsPage() {
+function changeContent(id, text) {
+  document.getElementById('content-' + id).innerHTML = text;
+}
 
+function loadInfo() {
+  ajax_get("/api/account/info.php", function (data) {
+    data = JSON.parse(data);
+    if (!data.error) {
+      document.getElementById('content-image').src = 'https://robohash.org/' + data.image;
+      changeContent('id', data.id);
+      changeContent('status', data.status);
+      changeContent('address', data.address);
+      changeContent('balance', data.balance);
+      changeContent('invitesSent', data.invitesSent);
+      changeContent('username', data.username);
+
+
+
+      if (!data.accounts.includes('telegram')) {
+        loadTelegram();
+      } else {
+        document.getElementById('telegramLoginButton').innerHTML = '<p class="text-center p-0 m-0"> Already connected </p>';
+      }
+      if (data.accounts.includes('twitter')) {
+        document.getElementById('twitterLoginButton').innerHTML = '<p class="text-center p-0 m-0"> Already connected </p>';
+      }
+      if (data.accounts.includes('discord')) {
+        document.getElementById('discordLoginButton').innerHTML = '<p class="text-center p-0 m-0"> Already connected </p>';
+      }
+
+
+
+
+    }
+  });
+
+
+
+
+}
+
+function loadInvoices() {
+  ajax_get("/api/payments/invoices.php", function (data) {
+    data = JSON.parse(data);
+    if (!data.error) {
+      let count = 0;
+      data.invoices.forEach(invoice => {
+        count += 1;
+        document.getElementById("content-invoicesTable").innerHTML += '<tr>' +
+          '<th scope="row">' + invoice.id + '</th>' +
+          '<td>' + invoice.info + '</td>' +
+          '<td>' + invoice.amount + '</td>' +
+          '<td>' + invoice.epoch + '</td>' +
+          '<td><button type="button" class="btn btn-outline-info btn-sm"onclick="payInvoice(' + invoice.id + ');">Pay</button></td>' +
+          '</tr>';
+      });
+      document.getElementById("content-invoicesCount").innerHTML = count;
+    }
+
+  });
+
+}
+
+function loadReports() {
+  ajax_get("/api/account/reports.php", function (data) {
+    data = JSON.parse(data);
+    if (!data.error) {
+      let count = 0;
+      data.reports.forEach(report => {
+        count += 1;
+        document.getElementById("content-reportsList").innerHTML += 
+
+          '<li class="list-group-item">' + report.id + ' : ' + report.reason + '</li>' ;
+      });
+      document.getElementById("content-reportsCount").innerHTML = count;
+    }
+
+  });
+
+}
+
+
+function loadHistory() {
+  ajax_get("/api/account/history.php", function (data) {
+    data = JSON.parse(data);
+    if (!data.error) {
+      let count = 0;
+      data.events.forEach(event => {
+        count += 1;
+        document.getElementById("content-historyTable").innerHTML += '<tr>' +
+          '<th scope="row">' + event.id + '</th>' +
+          '<td>' + event.text + '</td>' +
+          '<td>' + event.time + '</td>' +
+          '</tr>';
+      });
+      document.getElementById("content-historyCount").innerHTML = count;
+    }
+
+  });
+
+}
+
+function payInvoice(id) {
+  var formData = new FormData();
+  formData.append('id', id);
+  ajax_post("/api/payments/payInvoice.php", formData, function (data) {
+    data = JSON.parse(data);
+    if (!data.error) {
+      toastr.sucess("Invoice Paid");
+    } else {
+      toastr.error("ERROR");
+    }
+  });
+}
+
+function loadTelegram() {
   (function (window) {
     (function (window) {
       window.__parseFunction = function (__func, __attrs) {
@@ -360,7 +474,13 @@ function loadSettingsPage() {
       toastr.success("Telegram connected successfully")
     });
 
-
-
   }
+}
+
+function loadSettingsPage() {
+  loadInfo();
+  loadInvoices();
+  loadReports();
+  loadHistory();
+
 }
