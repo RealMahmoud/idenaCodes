@@ -6,13 +6,14 @@ function loadInfo() {
   ajax_get("/api/account/info.php", function (data) {
     data = JSON.parse(data);
     if (!data.error) {
-      document.getElementById('content-image').src = 'https://robohash.org/' + data.image;
+      document.getElementById('content-image').src = 'https://robohash.idena.io/' + data.image;
       changeContent('id', data.id);
-      changeContent('status', data.status);
+      changeContent('status', data.status || ' - ');
       changeContent('address', data.address);
       changeContent('balance', data.balance);
       changeContent('invitesSent', data.invitesSent);
-      changeContent('username', data.username);
+
+      changeContent('username', data.username || ' - ');
 
 
 

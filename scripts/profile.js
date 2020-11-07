@@ -30,7 +30,7 @@ function loadProfilePage() {
                 changeContent('flipChallengeScore', data.flipChallengeScore);
                 changeContent('quizScore', data.quizScore);
                 changeContent('votes', data.votes);
-                document.getElementById('content-image').src = 'https://robohash.org/' + data.image;
+                document.getElementById('content-image').src = 'https://robohash.idena.io/' + data.image;
 
 
                 if (data.accounts.length > 0) {

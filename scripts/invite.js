@@ -26,7 +26,7 @@ function loadInvitePage() {
                     '<div class=" row p-0">' +
                     '<div class="col-4">' +
                     '<img class="rounded-circle border m-3 w-100" style="background-color:#00000057;"' +
-                    'src="https://robohash.org/' + user.image + '" />' +
+                    'src="https://robohash.idena.io/' + user.image + '" />' +
                     '</div>' +
                     '<div class="col-6">' +
                     '<div class="m-3">' +

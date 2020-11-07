@@ -13,15 +13,16 @@ toastr.options = {
     "hideMethod": "fadeOut"
   };
 
-  function makeLogged(address) {
+  function makeLogged(image,balance,votes) {
     document.getElementById("navbar-SignIN").innerHTML = '<ul class="navbar-nav ml-auto">' +
       '<li class="nav-item dropdown">' +
       '<a class="nav-link dropdown-toggle p-0 pointer"  id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
-      '<img src="https://robohash.org/' + address +
+      '<img src="https://robohash.idena.io/' + image +
       '" width="40" height="40" style="background-color:#00000057;"class="rounded-circle">' +
       '</a>' +
       '<div style="left: -200%;" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">' +
-      '<a class="dropdown-item" >Balance : 5 Votes</a>' +
+      '<a class="dropdown-item" >Balance : '+balance+' iDNA</a>' +
+      '<a class="dropdown-item" >Votes : '+votes+' left</a>' +
       '<a class="dropdown-item pointer" onclick="navigate(`/invite`);">Invite</a>' +
       '<a class="dropdown-item pointer" onclick="navigate(`/settings`);">Settings</a>' +
       '<a class="dropdown-item pointer" onclick=""navigate(`/support`);">Support</a>' +
@@ -41,8 +42,8 @@ toastr.options = {
 
   function checkLoggedStatus() {
     ajax_get('/api/auth/checkLogin.php', function (data) {
-      if (JSON.parse(data)['Logged'] == true) {
-        makeLogged(JSON.parse(data)['Address']);
+      if (JSON.parse(data)['logged'] == true) {
+        makeLogged(JSON.parse(data)['image'],JSON.parse(data)['balance'],JSON.parse(data)['votes']);
       } else {
         makeNotLogged();
       }
