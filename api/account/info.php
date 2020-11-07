@@ -17,7 +17,7 @@ if (isset($_SESSION['CODES-Token'])) {
 
 $result = (object)array();
 
-$row =  $conn->query("SELECT id,status,image,balance,address FROM users where id = '".$loggedUserID."' LIMIT 1;")->fetch_row();
+$row =  $conn->query("SELECT id,status,image,balance,address,username FROM users where id = '".$loggedUserID."' LIMIT 1;")->fetch_row();
 
 if ($row == null) {
     $result->error=true;
@@ -29,6 +29,7 @@ if ($row == null) {
     $result->image=$row[2];
     $result->balance=$row[3];
     $result->address=$row[4];
+    $result->username=$row[5];
     $result->reports=$conn->query("SELECT COUNT(*) FROM `reports` where `userID` = '".$loggedUserID."' ;")->fetch_row()[0];
     $result->invitesSent=$conn->query("SELECT COUNT(*) FROM `invites` where `userID` = '".$loggedUserID."' ;")->fetch_row()[0];
 
