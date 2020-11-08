@@ -95,7 +95,7 @@ function resolvePathAndTitle(path) {
             break;
         case 'quiz':
             return {
-                htmlPath: '/html/quiz.html', title: 'quiz', callback: loadHomePage
+                htmlPath: '/html/quiz.html', title: 'quiz', callback: loadQuizPage
             }
             break;
         case 'settings':

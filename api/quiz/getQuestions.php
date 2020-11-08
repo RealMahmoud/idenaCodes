@@ -10,10 +10,10 @@ if (isset($_SESSION['CODES-Token'])) {
     $result->error=true;
     die(json_encode($result));
 }
-$oldQuestions = $conn->query("SELECT questions FROM `test_questions` WHERE userID = '" . $loggedUserID . "' LIMIT 1;")->fetch_assoc();
+$oldQuestions = $conn->query("SELECT questions,score FROM `test_questions` WHERE userID = '" . $loggedUserID . "' LIMIT 1;")->fetch_assoc();
 
 if ($oldQuestions) {
-    if (isset($oldQuestions["flips"])) {
+    if (isset($oldQuestions["score"])) {
         $result        = (object) array();
         $result->error = true;
         die(json_encode($result));
@@ -64,4 +64,4 @@ if (count($questionsArray) == 0) {
     $result->error     = false;
     $result->questions = $questionsArray;
 }
-echo(json_encode($result));
+die(json_encode($result));
