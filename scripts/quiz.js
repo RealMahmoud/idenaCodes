@@ -95,7 +95,6 @@ function submitAnswers() {
 function loadQuestion(index) {
     console.log(answers);
     document.getElementById('quiz-question').innerHTML = questionsData[index].question;
-    document.getElementById('quiz-question').innerHTML = questionsData[index].question;
     if (index == 0) {
         document.getElementById('quiz-previousQuestionButton').disabled = true;
         document.getElementById('quiz-nextQuestionButton').disabled = false;

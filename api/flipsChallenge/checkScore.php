@@ -10,7 +10,7 @@ if (isset($_SESSION['CODES-Token'])) {
     $result->error=true;
     die(json_encode($result));
 }
-$score = $conn->query("SELECT score FROM `test_questions` WHERE userID = '" . $loggedUserID . "' LIMIT 1;")->fetch_assoc();
+$score = $conn->query("SELECT score FROM `test_flips` WHERE userID = '" . $loggedUserID . "' LIMIT 1;")->fetch_assoc();
 
 
     if (isset($score)) {

@@ -73,9 +73,9 @@ function resolvePathAndTitle(path) {
                 htmlPath: '/html/home.html', title: 'Home', callback: loadHomePage
             }
             break;
-        case 'Flip-Challenge':
+        case 'flipChallenge':
             return {
-                htmlPath: '/html/flip-challenge.html', title: 'Flip Challenge', callback: loadHomePage
+                htmlPath: '/html/flipChallenge.html', title: 'Flip Challenge', callback: loadFCPage
             }
             break;
         case 'admin':

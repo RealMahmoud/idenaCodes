@@ -27,8 +27,8 @@ if ($oldFlips) {
             while ($row = $resultSQL->fetch_assoc()) {
                 $flip           = (object) array();
                 $flip->id       = (int) $row['id'];
-                $flip->flip = $row['url'];
-
+                $flip->url = $row['url'];
+                $flip->url2 = $row['url2'];
                 array_push($flipsArray, $flip);
             }
         }
@@ -52,6 +52,7 @@ while ($row = $resultSQL->fetch_assoc()) {
     $flip           = (object) array();
     $flip->id       = (int) $row['id'];
     $flip->url = $row['url'];
+    $flip->url = $row['url2'];
     array_push($flipsArray, $flip);
     array_push($flipsIDArray, (int) $row['id']);
 }
@@ -64,4 +65,4 @@ if (count($flipsArray) == 0) {
     $result->error     = false;
     $result->flips = $flipsArray;
 }
-echo(json_encode($result));
+die(json_encode($result));

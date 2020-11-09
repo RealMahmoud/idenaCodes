@@ -1,0 +1,57 @@
+
+<div class="container mt-3">
+    <div class="justify-content-center">
+        <div class="col-md-5 col-lg-5 m-auto d-none" id="fc-startForm">
+            <div class="card w-100 p-3">
+                <h5 class="text-center">Start taking the flips test</h5>
+                <br>
+                <a type="button" class="btn btn-sm btn-outline-success w-50  m-auto " onclick="startFC();">Start</a>
+            </div>
+        </div>
+        <div class="col-md-5 col-lg-5 m-auto d-none" id="fc-endForm">
+            <div class="card w-100 p-3">
+                <h5 class="text-center">Thanks for taking the flips test</h5>
+            </div>
+        </div>
+        <div class="col-md-5 col-lg-5 m-auto d-none" id="fc-errorForm">
+            <div class="card w-100 p-3">
+                <h5 class="text-center">You can't take this test again.</h5>
+            </div>
+        </div>
+        <div class="card d-none" id="fc-testForm" style="height: 80%;">
+            <div class="row mt-3 h-100 mb-3" style="flex-wrap: nowrap;">
+                <div class="col-3 mr-auto">
+                    <a id="fc-previousFlipButton" onclick="previousFlip();" class=" w-100 h-100 btn-block pointer" style="flex: 0 0 0px;">
+                        <i class="fa fa-arrow-circle-left  fa-3x w-100 text-center v-center"></i>
+                    </a>
+                </div>
+                <div class="col-6 row justify-content-center mr-auto ml-auto">
+                    <div class="col-6">
+                        <div>
+                            <img id="fc-flipLeft" src="https://via.placeholder.com/240x720.png" alt="pic"
+                                class="flipimage  ui-not-selected pointer" onclick="chooseLeft();">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div>
+                            <img id="fc-flipRight" src="https://via.placeholder.com/240x720.png" alt="pic"
+                                class="flipimage flipframe ui-not-selected pointer" onclick="chooseRight();">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 ml-auto">
+                    <a id="fc-nextFlipButton" onclick="nextFlip();" class=" w-100 h-100 btn-block pointer" style="flex: 0 0 0px;">
+                        <i class="fa fa-arrow-circle-right  fa-3x w-100 text-center v-center"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row m-0 p-0">
+                <p id="fc-timeCount" class="mr-auto mb-auto mt-auto ml-2" ><span id="fc-count"style="color: green;">(0 of 0)</span> - <span id="fc-time" style="color: red;">00:00</span></p>
+                <button class="btn btn-sm btn-outline-success ml-auto mr-2 mb-2"id="fc-submitButton"onclick="submitFCAnswers();" disabled>Submit</button>
+            </div>
+           
+        </div>
+       
+    </div>
+    
+</div>

@@ -39,7 +39,7 @@ foreach (json_decode($resultSQL) as $flipID) {
 
 (int)$score = (float)($rightAnswers/$totalFlips)*100;
 
- $conn->query("UPDATE `test_flips` SET `score`= '".$score."' WHERE `userID`");
+ $conn->query("UPDATE `test_flips` SET `score`= '".$score."' WHERE `userID` = '".$loggedUserID."' LIMIT 1;");
 
  $result = (object)array();
  $result->error=false;
