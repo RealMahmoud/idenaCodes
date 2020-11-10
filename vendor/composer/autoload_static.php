@@ -23,6 +23,10 @@ class ComposerStaticInitf4c1ce772059189868f2fc87080cc4d4
         array (
             'Elliptic\\' => 9,
         ),
+        'D' => 
+        array (
+            'Defuse\\Crypto\\' => 14,
+        ),
         'C' => 
         array (
             'Composer\\CaBundle\\' => 18,
@@ -50,6 +54,10 @@ class ComposerStaticInitf4c1ce772059189868f2fc87080cc4d4
         'Elliptic\\' => 
         array (
             0 => __DIR__ . '/..' . '/simplito/elliptic-php/lib',
+        ),
+        'Defuse\\Crypto\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/defuse/php-encryption/src',
         ),
         'Composer\\CaBundle\\' => 
         array (
