@@ -32,7 +32,7 @@ if(!isset($conn->query("SELECT id FROM  `users` WHERE `id` = '".$userID."';")->f
 }
 
 
-$balance = $conn->query("SELECT balance FROM  `users` WHERE `id` = '".$loggedUserID."';");
+$balance = $conn->query("SELECT balance FROM  `users` WHERE `id` = '".$loggedUserID."';")->fetch_row()[0];
 
 if($balance >= $price){
 
