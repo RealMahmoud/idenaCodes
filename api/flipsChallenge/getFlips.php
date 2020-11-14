@@ -52,7 +52,7 @@ if ($oldFlips) {
 };
 
 $result           = (object) array();
-$resultSQL        = $conn->query("SELECT * FROM flips ORDER BY RAND() LIMIT 15;");
+$resultSQL        = $conn->query("SELECT * FROM flips WHERE `enabled` = '1' ORDER BY RAND() LIMIT 15;");
 $flipsArray   = array();
 $flipsIDArray = array();
 while ($row = $resultSQL->fetch_assoc()) {

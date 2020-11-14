@@ -51,7 +51,7 @@ if ($oldQuestions) {
 };
 
 $result           = (object) array();
-$resultSQL        = $conn->query("SELECT * FROM questions ORDER BY RAND() LIMIT 15;");
+$resultSQL        = $conn->query("SELECT * FROM `questions`  WHERE `enabled` = '1' ORDER BY RAND() LIMIT 15;");
 $questionsArray   = array();
 $questionsIDArray = array();
 while ($row = $resultSQL->fetch_assoc()) {
