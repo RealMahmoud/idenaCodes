@@ -26,7 +26,7 @@ $id = (int)$id;
 
 $result = (object)array();
 
-$row =  $conn->query("SELECT id,status,joined,image,lastseen,flag FROM users where id = '".$id."' LIMIT 1;")->fetch_row();
+$row =  $conn->query("SELECT id,status,joined,image,lastseen,flag,ip,country FROM users where id = '".$id."' LIMIT 1;")->fetch_row();
 
 if ($row == null) {
     $result->error=true;
@@ -39,8 +39,20 @@ if ($row == null) {
     $result->image=$row[3];
     $result->lastSeen=$row[4];
     $result->flag=$row[5];
+    if(isset($row[6])){
+        $result->ipCount=$conn->query("SELECT COUNT(*) FROM `users` where `ip` = '".$row[6]."' ;")->fetch_row()[0];
+    }else{
+        $result->ipCount= ' - ';
+    }
+    if(isset($row[7])){
+        $result->country=$row[7];
+    }else{
+        $result->country= ' - ';
+    }
+
     $result->boughtCount=$conn->query("SELECT COUNT(*) FROM `bought_users` where `boughtUserID` = '".$id."' ;")->fetch_row()[0];
     $result->buyCount=$conn->query("SELECT COUNT(*) FROM `bought_users` where `userID` = '".$id."' ;")->fetch_row()[0];
+
 
     $result->reports=$conn->query("SELECT COUNT(*) FROM `reports` where `userID` = '".$id."' ;")->fetch_row()[0];
 
