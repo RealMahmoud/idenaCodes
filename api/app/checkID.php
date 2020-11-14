@@ -26,7 +26,7 @@ $id = (int)$id;
 
 $result = (object)array();
 
-$row =  $conn->query("SELECT id,status,joined,image,lastseen FROM users where id = '".$id."' LIMIT 1;")->fetch_row();
+$row =  $conn->query("SELECT id,status,joined,image,lastseen,flag FROM users where id = '".$id."' LIMIT 1;")->fetch_row();
 
 if ($row == null) {
     $result->error=true;
@@ -38,7 +38,7 @@ if ($row == null) {
     $result->joined=$row[2];
     $result->image=$row[3];
     $result->lastSeen=$row[4];
-
+    $result->flag=$row[5];
 
 
     $result->reports=$conn->query("SELECT COUNT(*) FROM `reports` where `userID` = '".$id."' ;")->fetch_row()[0];
