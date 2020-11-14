@@ -39,7 +39,8 @@ if ($row == null) {
     $result->image=$row[3];
     $result->lastSeen=$row[4];
     $result->flag=$row[5];
-
+    $result->boughtCount=$conn->query("SELECT COUNT(*) FROM `bought_users` where `boughtUserID` = '".$id."' ;")->fetch_row()[0];
+    $result->buyCount=$conn->query("SELECT COUNT(*) FROM `bought_users` where `userID` = '".$id."' ;")->fetch_row()[0];
 
     $result->reports=$conn->query("SELECT COUNT(*) FROM `reports` where `userID` = '".$id."' ;")->fetch_row()[0];
 
