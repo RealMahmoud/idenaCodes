@@ -1,5 +1,5 @@
 <?php
-include_once(dirname(__FILE__)."/../../common/_public.php");
+include_once dirname(__FILE__) . "/../../common/_public.php";
 // private
 header('Content-Type: application/json');
 session_start();
@@ -18,7 +18,7 @@ if (isset($_SESSION['CODES-Token'])) {
     die(json_encode($result));
 }
 
-if ($conn->query("SELECT id FROM `auth_telegram` where userID = (SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '".$_SESSION['CODES-Token']."'))")->fetch_row()) {
+if ($conn->query("SELECT id FROM `auth_telegram` where userID = (SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '" . $_SESSION['CODES-Token'] . "'))")->fetch_row()) {
     die('Already exist');
 }
 $keys = array("id", "first_name", "last_name", "username", "photo_url", "auth_date");
@@ -26,7 +26,7 @@ $keys = array("id", "first_name", "last_name", "username", "photo_url", "auth_da
 function getClosest($search, $object)
 {
     $closest = null;
-    foreach ($object as  $key=>$xx) {
+    foreach ($object as $key => $xx) {
         if ($closest === null || abs($search - $closest) > abs($key - $search)) {
             $closest = $key;
         }
@@ -34,14 +34,13 @@ function getClosest($search, $object)
     return $object[$closest];
 }
 
-
- $dates = file_get_contents("./dates.json");
+$dates = file_get_contents("./dates.json");
 $datesArr = json_decode($dates, true);
 
 if (isset($_GET['hash'])) {
     foreach ($_GET as $key => $value) {
         if (in_array($key, $keys)) {
-            $data[] = $key."=".$value;
+            $data[] = $key . "=" . $value;
         }
     }
 
@@ -54,11 +53,11 @@ if (isset($_GET['hash'])) {
     }
     if (hash_equals($hash, $_GET['hash'])) {
         $conn->query("INSERT INTO `auth_telegram`( `userID`, `tg_ID`, `tg_Username`, `time`,`tg_creationDate`) VALUES (
-			(SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '".$_SESSION['CODES-Token']."')),
-			'".$_GET['id']."',
-			'".$_GET['username']."',
-			'".$_GET['auth_date']."',
-			'".getClosest($_GET['id'], $datesArr)."'
+			(SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '" . $_SESSION['CODES-Token'] . "')),
+			'" . $_GET['id'] . "',
+			'" . $_GET['username'] . "',
+			'" . $_GET['auth_date'] . "',
+			'" . getClosest($_GET['id'], $datesArr) . "'
 		);");
         echo "Telegram data integrity check success!";
     } else {

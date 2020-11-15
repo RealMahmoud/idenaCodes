@@ -1,6 +1,6 @@
 <?php
 session_start();
-include(dirname(__FILE__) . "/../../common/_public.php");
+include dirname(__FILE__) . "/../../common/_public.php";
 header('Content-Type: application/json');
 
 if (isset($_SESSION['CODES-Token'])) {
@@ -19,15 +19,14 @@ if (isset($_SESSION['CODES-Token'])) {
 }
 $score = $conn->query("SELECT score FROM `test_questions` WHERE userID = '" . $loggedUserID . "' LIMIT 1;")->fetch_assoc();
 
-
-    if (isset($score)) {
-        $result        = (object) array();
-        $result->error = false;
-        $result->score = $score["score"];
-        die(json_encode($result));
-    } else {
-        $result        = (object) array();
-        $result->error = true;
-        $result->score = null;
-        die(json_encode($result));
-    }
+if (isset($score)) {
+    $result = (object) array();
+    $result->error = false;
+    $result->score = $score["score"];
+    die(json_encode($result));
+} else {
+    $result = (object) array();
+    $result->error = true;
+    $result->score = null;
+    die(json_encode($result));
+}

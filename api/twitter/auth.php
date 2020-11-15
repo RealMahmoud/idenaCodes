@@ -1,5 +1,5 @@
 <?php
-include_once(dirname(__FILE__)."/../../common/_public.php");
+include_once dirname(__FILE__) . "/../../common/_public.php";
 session_start();
 
 if (isset($_SESSION['CODES-Token'])) {
@@ -16,20 +16,17 @@ if (isset($_SESSION['CODES-Token'])) {
     $result->error = true;
     die(json_encode($result));
 }
-if ($conn->query("SELECT id FROM `auth_twitter` where userID = (SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '".$_SESSION['CODES-Token']."'))")->fetch_row()) {
+if ($conn->query("SELECT id FROM `auth_twitter` where userID = (SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '" . $_SESSION['CODES-Token'] . "'))")->fetch_row()) {
     header("location: /index.html");
     die('Already exist');
 }
-    require_once(dirname(__FILE__)."/../../vendor/autoload.php");
-    use Abraham\TwitterOAuth\TwitterOAuth;
+require_once dirname(__FILE__) . "/../../vendor/autoload.php";
+use Abraham\TwitterOAuth\TwitterOAuth;
 
-    $connection = new TwitterOAuth(TWITTER_KEY, TWITTER_SECRET);
-        $request_token = $connection->oauth('oauth/request_token', array( 'oauth_callback' => TWITTER_CALLBACK ));
-        $_SESSION['oauth_token'] = $request_token['oauth_token'];
-        $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
-       
-    
-     
+$connection = new TwitterOAuth(TWITTER_KEY, TWITTER_SECRET);
+$request_token = $connection->oauth('oauth/request_token', array('oauth_callback' => TWITTER_CALLBACK));
+$_SESSION['oauth_token'] = $request_token['oauth_token'];
+$_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
 
-        $url = $connection->url('oauth/authorize', array( 'oauth_token' => $request_token['oauth_token'] ));
-        header("location: ".$url);
+$url = $connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token']));
+header("location: " . $url);

@@ -82,7 +82,6 @@ if (!($resultInvite['result']['state'] == 'Invite') || !inviteable($resultInvite
     die(json_encode($result));
 }
 
-
 if (!(end($resultInviteTxs['result'])['type'] == "InviteTx") || !(strtolower(end($resultInviteTxs['result'])['from']) == $address1)) {
     $result = (object) array();
     $result->error = true;

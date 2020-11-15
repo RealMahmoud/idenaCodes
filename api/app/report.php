@@ -1,8 +1,8 @@
 <?php
 session_start();
-include(dirname(__FILE__)."/../../common/_public.php");
+include dirname(__FILE__) . "/../../common/_public.php";
 header('Content-Type: application/json');
-$result = (object)array();
+$result = (object) array();
 if (isset($_SESSION['CODES-Token'])) {
     $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
@@ -18,22 +18,15 @@ if (isset($_SESSION['CODES-Token'])) {
     die(json_encode($result));
 }
 
-
 if (!isset($_POST['forID']) || !isset($_POST['report'])) {
-    $result->error=true;
+    $result->error = true;
     die(json_encode($result));
 }
 $forID = htmlspecialchars($conn->real_escape_string($_POST['forID']));
 $report = htmlspecialchars($conn->real_escape_string($_POST['report']));
-$forID = (int)$forID;
+$forID = (int) $forID;
 
+$conn->query("INSERT INTO `reports_tickets`( `userID`, `report`, `reporterID`) VALUES ('" . $loggedUserID . "','" . $report . "','" . $forID . "');");
 
-
-
-$conn->query("INSERT INTO `reports_tickets`( `userID`, `report`, `reporterID`) VALUES ('".$loggedUserID."','".$report."','".$forID."');");
-
-
-
-
-$result->error=false;
+$result->error = false;
 die(json_encode($result));

@@ -24,7 +24,7 @@ if (!isset($_POST['id']) || !isset($_POST['flag'])) {
 $id = (int) htmlspecialchars($conn->real_escape_string($_POST['id']));
 $flag = (int) htmlspecialchars($conn->real_escape_string($_POST['flag']));
 
-$conn->query("UPDATE `users` SET `flag` = '".$flag."' WHERE `id` = '" . $id . "';");
+$conn->query("UPDATE `users` SET `flag` = '" . $flag . "' WHERE `id` = '" . $id . "';");
 $result = (object) array();
 $result->error = false;
 die(json_encode($result));

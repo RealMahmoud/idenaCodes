@@ -14,14 +14,14 @@ if (isset($_GET['id'])) {
         readfile("https://robohash.idena.io/" . $row[0]);
     } else {
         $rand = rand();
-        $imginfo = getimagesize("https://robohash.idena.io/".$rand);
+        $imginfo = getimagesize("https://robohash.idena.io/" . $rand);
         header("Content-type: " . $imginfo['mime']);
-        readfile("https://robohash.idena.io/".$rand);
+        readfile("https://robohash.idena.io/" . $rand);
     }
 
 } else {
     $rand = rand();
-    $imginfo = getimagesize("https://robohash.idena.io/".$rand);
+    $imginfo = getimagesize("https://robohash.idena.io/" . $rand);
     header("Content-type: " . $imginfo['mime']);
-    readfile("https://robohash.idena.io/".$rand);
+    readfile("https://robohash.idena.io/" . $rand);
 }
