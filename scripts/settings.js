@@ -477,11 +477,12 @@ function loadTelegram() {
 
   }
 }
-
-function loadSettingsPage() {
+function viewSettingsPage(){
   loadInfo();
   loadInvoices();
   loadReports();
   loadHistory();
-
+}
+function loadSettingsPage() {
+  checkLogged(viewSettingsPage,true);
 }

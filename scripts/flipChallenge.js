@@ -1,4 +1,7 @@
 function loadFCPage() {
+    checkLogged(viewFCPage,true);
+}
+function viewFCPage(){
     checkFCAvailability();
 }
 let flipsData;

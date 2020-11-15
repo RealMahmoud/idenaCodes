@@ -17,6 +17,9 @@ function changeContent(id, text) {
 }
 
 function loadProfilePage() {
+    checkLogged(viewProfilePage,true);
+}
+function viewProfilePage(){
     if (Number(window.location.pathname.split('/')[2]) > 0) {
         ajax_get('/api/app/checkID.php?id=' + Number(window.location.pathname.split('/')[2]), function (data) {
             data = JSON.parse(data);
@@ -56,8 +59,8 @@ function loadProfilePage() {
     } else {
         document.getElementById('pageLoadingText').innerHTML = 'Error - ID missing';
     }
-}
 
+}
 function vote(type) {
     if (!type == 'up' || !type == 'down') {
 

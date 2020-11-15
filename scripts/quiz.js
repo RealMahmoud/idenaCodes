@@ -1,4 +1,7 @@
 function loadQuizPage() {
+    checkLogged(viewQuizPage,true);
+}
+function viewQuizPage(){
     checkAvailability();
 }
 let questionsData;
