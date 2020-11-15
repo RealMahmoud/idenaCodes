@@ -6,7 +6,7 @@ function loadInfo() {
   ajax_get("/api/account/info.php", function (data) {
     data = JSON.parse(data);
     if (!data.error) {
-      document.getElementById('content-image').src = 'https://robohash.idena.io/' + data.image;
+      document.getElementById('content-image').src = '/api/images/?id=' + data.id;
       changeContent('id', data.id);
       changeContent('status', data.status || ' - ');
       changeContent('address', data.address);

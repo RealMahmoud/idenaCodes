@@ -26,7 +26,7 @@ $id = (int)$id;
 
 $result = (object)array();
 
-$row =  $conn->query("SELECT id,status,joined,image,lastseen,flag,ip,country FROM users where id = '".$id."' LIMIT 1;")->fetch_row();
+$row =  $conn->query("SELECT id,status,joined,lastseen,flag,ip,country FROM users where id = '".$id."' LIMIT 1;")->fetch_row();
 
 if ($row == null) {
     $result->error=true;
@@ -36,16 +36,15 @@ if ($row == null) {
     $result->id=$row[0];
     $result->status=$row[1];
     $result->joined=$row[2];
-    $result->image=$row[3];
-    $result->lastSeen=$row[4];
-    $result->flag=$row[5];
-    if(isset($row[6])){
+    $result->lastSeen=$row[3];
+    $result->flag=$row[4];
+    if(isset($row[5])){
         $result->ipCount=$conn->query("SELECT COUNT(*) FROM `users` where `ip` = '".$row[6]."' ;")->fetch_row()[0];
     }else{
         $result->ipCount= ' - ';
     }
-    if(isset($row[7])){
-        $result->country=$row[7];
+    if(isset($row[6])){
+        $result->country=$row[6];
     }else{
         $result->country= ' - ';
     }

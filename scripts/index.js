@@ -13,11 +13,11 @@ toastr.options = {
     "hideMethod": "fadeOut"
   };
 
-  function makeLogged(image,balance,votes) {
+  function makeLogged(id,balance,votes) {
     document.getElementById("navbar-SignIN").innerHTML = '<ul class="navbar-nav ml-auto">' +
       '<li class="nav-item dropdown">' +
       '<a class="nav-link dropdown-toggle p-0 pointer"  id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
-      '<img src="https://robohash.idena.io/' + image +
+      '<img src="/api/images/?id=' + id +
       '" width="40" height="40" style="background-color:#00000057;"class="rounded-circle">' +
       '</a>' +
       '<div style="left: -200%;" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">' +
@@ -43,7 +43,7 @@ toastr.options = {
   function checkLoggedStatus() {
     ajax_get('/api/auth/checkLogin.php', function (data) {
       if (JSON.parse(data)['logged'] == true) {
-        makeLogged(JSON.parse(data)['image'],JSON.parse(data)['balance'],JSON.parse(data)['votes']);
+        makeLogged(JSON.parse(data)['id'],JSON.parse(data)['balance'],JSON.parse(data)['votes']);
       } else {
         makeNotLogged();
       }

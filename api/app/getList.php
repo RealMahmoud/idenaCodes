@@ -34,7 +34,6 @@ $result = (object)array();
         $user = (object)array();
         $user->id = (int)$row['id'];
         $user->score = 5;
-        $user->image =$row['image'];
 
 
         $countUp = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '".(int)$row['id']."' AND `type` =  1;")->fetch_row()[0];
