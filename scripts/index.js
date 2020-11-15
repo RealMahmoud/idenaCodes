@@ -55,7 +55,11 @@ function openIdena() {
 }
 
 function loadPrivateTemplate() {
-  alert("login bitch");
+  document.getElementById("content").innerHTML = '<div>'
+  +'<div class="mt-5 text-center">'
+      +'<h4>You have to login to view this page</h4>'
+      +'</div>'
+      +'</div>';
 }
 
 function logout() {
