@@ -4,7 +4,7 @@ include dirname(__FILE__) . "/../../common/_public.php";
 header('Content-Type: application/json');
 
 if (isset($_SESSION['CODES-Token'])) {
-    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
+    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
     $banned = $data[1];
     if ($banned) {
@@ -24,11 +24,11 @@ $id = (int) $id;
 
 $result = (object) array();
 
-$row = $conn->query("SELECT id,status,joined,lastseen,flag,ip,country FROM users where id = '" . $id . "' LIMIT 1;")->fetch_row();
+$row = $conn->query("SELECT `id`,`status`,`joined`,`lastseen`,`flag`,`ip`,`country` FROM `users` where `id` = '" . $id . "' LIMIT 1;")->fetch_row();
 
 if ($row == null) {
     $result->error = true;
-    echo json_encode($result);
+    die(json_encode($result));
 } else {
     $result->error = false;
     $result->id = $row[0];
@@ -64,14 +64,14 @@ if ($row == null) {
         $result->votes = 0;
     }
 
-    $quizScore = $conn->query("SELECT `score` FROM `test_questions` where userID = '" . $id . "';")->fetch_row();
+    $quizScore = $conn->query("SELECT `score` FROM `test_questions` where `userID` = '" . $id . "';")->fetch_row();
     if (isset($quizScore[0])) {
         $result->quizScore = $quizScore[0] . '%';
     } else {
         $result->quizScore = ' - ';
     }
 
-    $flipChallengeScore = $conn->query("SELECT score FROM `test_flips` where userID = '" . $id . "';")->fetch_row();
+    $flipChallengeScore = $conn->query("SELECT `score` FROM `test_flips` where `userID` = '" . $id . "';")->fetch_row();
     if (isset($flipChallengeScore[0])) {
         $result->flipChallengeScore = $flipChallengeScore[0] . ' %';
     } else {
@@ -79,7 +79,7 @@ if ($row == null) {
     }
 
     $accounts = array();
-    $tgResult = $conn->query("SELECT id,tg_creationDate FROM auth_telegram where userID = '" . $id . "' LIMIT 1;")->fetch_row();
+    $tgResult = $conn->query("SELECT `id`,`tg_creationDate` FROM `auth_telegram` where `userID` = '" . $id . "' LIMIT 1;")->fetch_row();
     if (isset($tgResult[0])) {
         $service = (object) array();
         $service->name = 'Telegram';
@@ -87,7 +87,7 @@ if ($row == null) {
         $service->available = false;
         array_push($accounts, $service);
     }
-    $dcResult = $conn->query("SELECT id,dc_creationDate FROM auth_discord where userID = '" . $id . "' LIMIT 1;")->fetch_row();
+    $dcResult = $conn->query("SELECT `id`,dc_creationDate FROM `auth_discord` where `userID` = '" . $id . "' LIMIT 1;")->fetch_row();
     if (isset($dcResult[0])) {
         $service = (object) array();
         $service->name = 'Discord';
@@ -95,7 +95,7 @@ if ($row == null) {
         $service->available = false;
         array_push($accounts, $service);
     }
-    $twResult = $conn->query("SELECT id,tw_creationDate FROM auth_twitter where userID = '" . $id . "' LIMIT 1;")->fetch_row();
+    $twResult = $conn->query("SELECT `id`,tw_creationDate FROM `auth_twitter` where `userID` = '" . $id . "' LIMIT 1;")->fetch_row();
     if (isset($twResult[0])) {
         $service = (object) array();
         $service->name = 'Twitter';
@@ -106,5 +106,5 @@ if ($row == null) {
 
     $result->accounts = $accounts;
 
-    echo json_encode($result);
+    die(json_encode($result));
 }

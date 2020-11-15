@@ -4,7 +4,7 @@ include dirname(__FILE__) . "/../../common/_public.php";
 header('Content-Type: application/json');
 $result = (object) array();
 if (isset($_SESSION['CODES-Token'])) {
-    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
+    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
     $banned = $data[1];
     if ($banned) {
@@ -26,7 +26,7 @@ $forID = htmlspecialchars($conn->real_escape_string($_POST['forID']));
 $type = htmlspecialchars($conn->real_escape_string($_POST['type']));
 $forID = (int) $forID;
 $type = (int) $type;
-$row = $conn->query("SELECT id FROM `users` where `id` = '" . $forID . "' LIMIT 1 ;")->fetch_row();
+$row = $conn->query("SELECT `id` FROM `users` where `id` = '" . $forID . "' LIMIT 1 ;")->fetch_row();
 if (!isset($row)) {
     $result->error = true;
     die(json_encode($result));
@@ -49,4 +49,4 @@ $countDown = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '" . $fo
 
 $result->error = false;
 $result->votes = (int) $countUp - (int) $countDown;
-echo json_encode($result);
+die(json_encode($result));

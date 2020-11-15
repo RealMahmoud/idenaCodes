@@ -4,7 +4,7 @@ include dirname(__FILE__) . "/../../common/_public.php";
 header('Content-Type: application/json');
 
 if (isset($_SESSION['CODES-Token'])) {
-    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
+    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
     $banned = $data[1];
     if ($banned) {
@@ -18,7 +18,7 @@ if (isset($_SESSION['CODES-Token'])) {
     die(json_encode($result));
 }
 $answers = json_decode(file_get_contents('php://input'), true);
-$oldQuestions = $conn->query("SELECT questions,score FROM `test_questions` WHERE userID = '" . $loggedUserID . "' LIMIT 1;")->fetch_assoc();
+$oldQuestions = $conn->query("SELECT `questions`,`score` FROM `test_questions` where `userID` = '" . $loggedUserID . "' LIMIT 1;")->fetch_assoc();
 if ($oldQuestions) {
     if (isset($oldQuestions["score"])) {
         $result = (object) array();
@@ -29,7 +29,7 @@ if ($oldQuestions) {
         $rightAnswers = 0;
         $totalQuestions = 0;
         foreach (json_decode($oldQuestions["questions"]) as $questionID) {
-            $answer = $conn->query("SELECT answer FROM `questions` WHERE id = '" . $questionID . "' LIMIT 1;")->fetch_assoc()['answer'];
+            $answer = $conn->query("SELECT `answer` FROM `questions` where `id` = '" . $questionID . "' LIMIT 1;")->fetch_assoc()['answer'];
 
             if (!is_bool(array_search($questionID, array_column($answers, 'id')))) {
                 if ($answer == $answers[array_search($questionID, array_column($answers, 'id'))]["answer"]) {

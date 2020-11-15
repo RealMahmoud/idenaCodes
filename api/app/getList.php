@@ -3,7 +3,7 @@ session_start();
 include dirname(__FILE__) . "/../../common/_public.php";
 header('Content-Type: application/json');
 if (isset($_SESSION['CODES-Token'])) {
-    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
+    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
     $banned = $data[1];
     if ($banned) {
@@ -26,7 +26,7 @@ if (isset($_GET['skip'])) {
 
 $result = (object) array();
 
-$resultSQL = $conn->query("SELECT * FROM users LIMIT " . $skip . ", 15;");
+$resultSQL = $conn->query("SELECT * FROM `users` LIMIT " . $skip . ", 15;");
 $usersArray = array();
 while ($row = $resultSQL->fetch_assoc()) {
     $user = (object) array();
@@ -43,13 +43,13 @@ while ($row = $resultSQL->fetch_assoc()) {
     }
 
     $accounts = array();
-    if (isset($conn->query("SELECT id FROM auth_telegram where userID = '" . (int) $row['id'] . "' LIMIT 1;")->fetch_row()[0])) {
+    if (isset($conn->query("SELECT `id` FROM `auth_telegram` where `userID` = '" . (int) $row['id'] . "' LIMIT 1;")->fetch_row()[0])) {
         array_push($accounts, "telegram");
     }
-    if (isset($conn->query("SELECT id FROM auth_discord where userID = '" . (int) $row['id'] . "' LIMIT 1;")->fetch_row()[0])) {
+    if (isset($conn->query("SELECT `id` FROM `auth_discord` where `userID` = '" . (int) $row['id'] . "' LIMIT 1;")->fetch_row()[0])) {
         array_push($accounts, "discord");
     }
-    if (isset($conn->query("SELECT id FROM auth_twitter where userID = '" . (int) $row['id'] . "' LIMIT 1;")->fetch_row()[0])) {
+    if (isset($conn->query("SELECT `id` FROM `auth_twitter` where `userID` = '" . (int) $row['id'] . "' LIMIT 1;")->fetch_row()[0])) {
         array_push($accounts, "twitter");
     }
     $user->accounts = $accounts;

@@ -3,7 +3,7 @@ include_once dirname(__FILE__) . "/../../common/_public.php";
 header('Content-Type: application/json');
 session_start();
 if (isset($_SESSION['CODES-Token'])) {
-    $row = $conn->query("SELECT id,address,balance FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
+    $row = $conn->query("SELECT `id`,`address`,`balance` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     if ($row == null) {
         die(json_encode(["logged" => false]));
     } else {

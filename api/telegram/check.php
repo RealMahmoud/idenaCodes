@@ -4,7 +4,7 @@ include_once dirname(__FILE__) . "/../../common/_public.php";
 header('Content-Type: application/json');
 session_start();
 if (isset($_SESSION['CODES-Token'])) {
-    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
+    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
     $banned = $data[1];
     if ($banned) {
@@ -18,7 +18,7 @@ if (isset($_SESSION['CODES-Token'])) {
     die(json_encode($result));
 }
 
-if ($conn->query("SELECT id FROM `auth_telegram` where userID = (SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '" . $_SESSION['CODES-Token'] . "'))")->fetch_row()) {
+if ($conn->query("SELECT `id` FROM `auth_telegram` where `userID` = (SELECT `id` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` WHERE token = '" . $_SESSION['CODES-Token'] . "'))")->fetch_row()) {
     die('Already exist');
 }
 $keys = array("id", "first_name", "last_name", "username", "photo_url", "auth_date");
@@ -53,7 +53,7 @@ if (isset($_GET['hash'])) {
     }
     if (hash_equals($hash, $_GET['hash'])) {
         $conn->query("INSERT INTO `auth_telegram`( `userID`, `tg_ID`, `tg_Username`, `time`,`tg_creationDate`) VALUES (
-			(SELECT id FROM `users` WHERE address = (SELECT address FROM `auth_idena` WHERE token = '" . $_SESSION['CODES-Token'] . "')),
+			(SELECT `id` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` WHERE token = '" . $_SESSION['CODES-Token'] . "')),
 			'" . $_GET['id'] . "',
 			'" . $_GET['username'] . "',
 			'" . $_GET['auth_date'] . "',

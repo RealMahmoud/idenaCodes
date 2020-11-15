@@ -6,7 +6,7 @@ include dirname(__FILE__) . "/../../common/_public.php";
 header('Content-Type: application/json');
 //todo : prevent sumbitting twice
 if (isset($_SESSION['CODES-Token'])) {
-    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
+    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
     $banned = $data[1];
     if ($banned) {
@@ -22,7 +22,7 @@ if (isset($_SESSION['CODES-Token'])) {
 
 $answers = json_decode(file_get_contents('php://input'), true);
 
-$oldFlips = $conn->query("SELECT `flips`,`score` FROM `test_flips` WHERE userID = '" . $loggedUserID . "' LIMIT 1;")->fetch_assoc();
+$oldFlips = $conn->query("SELECT `flips`,`score` FROM `test_flips` where `userID` = '" . $loggedUserID . "' LIMIT 1;")->fetch_assoc();
 if ($oldFlips) {
     if (isset($oldFlips[1])) {
         $result = (object) array();
@@ -33,7 +33,7 @@ if ($oldFlips) {
         $rightAnswers = 0;
         $totalFlips = 0;
         foreach (json_decode($oldFlips[0]) as $flipID) {
-            $answer = $conn->query("SELECT answer FROM `flips` WHERE id = '" . $flipID . "' LIMIT 1;")->fetch_assoc()['answer'];
+            $answer = $conn->query("SELECT `answer` FROM `flips` where `id` = '" . $flipID . "' LIMIT 1;")->fetch_assoc()['answer'];
             if (!is_bool(array_search($flipID, array_column($answers, 'id')))) {
                 if ($answer == $answers[array_search($flipID, array_column($answers, 'id'))]["answer"]) {
                     $rightAnswers += 1;

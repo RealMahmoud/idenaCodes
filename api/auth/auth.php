@@ -82,7 +82,7 @@ if ($result->num_rows > 0) {
             $sql = "UPDATE `auth_idena` SET `sig` = '" . $dataSig . "', `authenticated` = 1 , `pubkey` = '" . $pubKey . "' WHERE `token` = '" . $dataToken . "' LIMIT 1;";
             $conn->query($sql);
 
-            $sql = "Select id from users where address = '" . $address . "' limit 1 ;";
+            $sql = "SELECT `id` FROM `users` where `address` = '" . $address . "' limit 1 ;";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {

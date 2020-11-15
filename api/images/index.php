@@ -6,7 +6,7 @@ if (isset($_GET['id'])) {
     $id = htmlspecialchars($id);
     $id = (int) $id;
 
-    $row = $conn->query("SELECT `address` FROM users where id = '" . $id . "' LIMIT 1;")->fetch_row();
+    $row = $conn->query("SELECT `address` FROM `users` where `id` = '" . $id . "' LIMIT 1;")->fetch_row();
 
     if (isset($row[0])) {
         $imginfo = getimagesize("https://robohash.idena.io/" . $row[0]);

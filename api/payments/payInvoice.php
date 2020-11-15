@@ -4,7 +4,7 @@ include dirname(__FILE__) . "/../../common/_public.php";
 header('Content-Type: application/json');
 
 if (isset($_SESSION['CODES-Token'])) {
-    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT address FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
+    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
     $banned = $data[1];
     if ($banned) {
@@ -31,7 +31,7 @@ $id = (int) $id;
 $balance = $conn->query("SELECT `balance` FROM `users` where `id` =  '" . $loggedUserID . "'  LIMIT 1 ;")->fetch_row();
 
 // check if the invoice ID is valid
-$resultSQL = $conn->query("SELECT `epoch`, `userID`, `paid`, `time`, `amount`, `info` FROM `invoices` WHERE id = '" . $id . "' LIMIT 1;")->fetch_row();
+$resultSQL = $conn->query("SELECT `epoch`, `userID`, `paid`, `time`, `amount`, `info` FROM `invoices` where `id` = '" . $id . "' LIMIT 1;")->fetch_row();
 if ($resultSQL == null) {
     //not valid
     $result->error = true;
