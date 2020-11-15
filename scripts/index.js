@@ -25,7 +25,6 @@ function makeLogged(id, balance, votes) {
     '<a class="dropdown-item" >Votes : ' + votes + ' left</a>' +
     '<a class="dropdown-item pointer" onclick="navigate(`/invite`);">Invite</a>' +
     '<a class="dropdown-item pointer" onclick="navigate(`/settings`);">Settings</a>' +
-    '<a class="dropdown-item pointer" onclick=""navigate(`/support`);">Support</a>' +
     '<a class="dropdown-item pointer" onclick="logout(); navigate(`/home`);">Log Out</a>' +
     '</div>' +
     '</li>   ' +
