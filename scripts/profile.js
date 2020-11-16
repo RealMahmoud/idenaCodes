@@ -33,6 +33,8 @@ function viewProfilePage(){
                 changeContent('flipChallengeScore', data.flipChallengeScore);
                 changeContent('quizScore', data.quizScore);
                 changeContent('votes', data.votes);
+                changeContent('ipCount', data.ipCount);
+                changeContent('country', data.country);
                 document.getElementById('content-image').src = '/api/images/?id=' + data.id;
                 if (data.accounts.length > 0) {
                     document.getElementById('content-accountsList').innerHTML = '<h5 class="m-0">Accounts connected</h5>';
