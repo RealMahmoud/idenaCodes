@@ -2,7 +2,6 @@
     "require": {
         "simplito/elliptic-php": "^1.0",
         "kornrunner/keccak": "^1.0",
-        "abraham/twitteroauth": "^1.2",
-        "defuse/php-encryption": "^2.2"
+        "abraham/twitteroauth": "^1.2"
     }
 }
