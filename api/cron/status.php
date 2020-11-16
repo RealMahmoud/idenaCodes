@@ -28,13 +28,12 @@ function getstatus($address)
     }
 }
 
-// update types
-$conn->query("UPDATE `users` SET `type` = 1 WHERE `status` = 'Human' OR `status` = 'Verified';");
-$conn->query("UPDATE `users` SET `type` = 0 WHERE `status` != 'Human' AND `status` != 'Verified' AND `type` != 2;");
-
-
 
 $resultSQL = $conn->query("SELECT `address` from `users`;");
 while ($row = $resultSQL->fetch_assoc()) {
     $conn->query("UPDATE `users` SET `status` = '".getstatus($row[0])."' WHERE `address` = '".$row[0]."'");
 }
+
+
+$conn->query("UPDATE `users` SET `type` = 1 WHERE `status` = 'Human' OR `status` = 'Verified';");
+$conn->query("UPDATE `users` SET `type` = 0 WHERE `status` != 'Human' AND `status` != 'Verified' AND `type` != 2;");
