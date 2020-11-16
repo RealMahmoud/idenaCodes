@@ -28,7 +28,11 @@ if (!isset($_POST['forID']) || !isset($_POST['report'])) {
 $forID = htmlspecialchars($conn->real_escape_string($_POST['forID']));
 $report = htmlspecialchars($conn->real_escape_string($_POST['report']));
 $forID = (int) $forID;
-
+if(strlen($report) < 10){
+    $result->error = true;
+    $result->reason = "Report description is too short";
+    die(json_encode($result));
+}
 $conn->query("INSERT INTO `reports_tickets`( `userID`, `report`, `reporterID`) VALUES ('" . $loggedUserID . "','" . $report . "','" . $forID . "');");
 
 $result->error = false;

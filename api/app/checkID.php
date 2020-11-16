@@ -8,13 +8,13 @@ if (isset($_SESSION['CODES-Token'])) {
     $loggedUserID = $data[0];
     $banned = $data[1];
     if ($banned) {
-        
+
         $result->error = true;
         $result->reason = "Banned";
         die(json_encode($result));
     }
 } else {
-    
+
     $result->error = true;
     $result->reason = "Not logged in";
     die(json_encode($result));
@@ -23,8 +23,6 @@ if (isset($_SESSION['CODES-Token'])) {
 $id = $conn->real_escape_string($_GET['id']);
 $id = htmlspecialchars($id);
 $id = (int) $id;
-
-
 
 $row = $conn->query("SELECT `id`,`status`,`joined`,`lastseen`,`flag`,`ip`,`country`,`type` FROM `users` where `id` = '" . $id . "' LIMIT 1;")->fetch_row();
 
@@ -36,8 +34,8 @@ if ($row == null) {
     $result->error = false;
     $result->id = $row[0];
     $result->status = $row[1];
-    $result->joined = $row[2];
-    $result->lastSeen = $row[3];
+    $result->joined = strtotime($row[2]);
+    $result->lastSeen = strtotime($row[3]);
     $result->flag = $row[4];
     $result->score = 0;
     if (isset($row[5])) {
@@ -60,18 +58,21 @@ if ($row == null) {
 
     if ($row[7] == 0) {
         $result->inviteAbility = false;
-        $result->voteAbility = false;
+        $result->votingAbility = false;
     } elseif ($row[7] == 1) {
         $result->inviteAbility = true;
-        $result->voteAbility = true;
+        $result->votingAbility = true;
     } elseif ($row[7] == 2) {
         $result->inviteAbility = true;
-        $result->voteAbility = true;
+        $result->votingAbility = true;
     } else {
         $result->inviteAbility = false;
-        $result->voteAbility = false;
+        $result->votingAbility = false;
     }
-
+    if ($id = $loggedUserID) {
+        $result->inviteAbility = false;
+        $result->votingAbility = false;
+    }
     $countUp = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '" . $id . "' AND `type` =  1;")->fetch_row()[0];
     $countDown = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '" . $id . "' AND `type` =  0;")->fetch_row()[0];
     $votesCount = (int) $countUp - (int) $countDown;

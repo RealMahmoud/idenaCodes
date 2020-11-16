@@ -29,6 +29,12 @@ $forID = htmlspecialchars($conn->real_escape_string($_POST['forID']));
 $type = htmlspecialchars($conn->real_escape_string($_POST['type']));
 $forID = (int) $forID;
 $type = (int) $type;
+
+if($loggedUserID = $forID){
+    $result->error = true;
+    $result->reason = "Can't vote for yourself";
+    die(json_encode($result));
+}
 $row = $conn->query("SELECT `id` FROM `users` where `id` = '" . $forID . "' LIMIT 1 ;")->fetch_row();
 if (!isset($row)) {
     $result->error = true;

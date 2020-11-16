@@ -35,7 +35,6 @@ if (isset($_SESSION['CODES-Token'])) {
     $loggedUserID = $data[0];
     $banned = $data[1];
     if ($banned) {
-        
         $result->error = true;
         $result->reason = "Banned";
         die(json_encode($result));
@@ -46,7 +45,12 @@ if (isset($_SESSION['CODES-Token'])) {
     $result->reason = "Not logged in";
     die(json_encode($result));
 }
-
+$type = $conn->query("SELECT `type` FROM `users` where `id` = '".$loggedUserID."' LIMIT 1 ;")->fetch_row()[0];
+if ($type == 0) {
+    $result->error = true;
+    $result->reason = "Can't send invites";
+    die(json_encode($result));
+}
 if (!isset($_POST['forID']) || !isset($_POST['invite'])) {
     $result->error = true;
     $result->reason = "Missing parameters";

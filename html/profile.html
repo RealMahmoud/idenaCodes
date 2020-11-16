@@ -40,26 +40,56 @@
             </div>
         </div>
         <div class="col-4">
-            <div class="card card-body ">
-                <p class="m-0">Invite Panel </p>
-                <input type="text" class="form-control m-2" id="content-inviteCode" placeholder="invite">
-                <button type="button" class="btn btn-outline-success btn-sm w-50 m-auto" onclick="">Send</button>
-            </div>
-            <hr>
-            <div class="card card-body pt-0">
-                <p class="m-2 text-center">Votes</p>
-                <div class="row mt-0">
-                    <button type="button" class="btn btn-outline-success btn-sm m-auto" onclick="vote('up');"><i
-                            class="fa fa-arrow-up"></i></button>
-                    <p class="m-0" id="content-votes">0</p>
-                    <button type="button" class="btn btn-outline-danger btn-sm  m-auto" onclick="vote('down');"><i
-                            class="fa fa-arrow-down"></i></button>
+            <div class="d-none" id="profile-inviteCard">
+                <div class="card card-body">
+                    <p class="m-0">Invite Panel </p>
+                    <input type="text" class="form-control m-2" id="content-inviteCode" placeholder="invite">
+                    <button type="button" class="btn btn-outline-success btn-sm w-50 m-auto"
+                        onclick="sendInvite();">Send</button>
                 </div>
-
+                <hr>
             </div>
-            <hr>
-            <div class="card card-body">
-                <button type="button" class="btn btn-outline-danger btn-block" id="content-" onclick="">Report</button>
+            <div id="profile-votingCard">
+                <div class="card card-body pt-0">
+                    <p class="m-2 text-center">Votes</p>
+                    <div class="row mt-0">
+                        <button type="button" class="btn btn-outline-success btn-sm m-auto" id="profile-voteup" onclick="vote('up');" disabled><i
+                                class="fa fa-arrow-up"></i></button>
+                        <p class="m-0" id="content-votes">0</p>
+                        <button type="button" class="btn btn-outline-danger btn-sm  m-auto" id="profile-votedown" onclick="vote('down');"disabled><i
+                                class="fa fa-arrow-down"></i></button>
+                    </div>
+
+                </div>
+                <hr>
+            </div>
+            <div  id="profile-reportCard">
+                <div class="card card-body">
+                    <button type="button" class="btn btn-outline-danger btn-block" data-toggle="modal"
+                        data-target="#reportModal" onclick="report();">Report</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reportModalLabel">Report</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" id="profile-report"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" onclick="sendReport();"
+                    data-dismiss="modal">Report</button>
             </div>
         </div>
     </div>
