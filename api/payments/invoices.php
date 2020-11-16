@@ -22,7 +22,7 @@ if (isset($_SESSION['CODES-Token'])) {
 
 
 
-$resultSQL = $conn->query("SELECT `id`, `epoch`, `paid`, `time`, `amount`, `payTime`, `info` FROM `invoices` where `userID` = '" . $loggedUserID . "' LIMIT 50;");
+$resultSQL = $conn->query("SELECT `id`, `epoch`, `paid`, `time`, `amount`, `payTime`, `info` FROM `invoices` where `userID` = '" . $loggedUserID . "' AND `paid` = 0 LIMIT 50;");
 if ($resultSQL == null) {
     $result->error = true;
     $result->reason = "NULL";
