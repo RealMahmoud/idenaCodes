@@ -35,5 +35,5 @@ while ($row = $resultSQL->fetch_assoc()) {
 }
 
 
-$conn->query("UPDATE `users` SET `type` = 1 WHERE `status` = 'Human' OR `status` = 'Verified';");
-$conn->query("UPDATE `users` SET `type` = 0 WHERE `status` != 'Human' AND `status` != 'Verified' AND `type` != 2;");
+$conn->query("UPDATE `users` SET `type` = 1 WHERE `status` = 'Human' OR `status` = 'Verified' OR `status` = 'Newbie';");
+$conn->query("UPDATE `users` SET `type` = 0 WHERE `status` != 'Human' AND `status` != 'Verified' AND `status` != 'Newbie' AND `type` != 2;");
