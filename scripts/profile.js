@@ -26,8 +26,8 @@ function viewProfilePage(){
             if (!data.error) {
                 changeContent('id', data.id);
                 changeContent('status', data.status);
-                changeContent('joined', data.joined);
-                changeContent('lastSeen', data.lastSeen);
+                changeContent('joined', timeConverter(data.joined));
+                changeContent('lastSeen', timeConverter(data.lastSeen));
                 changeContent('reports', data.reports);
 
                 changeContent('flipChallengeScore', data.flipChallengeScore);

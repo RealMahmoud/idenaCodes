@@ -37,33 +37,42 @@ function getClosest($search, $object)
     return $object[$closest];
 }
 
+
+$json = file_get_contents('php://input');
+$POSTDATA = (array)json_decode($json);
+
+
 $dates = file_get_contents("./dates.json");
 $datesArr = json_decode($dates, true);
 
-if (isset($_GET['hash'])) {
-    foreach ($_GET as $key => $value) {
+if (isset($POSTDATA['hash'])) {
+    foreach ($POSTDATA as $key => $value) {
+        
         if (in_array($key, $keys)) {
-            $data[] = $key . "=" . $value;
+            
+            $dataTG[] = $key . "=" . $value;
         }
     }
-
-    sort($data);
-    $data = implode("\n", $data);
-    $secretKey = hash('sha256', $telegramToken, true);
-    $hash = hash_hmac('sha256', $data, $secretKey);
-    if ((time() - $_GET['auth_date']) > 86400) {
-        die($_GET['auth_date']);
+    sort($dataTG);
+    $dataTG = implode("\n", $dataTG);
+    $secretKey = hash('sha256', TELEGRAM_SECRET, true);
+    $hash = hash_hmac('sha256', $dataTG, $secretKey);
+    if ((time() - $POSTDATA['auth_date']) > 86400) {
+        die($POSTDATA['auth_date']);
     }
-    if (hash_equals($hash, $_GET['hash'])) {
+    if (hash_equals($hash, $POSTDATA['hash'])) {
         $conn->query("INSERT INTO `auth_telegram`( `userID`, `tg_ID`, `tg_Username`, `time`,`tg_creationDate`) VALUES (
 			(SELECT `id` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` WHERE token = '" . $_SESSION['CODES-Token'] . "')),
-			'" . $_GET['id'] . "',
-			'" . $_GET['username'] . "',
-			'" . $_GET['auth_date'] . "',
-			'" . getClosest($_GET['id'], $datesArr) . "'
+			'" . $POSTDATA['id'] . "',
+			'" . $POSTDATA['username'] . "',
+			'" . $POSTDATA['auth_date'] . "',
+			'" . getClosest($POSTDATA['id'], $datesArr) . "'
 		);");
-        echo "Telegram data integrity check success!";
+        $result->error = false;
+        die(json_encode($result));
     } else {
-        die('Data is not incorrect');
+        $result->error = true;
+        $result->reason = "ERROR";
+        die(json_encode($result));
     }
 }

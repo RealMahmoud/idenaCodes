@@ -71,7 +71,7 @@ while ($row = $resultSQL->fetch_assoc()) {
 
 if (count($usersArray) == 0) {
     $result->error = true;
-    $result->reason = "ERROR";
+    $result->reason = "No users available";
 } else {
     $result->error = false;
     $result->users = $usersArray;
