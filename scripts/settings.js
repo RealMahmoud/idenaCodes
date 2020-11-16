@@ -109,7 +109,7 @@ function payInvoice(id) {
     if (!data.error) {
       toastr.sucess("Invoice Paid");
     } else {
-      toastr.error("ERROR");
+      toastr.error("Error : " + data.reason);
     }
   });
 }
