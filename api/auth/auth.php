@@ -36,7 +36,13 @@ function getPubKey($message, $signature)
     $pubkey = $ec->recoverPubKey($hash, $sign, $recid);
     return $pubkey->encode("hex");
 }
-
+function getAccountType($status){
+    if($status == 'Human' || $status == 'Verified' || $status == 'Newbiew'){
+        return 1;
+    }else{
+        return 0;
+    }
+}
 function getstatus($address)
 {
     if (strlen($address) != 42) {
@@ -86,10 +92,14 @@ if ($result->num_rows > 0) {
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
-                $sql = "UPDATE `users` SET `status` = '" . getstatus($address) . "' , `lastseen` = '" . date("Y-m-d H:i:s", time()) . "' WHERE `users`.`address` = '" . $address . "';";
+                $status = getstatus($address);
+                $type = getAccountType($status);
+                $sql = "UPDATE `users` SET `status` = '" . $status . "' ,`type` = '".$type."', `lastseen` = '" . date("Y-m-d H:i:s", time()) . "' WHERE `users`.`address` = '" . $address . "';";
                 $conn->query($sql);
             } else {
-                $sql = "INSERT INTO `users`( `address`, `status`, `pubKey`) VALUES ('" . $address . "','" . getstatus($address) . "','" . $pubKey . "')";
+                $status = getstatus($address);
+                $type = getAccountType($status);
+                $sql = "INSERT INTO `users`( `address`, `status`, `pubKey`,`type`) VALUES ('" . $address . "','" . $status . "','" . $pubKey . "' , '".$type."')";
 
                 $conn->query($sql);
             }
