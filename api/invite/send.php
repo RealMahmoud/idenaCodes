@@ -95,7 +95,7 @@ if (!(end($resultInviteTxs['result'])['type'] == "InviteTx") || !(strtolower(end
 }
 
 $dna_activateInvite = json_encode(array("method" => "dna_activateInvite", "params" => ["key" => $invite, "to" => $address3, "payload" => $payload], "id" => 1, "key" => RPC_KEY));
-/*$dna_activateInvite_result = curl_post(RPC_BASE_URL, $dna_activateInvite);*/
+$dna_activateInvite_result = curl_post(RPC_BASE_URL, $dna_activateInvite);
 
 $conn->query("INSERT INTO `invites`( `userID`, `forID`, `epoch`, `validations`, `address_1`, `address_2`, `address_3`) VALUES ('" . $loggedUserID . "','" . $forID . "','" . $epoch . "',0,'" . $address1 . "','" . $address2 . "','" . $address3 . "' );");
 
