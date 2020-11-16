@@ -24,6 +24,7 @@ if (isset($_SESSION['CODES-Token'])) {
 if (isset($conn->query("SELECT `ip` FROM `users` WHERE `id` = '" . $loggedUserID . "'")->fetch_row()[0])) {
     $result = (object) array();
     $result->error = true;
+    $result->reason = "ip is already recorded";
     die(json_encode($result));
 }
 

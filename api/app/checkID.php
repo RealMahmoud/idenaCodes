@@ -30,6 +30,7 @@ $row = $conn->query("SELECT `id`,`status`,`joined`,`lastseen`,`flag`,`ip`,`count
 
 if ($row == null) {
     $result->error = true;
+    $result->reason = "NULL";
     die(json_encode($result));
 } else {
     $result->error = false;

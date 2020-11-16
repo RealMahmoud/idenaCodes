@@ -25,6 +25,7 @@ if (isset($_SESSION['CODES-Token'])) {
 $resultSQL = $conn->query("SELECT `id`,`text`,`time` FROM `history` where `userID` = '" . $loggedUserID . "' LIMIT 50;");
 if ($resultSQL == null) {
     $result->error = true;
+    $result->reason = "NULL";
     die(json_encode($result));
 } else {
     $result->error = false;

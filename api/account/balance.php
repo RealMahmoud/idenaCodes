@@ -24,7 +24,7 @@ $row = $conn->query("SELECT `balance` FROM `users` where `id` = '" . $loggedUser
 
 if ($row == null) {
     $result->error = true;
-    $result->reason = "ERROR 0";
+    $result->reason = "NULL";
     die(json_encode($result));
 } else {
     $result->error = false;

@@ -26,6 +26,7 @@ if ($oldFlips) {
     if (isset($oldFlips["score"])) {
         
         $result->error = true;
+        $result->reason = "Already sent";
         die(json_encode($result));
     } else {
         $flipsArray = array();
@@ -44,6 +45,7 @@ if ($oldFlips) {
 
         if (count($flipsArray) == 0) {
             $result->error = true;
+            $result->reason = "0 Flips error";
         } else {
             $result->error = false;
             $result->flips = $flipsArray;
@@ -71,6 +73,7 @@ $conn->query("INSERT INTO `test_flips`( `userID`, `flips`) VALUES ('" . $loggedU
 
 if (count($flipsArray) == 0) {
     $result->error = true;
+    $result->reason = "0 Flips error";
 } else {
     $result->error = false;
     $result->flips = $flipsArray;

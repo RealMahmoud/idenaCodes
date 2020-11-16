@@ -29,6 +29,7 @@ if (isset($score)) {
 } else {
     
     $result->error = true;
+    $result->reason = "NULL";
     $result->score = null;
     die(json_encode($result));
 }

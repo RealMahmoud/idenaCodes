@@ -8,13 +8,14 @@ if (isset($_SESSION['CODES-Token'])) {
     $loggedUserID = $result[0];
     $type = $result[1];
     if ($type !== 2) {
-        
         $result->error = true;
+        $result->reason = "admin role required";
         die(json_encode($result));
     }
 } else {
     
     $result->error = true;
+    $result->reason = "Not logged in";
     die(json_encode($result));
 }
 
@@ -23,6 +24,7 @@ if (isset($_SESSION['CODES-Token'])) {
 $resultSQL = $conn->query("SELECT `id`, `userID`, `report`, `reporterID`, `time` FROM `reports_tickets` LIMIT 20;");
 if ($resultSQL == null) {
     $result->error = true;
+    $result->reason = "NULL";
     die(json_encode($result));
 } else {
     $result->error = false;

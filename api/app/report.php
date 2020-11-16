@@ -22,6 +22,7 @@ if (isset($_SESSION['CODES-Token'])) {
 
 if (!isset($_POST['forID']) || !isset($_POST['report'])) {
     $result->error = true;
+    $result->reason = "Missing parameters";
     die(json_encode($result));
 }
 $forID = htmlspecialchars($conn->real_escape_string($_POST['forID']));

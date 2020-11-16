@@ -26,6 +26,7 @@ $row = $conn->query("SELECT `id`,`status`,`balance`,`address`,`username` FROM `u
 
 if ($row == null) {
     $result->error = true;
+    $result->reason = "NULL";
     die(json_encode($result));
 } else {
     $result->error = false;

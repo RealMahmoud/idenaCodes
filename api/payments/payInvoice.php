@@ -23,6 +23,7 @@ if (isset($_SESSION['CODES-Token'])) {
 
 if (!isset($_POST['id'])) {
     $result->error = true;
+    $result->reason = "Missing parameters";
     die(json_encode($result));
 }
 $id = htmlspecialchars($conn->real_escape_string($_POST['id']));
@@ -37,12 +38,14 @@ $resultSQL = $conn->query("SELECT `epoch`, `userID`, `paid`, `time`, `amount`, `
 if ($resultSQL == null) {
     //not valid
     $result->error = true;
+    $result->reason = "NULL";
     die(json_encode($result));
 } else {
     //valid
     // check if already paid
     if ($resultSQL[2] == '1') {
         $result->error = true;
+        $result->reason = "Already paid";
         die(json_encode($result));
     }
 
@@ -53,6 +56,7 @@ if ($resultSQL == null) {
         die(json_encode($result));
     } else {
         $result->error = true;
+        $result->reason = "No enough balance";
         die(json_encode($result));
     }
 }

@@ -22,6 +22,7 @@ if (isset($_SESSION['CODES-Token'])) {
 
 if (!isset($_POST['forID']) || !isset($_POST['type'])) {
     $result->error = true;
+    $result->reason = "Missing parameters";
     die(json_encode($result));
 }
 $forID = htmlspecialchars($conn->real_escape_string($_POST['forID']));
@@ -31,16 +32,18 @@ $type = (int) $type;
 $row = $conn->query("SELECT `id` FROM `users` where `id` = '" . $forID . "' LIMIT 1 ;")->fetch_row();
 if (!isset($row)) {
     $result->error = true;
+    $result->reason = "User doesn't exist";
     die(json_encode($result));
 }
 if ($conn->query("SELECT COUNT(*) FROM `votes` WHERE `voterID` = '" . $loggedUserID . "';")->fetch_row()[0] >= 5) {
     $result->error = true;
+    $result->reason = "Max votes reached";
     die(json_encode($result));
 }
 
 if (!$type == 1 && !$type == 0) {
     $result->error = true;
-
+    $result->reason = "Should be 0 or 1";
     die(json_encode($result));
 }
 $conn->query("DELETE FROM `votes` WHERE `voterID` = '" . $loggedUserID . "' AND `forID` = '" . $forID . "' LIMIT 1;");

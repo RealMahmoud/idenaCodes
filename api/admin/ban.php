@@ -8,17 +8,19 @@ if (isset($_SESSION['CODES-Token'])) {
     $loggedUserID = $result[0];
     $type = $result[1];
     if ($type !== 2) {
-        
         $result->error = true;
+        $result->reason = "admin role required";
         die(json_encode($result));
     }
 } else {
     
     $result->error = true;
+    $result->reason = "Not logged in";
     die(json_encode($result));
 }
 if (!isset($_POST['id'])) {
     $result->error = true;
+    $result->reason = "Missing parameters";
     die(json_encode($result));
 }
 $id = (int) htmlspecialchars($conn->real_escape_string($_POST['id']));

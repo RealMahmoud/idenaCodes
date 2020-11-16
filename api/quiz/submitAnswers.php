@@ -50,5 +50,6 @@ if ($oldQuestions) {
 } else {
     
     $result->error = true;
+    $result->reason = "NULL";
     die(json_encode($result));
 }

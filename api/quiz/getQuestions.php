@@ -25,6 +25,7 @@ if ($oldQuestions) {
     if (isset($oldQuestions["score"])) {
         
         $result->error = true;
+        $result->reason = "Already submitted";
         die(json_encode($result));
     } else {
         $questionsArray = array();
@@ -43,6 +44,7 @@ if ($oldQuestions) {
 
         if (count($questionsArray) == 0) {
             $result->error = true;
+            $result->reason = "0 Questions error";
         } else {
             $result->error = false;
             $result->questions = $questionsArray;
@@ -70,6 +72,7 @@ $conn->query("INSERT INTO `test_questions`( `userID`, `questions`) VALUES ('" . 
 
 if (count($questionsArray) == 0) {
     $result->error = true;
+    $result->reason = "0 Questions error";
 } else {
     $result->error = false;
     $result->questions = $questionsArray;

@@ -37,17 +37,19 @@ if (isset($_SESSION['CODES-Token'])) {
     if ($banned) {
         
         $result->error = true;
+        $result->reason = "Banned";
         die(json_encode($result));
     }
 } else {
     
     $result->error = true;
+    $result->reason = "Not logged in";
     die(json_encode($result));
 }
 
 if (!isset($_POST['forID']) || !isset($_POST['invite'])) {
-    
     $result->error = true;
+    $result->reason = "Missing parameters";
     die(json_encode($result));
 }
 $forID = htmlspecialchars($conn->real_escape_string($_POST['forID']));
@@ -57,6 +59,7 @@ $forID = (int) $forID;
 if (!strlen($invite) == 64) {
     
     $result->error = true;
+    $result->reason = "invite is not valid";
     die(json_encode($result));
 }
 
@@ -74,17 +77,20 @@ $resultInviteTxs = curl_get(API_BASE_URL . "/address/" . $address2 . "/txs?skip=
 if (!isset($resultInvite['result']['state']) || !isset($resultInvitee['result']['state']) || !isset($resultInviteTxs['result'])) {
     
     $result->error = true;
+    $result->reason = "ERROR";
     die(json_encode($result));
 }
 if (!($resultInvite['result']['state'] == 'Invite') || !inviteable($resultInvitee['result']['state'])) {
     
     $result->error = true;
+    $result->reason = "ERROR";
     die(json_encode($result));
 }
 
 if (!(end($resultInviteTxs['result'])['type'] == "InviteTx") || !(strtolower(end($resultInviteTxs['result'])['from']) == $address1)) {
     
     $result->error = true;
+    $result->reason = "ERROR";
     die(json_encode($result));
 }
 

@@ -22,6 +22,7 @@ if (isset($_SESSION['CODES-Token'])) {
 
 if (!isset($_POST['userID'])) {
     $result->error = true;
+    $result->reason = "Missing parameters";
     die(json_encode($result));
 }
 $userID = htmlspecialchars($conn->real_escape_string($_POST['userID']));
