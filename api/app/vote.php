@@ -30,7 +30,7 @@ $type = htmlspecialchars($conn->real_escape_string($_POST['type']));
 $forID = (int) $forID;
 $type = (int) $type;
 
-if($loggedUserID = $forID){
+if($loggedUserID == $forID){
     $result->error = true;
     $result->reason = "Can't vote for yourself";
     die(json_encode($result));

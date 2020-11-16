@@ -1,41 +1,40 @@
 <?php
 session_start();
 include dirname(__FILE__) . "/../../common/_public.php";
-include "./countryResolver.php";
+include dirname(__FILE__) . "/../../api/ip/countryResolver.php";
 header('Content-Type: application/json');
-
+$result = (object) array();
 if (isset($_SESSION['CODES-Token'])) {
     $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
     $banned = $data[1];
     if ($banned) {
-        $result = (object) array();
+        
         $result->error = true;
         $result->reason = "Banned";
         die(json_encode($result));
     }
 } else {
-    $result = (object) array();
     $result->error = true;
     $result->reason = "Not logged in";
     die(json_encode($result));
 }
 
-if (isset($conn->query("SELECT `ip` FROM `users` WHERE `id` = '" . $loggedUserID . "'")->fetch_row()[0])) {
-    $result = (object) array();
+if (!isset($_POST['mode'])) {
     $result->error = true;
-    $result->reason = "ip is already recorded";
+    $result->reason = "Missing parameters";
     die(json_encode($result));
 }
+$mode = htmlspecialchars($conn->real_escape_string($_POST['mode']));
+$mode = (int) $mode;
 
-if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
-    $ip = $_SERVER["HTTP_CF_CONNECTING_IP"];
-} else {
-    $ip = $_SERVER['REMOTE_ADDR'];
+if($mode == 0){
+    $conn->query("UPDATE `users` SET `country` = null WHERE `id` = '".$loggedUserID."';");
+    $result->error = false;
+    die(json_encode($result));
+}else{
+    $ip = $conn->query("SELECT `ip` FROM `users` WHERE `id` = '".$loggedUserID."';")->fetch_row()[0];
+    $conn->query("UPDATE `users` SET `country` = '" . ip_info($ip, "Country") . "' WHERE `id` = '" . $loggedUserID . "'");
+    $result->error = false;
+    die(json_encode($result));
 }
-
-$conn->query("UPDATE `users` SET `ip` = '" . $ip . "' , `country` = '" . ip_info($ip, "Country") . "' WHERE `id` = '" . $loggedUserID . "'");
-
-$result = (object) array();
-$result->error = false;
-die(json_encode($result));

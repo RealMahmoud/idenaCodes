@@ -14,8 +14,16 @@ function loadInfo() {
       changeContent('invitesSent', data.invitesSent);
 
       changeContent('username', data.username || ' - ');
-
-
+      if (data.ip) {
+        document.getElementById('profile-recordIPButton').disabled = true;
+      }
+      if (!data.flipChallengeScore  == ' - ') {
+        document.getElementById('profile-FCButton').disabled = true;
+      }
+      if (!data.quizScore == ' - ') {
+        document.getElementById('profile-quizButton').disabled = true;
+      }
+      
 
       if (!data.accounts.includes('telegram')) {
         loadTelegram();
@@ -40,6 +48,18 @@ function loadInfo() {
 
 }
 
+function recordIP() {
+  ajax_get("/api/ip/record.php", function (data) {
+    data = JSON.parse(data);
+    if (data.error) {
+      toastr.error("ERROR : " + data.reason);
+    } else {
+      toastr.success("Ip recorded successfully");
+    }
+
+  });
+}
+
 function loadInvoices() {
   ajax_get("/api/payments/invoices.php", function (data) {
     data = JSON.parse(data);
@@ -56,6 +76,9 @@ function loadInvoices() {
           '</tr>';
       });
       document.getElementById("content-invoicesCount").innerHTML = count;
+      if (count == 0) {
+        document.getElementById("list-invoices").innerHTML = "<h5 class='text-center'>No invoices found</h5>"
+      }
     }
 
   });
@@ -69,11 +92,14 @@ function loadReports() {
       let count = 0;
       data.reports.forEach(report => {
         count += 1;
-        document.getElementById("content-reportsList").innerHTML += 
+        document.getElementById("content-reportsList").innerHTML +=
 
-          '<li class="list-group-item">' + report.id + ' : ' + report.reason + '</li>' ;
+          '<li class="list-group-item">' + report.id + ' : ' + report.reason + '</li>';
       });
       document.getElementById("content-reportsCount").innerHTML = count;
+      if (count == 0) {
+        document.getElementById("list-reports").innerHTML = "<h5 class='text-center'>No reports found</h5>"
+      }
     }
 
   });
@@ -95,6 +121,9 @@ function loadHistory() {
           '</tr>';
       });
       document.getElementById("content-historyCount").innerHTML = count;
+      if (count == 0) {
+        document.getElementById("list-history").innerHTML = "<h5 class='text-center'>No history found</h5>"
+      }
     }
 
   });
@@ -477,12 +506,14 @@ function loadTelegram() {
 
   }
 }
-function viewSettingsPage(){
+
+function viewSettingsPage() {
   loadInfo();
   loadInvoices();
   loadReports();
   loadHistory();
 }
+
 function loadSettingsPage() {
-  checkLogged(viewSettingsPage,true);
+  checkLogged(viewSettingsPage, true);
 }

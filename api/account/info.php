@@ -22,7 +22,7 @@ if (isset($_SESSION['CODES-Token'])) {
 
 
 
-$row = $conn->query("SELECT `id`,`status`,`balance`,`address`,`username` FROM `users` where `id` = '" . $loggedUserID . "' LIMIT 1;")->fetch_row();
+$row = $conn->query("SELECT `id`,`status`,`balance`,`address`,`username`,`ip` FROM `users` where `id` = '" . $loggedUserID . "' LIMIT 1;")->fetch_row();
 
 if ($row == null) {
     $result->error = true;
@@ -35,6 +35,7 @@ if ($row == null) {
     $result->balance = $row[2];
     $result->address = $row[3];
     $result->username = $row[4];
+    $result->ip = $row[5];
     $result->reports = $conn->query("SELECT COUNT(*) FROM `reports` where `userID` = '" . $loggedUserID . "' ;")->fetch_row()[0];
     $result->invitesSent = $conn->query("SELECT COUNT(*) FROM `invites` where `userID` = '" . $loggedUserID . "' ;")->fetch_row()[0];
 
