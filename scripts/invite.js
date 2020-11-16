@@ -10,10 +10,10 @@ function loadInvitePage() {
 
 function checkID() {
     ajax_get("/api/app/checkExistence.php?id=" + document.getElementById("invite-searchID").value, function (data) {
+        data = JSON.parse(data);
         if (data.error) {
             toastr.error("ERROR : " + data.reason);
         } else {
-            toastr.success("ID found");
             navigate('/profile/' + document.getElementById("invite-searchID").value);
         }
     });
