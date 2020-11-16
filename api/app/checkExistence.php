@@ -29,7 +29,8 @@ $resultSQL = $conn->query("SELECT `id` FROM `users` where `id` = '" . $id . "' L
 $row = $resultSQL->fetch_row();
 if ($row == null) {
     $result->error = true;
-    $result->reason = "NULL";
+    $result->exist = false;
+    $result->reason = "id not found";
     die(json_encode($result));
 } else {
     $result->error = false;
