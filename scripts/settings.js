@@ -500,7 +500,7 @@ function loadTelegram() {
   })(window);
 
   function onTelegramAuth(user) {
-    ajax_post('http://codes.localhost/api/telegram/check.php', JSON.stringify(user), function (data) {
+    ajax_post('/api/telegram/check.php', JSON.stringify(user), function (data) {
       toastr.success("Telegram connected successfully")
     });
 
