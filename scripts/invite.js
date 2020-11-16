@@ -1,11 +1,12 @@
 function loadInvitePage() {
 
-    checkLogged(loadInviteList,true);
+    checkLogged(viewInvitePage, true);
 
-    function loadInviteList(limit=10, skip=0) {
+    function viewInvitePage() {
+        loadInviteList(10, 0);
+    }
 
-
-
+    function loadInviteList(limit = 10, skip = 0) {
         ajax_get("/api/app/getList.php?skip=" + skip + "&limit=" + limit, function (data) {
             data = JSON.parse(data);
             if (data.error) {
@@ -57,5 +58,5 @@ function loadInvitePage() {
 
 
     }
-    
+
 }

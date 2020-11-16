@@ -60,9 +60,7 @@ function timeConverter(UNIX_timestamp, type = 'half') {
 var currentPath = window.location.pathname;
 
 
-function loadHomePage() {
 
-}
 
 var partialsCache = {}
 

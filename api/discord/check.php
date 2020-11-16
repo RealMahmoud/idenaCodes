@@ -42,27 +42,26 @@ curl_setopt($curl, CURLOPT_URL, $url);
 curl_setopt($curl, CURLOPT_POST, true);
 curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-$response = curl_exec($curl);
+$response1 = curl_exec($curl);
 curl_close($curl);
-$results = json_decode($response, true);
+$results = json_decode($response1, true);
 
 if (isset($results['access_token'])) {
     $url = $GLOBALS['base_url'] . "/api/users/@me";
-    $headers = array('Content-Type: application/x-www-form-urlencoded', 'Authorization: Bearer ' . $_SESSION['access_token']);
+    $headers = array('Content-Type: application/x-www-form-urlencoded', 'Authorization: Bearer ' . $results['access_token']);
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-    $response = curl_exec($curl);
+    $response2 = curl_exec($curl);
     curl_close($curl);
-    $results = json_decode($response, true);
-    $_SESSION['user'] = $results;
+    $decodedResponse = json_decode($response2, true);
 
     $conn->query("INSERT INTO `auth_discord`( `userID`, `dc_creationDate`, `dc_username`, `dc_ID`) VALUES (
         '" . $loggedUserID . "',
-        '" . substr(bindec(substr(decbin($results['id']), 0, -22)) + 1420070400000, 0, -3) . "',
-        '" . $results['username'] . "#" . $results['discriminator'] . "',
-        '" . $results['id'] . "'
+        '" . substr(bindec(substr(decbin($decodedResponse['id']), 0, -22)) + 1420070400000, 0, -3) . "',
+        '" . $decodedResponse['username'] . "#" . $decodedResponse['discriminator'] . "',
+        '" . $decodedResponse['id'] . "'
     )");
 
     header("location: /index.html");

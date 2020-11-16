@@ -26,13 +26,12 @@ if (isset($_GET['skip'])) {
 
 $result = (object) array();
 
-$resultSQL = $conn->query("SELECT * FROM `users` LIMIT " . $skip . ", 15;");
+$resultSQL = $conn->query("SELECT * FROM `users` WHERE `type` = 0 LIMIT " . $skip . ", 15;");
 $usersArray = array();
 while ($row = $resultSQL->fetch_assoc()) {
     $user = (object) array();
     $user->id = (int) $row['id'];
-    $user->score = 5;
-
+    $user->score = 0;
     $countUp = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '" . (int) $row['id'] . "' AND `type` =  1;")->fetch_row()[0];
     $countDown = $conn->query("SELECT COUNT(*) FROM `votes` where `forID` = '" . (int) $row['id'] . "' AND `type` =  0;")->fetch_row()[0];
     $votesCount = (int) $countUp - (int) $countDown;
@@ -42,15 +41,28 @@ while ($row = $resultSQL->fetch_assoc()) {
         $user->votes = 0;
     }
 
+    $quizScore = $conn->query("SELECT `score` FROM `test_questions` where `userID` = '" . (int) $row['id'] . "';")->fetch_row();
+    if (isset($quizScore[0])) {
+        $user->score = $user->score + 20;
+    }
+
+    $flipChallengeScore = $conn->query("SELECT `score` FROM `test_flips` where `userID` = '" . (int) $row['id'] . "';")->fetch_row();
+    if (isset($flipChallengeScore[0])) {
+        $user->score = $user->score + 20;
+    }
+
     $accounts = array();
     if (isset($conn->query("SELECT `id` FROM `auth_telegram` where `userID` = '" . (int) $row['id'] . "' LIMIT 1;")->fetch_row()[0])) {
         array_push($accounts, "telegram");
+        $user->score = $user->score + 10;
     }
     if (isset($conn->query("SELECT `id` FROM `auth_discord` where `userID` = '" . (int) $row['id'] . "' LIMIT 1;")->fetch_row()[0])) {
         array_push($accounts, "discord");
+        $user->score = $user->score + 25;
     }
     if (isset($conn->query("SELECT `id` FROM `auth_twitter` where `userID` = '" . (int) $row['id'] . "' LIMIT 1;")->fetch_row()[0])) {
         array_push($accounts, "twitter");
+        $user->score = $user->score + 25;
     }
     $user->accounts = $accounts;
     array_push($usersArray, $user);
