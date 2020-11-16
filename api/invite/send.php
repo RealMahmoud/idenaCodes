@@ -4,7 +4,7 @@ require_once dirname(__FILE__) . "/../../common/_public.php";
 require_once dirname(__FILE__) . "/../../vendor/autoload.php";
 use Elliptic\EC;
 use kornrunner\Keccak;
-
+$result = (object) array();
 function inviteAble($status)
 {
     switch ($status) {
@@ -35,18 +35,18 @@ if (isset($_SESSION['CODES-Token'])) {
     $loggedUserID = $data[0];
     $banned = $data[1];
     if ($banned) {
-        $result = (object) array();
+        
         $result->error = true;
         die(json_encode($result));
     }
 } else {
-    $result = (object) array();
+    
     $result->error = true;
     die(json_encode($result));
 }
 
 if (!isset($_POST['forID']) || !isset($_POST['invite'])) {
-    $result = (object) array();
+    
     $result->error = true;
     die(json_encode($result));
 }
@@ -55,7 +55,7 @@ $invite = htmlspecialchars($conn->real_escape_string($_POST['invite']));
 $forID = (int) $forID;
 
 if (!strlen($invite) == 64) {
-    $result = (object) array();
+    
     $result->error = true;
     die(json_encode($result));
 }
@@ -72,18 +72,18 @@ $resultInvitee = curl_get(API_BASE_URL . "/Identity/" . $address3);
 $resultInviteTxs = curl_get(API_BASE_URL . "/address/" . $address2 . "/txs?skip=0&limit=30");
 
 if (!isset($resultInvite['result']['state']) || !isset($resultInvitee['result']['state']) || !isset($resultInviteTxs['result'])) {
-    $result = (object) array();
+    
     $result->error = true;
     die(json_encode($result));
 }
 if (!($resultInvite['result']['state'] == 'Invite') || !inviteable($resultInvitee['result']['state'])) {
-    $result = (object) array();
+    
     $result->error = true;
     die(json_encode($result));
 }
 
 if (!(end($resultInviteTxs['result'])['type'] == "InviteTx") || !(strtolower(end($resultInviteTxs['result'])['from']) == $address1)) {
-    $result = (object) array();
+    
     $result->error = true;
     die(json_encode($result));
 }
@@ -92,6 +92,6 @@ $dna_activateInvite = json_encode(array("method" => "dna_activateInvite", "param
 /*$dna_activateInvite_result = curl_post(RPC_BASE_URL, $dna_activateInvite);*/
 
 $conn->query("INSERT INTO `invites`( `userID`, `forID`, `epoch`, `validations`, `address_1`, `address_2`, `address_3`) VALUES ('" . $loggedUserID . "','" . $forID . "','" . $epoch . "',0,'" . $address1 . "','" . $address2 . "','" . $address3 . "' );");
-$result = (object) array();
+
 $result->error = false;
 die(json_encode($result));

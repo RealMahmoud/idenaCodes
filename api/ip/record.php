@@ -11,11 +11,13 @@ if (isset($_SESSION['CODES-Token'])) {
     if ($banned) {
         $result = (object) array();
         $result->error = true;
+        $result->reason = "Banned";
         die(json_encode($result));
     }
 } else {
     $result = (object) array();
     $result->error = true;
+    $result->reason = "Not logged in";
     die(json_encode($result));
 }
 

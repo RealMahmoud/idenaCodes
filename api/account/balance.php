@@ -10,10 +10,12 @@ if (isset($_SESSION['CODES-Token'])) {
     $banned = $data[1];
     if ($banned) {
         $result->error = true;
+        $result->reason = "Banned";
         die(json_encode($result));
     }
 } else {
     $result->error = true;
+    $result->reason = "Not logged in";
     die(json_encode($result));
 }
 
@@ -22,6 +24,7 @@ $row = $conn->query("SELECT `balance` FROM `users` where `id` = '" . $loggedUser
 
 if ($row == null) {
     $result->error = true;
+    $result->reason = "ERROR 0";
     die(json_encode($result));
 } else {
     $result->error = false;

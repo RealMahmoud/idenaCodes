@@ -39,7 +39,7 @@ function getPubKey($message, $signature)
 
 function getstatus($address)
 {
-    if (strlen($address) < 20) {
+    if (strlen($address) != 42) {
         return 'Undefined';
     }
     $ch = curl_init();
