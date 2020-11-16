@@ -78,8 +78,6 @@ function nextFlip() {
 
 function previousFlip() {
     if (fcIndex > 0) {
-
-
         fcIndex = fcIndex - 1;
         loadFlip(fcIndex);
 
