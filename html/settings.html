@@ -1,58 +1,66 @@
-<div class="container mt-3">
-    <div class="row mb-4 mt-4">
-       <div class="col-3">
-          <div class="w-75 ml-auto">
-             <img class="rounded-circle border w-100" style="background-color:#00000057;" id="content-image" src="/api/images/?id=1">
-          </div>
-       </div>
-       <div class="col-9">
-          <br>
-          <br>
-          <p class="m-auto font-weight-bold">ID : <span id="content-id"></p>
-          <p class="m-auto">Username : <span id="content-username"></p>
-          <p class="m-auto">Address : <span id="content-address"></p>
-          <p class="m-auto">Balance : <span id="content-balance"> iDNA</p>
-          <p class="m-auto">Status : <span id="content-status"></p>
-          <p class="m-auto">Invites Sent : <span id="content-invitesSent"></p>
-       </div>
-    </div>
-    <hr>
-    <div class="row">
-       <div class="col-4">
-          <div class="list-group" id="list-tab" role="tablist">
-             <a class="list-group-item list-group-item-action active d-flex justify-content-between align-items-center"
-                id="list-profile-list" data-toggle="list" href="#list-profile" role="tab"
-                aria-controls="profile">Profile</a>
-             <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                id="list-home-list" data-toggle="list" href="#list-connections" role="tab"
-                aria-controls="connections">Connections</a>
-             <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                id="list-home-list" data-toggle="list" href="#list-invoices" role="tab"
-                aria-controls="invoices">Invoices<span class="badge badge-primary badge-pill ml-auto"><span
-                id="content-invoicesCount"></span></a>
-             <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                id="list-home-list" data-toggle="list" href="#list-reports" role="tab"
-                aria-controls="reports">Reports<span class="badge badge-primary badge-pill ml-auto"><span
-                id="content-reportsCount"></span></a>
-             <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                id="list-home-list" data-toggle="list" href="#list-history" role="tab"
-                aria-controls="history">History<span class="badge badge-primary badge-pill ml-auto"><span
-                id="content-historyCount"></span></a>
-          </div>
-       </div>
-       <div class="col-8">
-          <div class="tab-content" id="nav-tabContent">
-             <div class="tab-pane fade show active" id="list-profile" role="tabpanel"
-                aria-labelledby="list-profile-list">
-                <div class="card">
+<div class="container mt-3 mb-5">
+   <div class="row mb-4 mt-4">
+      <div class="col-3">
+         <div class="w-75 ml-auto">
+            <img class="rounded-circle border w-100" style="background-color:#00000057;" id="content-image"
+               src="/api/images/?id=1">
+         </div>
+      </div>
+      <div class="col-9">
+         <br>
+         <br>
+         <p class="m-auto font-weight-bold">ID : <span id="content-id"></p>
+         <p class="m-auto">Username : <span id="content-username"></p>
+         <p class="m-auto">Address : <span id="content-address"></p>
+         <p class="m-auto">Balance : <span id="content-balance"> iDNA</p>
+         <p class="m-auto">Status : <span id="content-status"></p>
+      </div>
+   </div>
+   <hr>
+   <div class="row">
+      <div class="col-4">
+         <div class="list-group" id="list-tab" role="tablist">
+            <a class="list-group-item list-group-item-action active d-flex justify-content-between align-items-center"
+               id="list-profile-list" data-toggle="list" href="#list-profile" role="tab"
+               aria-controls="profile">Profile</a>
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+               id="list-connections-list" data-toggle="list" href="#list-connections" role="tab"
+               aria-controls="connections">Connections</a>
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+               id="list-balance-list" data-toggle="list" href="#list-balance" role="tab"
+               aria-controls="balance">Balance<span class="badge badge-success badge-pill ml-auto"></a>
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+               id="list-invoices-list" data-toggle="list" href="#list-invoices" role="tab"
+               aria-controls="invoices">Invoices<span class="badge badge-primary badge-pill ml-auto"><span
+                     id="content-invoicesCount">0</span></a>
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+               id="list-invitees-list" data-toggle="list" href="#list-invitees" role="tab"
+               aria-controls="invitees">Invitees<span class="badge badge-info badge-pill ml-auto"><span
+                     id="content-inviteesCount">0</span></a>
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+               id="list-reports-list" data-toggle="list" href="#list-reports" role="tab"
+               aria-controls="reports">Reports<span class="badge badge-danger badge-pill ml-auto"><span
+                     id="content-reportsCount">0</span></a>
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+               id="list-history-list" data-toggle="list" href="#list-history" role="tab"
+               aria-controls="history">History<span class="badge badge-secondary badge-pill ml-auto"><span
+                     id="content-historyCount">0</span></a>
+         </div>
+      </div>
+      <div class="col-8">
+         <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="list-profile" role="tabpanel"
+               aria-labelledby="list-profile-list">
+               <div class="card">
                   <div class="card-body p-2">
                      <div class="row">
                         <div class="col-8">
                            <p class="m-1"> Record IP/Country :</p>
                         </div>
                         <div class="col-4 text-center" id="profile-ipRecord">
-                           <button type="button" class="btn btn-outline-secondary btn-block"id="profile-recordIPButton" onclick="recordIP();">
-                           Record</button>
+                           <button type="button" class="btn btn-outline-secondary btn-block" id="profile-recordIPButton"
+                              onclick="recordIP();">
+                              Record</button>
                         </div>
                      </div>
                   </div>
@@ -65,8 +73,9 @@
                            <p class="m-1">Idena Quiz :</p>
                         </div>
                         <div class="col-4 text-center" id="profile-ipRecord">
-                           <button type="button" class="btn btn-outline-success btn-block"id="profile-quizButton"onclick="navigate('/quiz/')">
-                           Start</button>
+                           <button type="button" class="btn btn-outline-success btn-block" id="profile-quizButton"
+                              onclick="navigate('/quiz/')">
+                              Start</button>
                         </div>
                      </div>
                   </div>
@@ -77,105 +86,189 @@
                      <div class="row">
                         <div class="col-8">
                            <p class="m-1">Idena flips challenge :</p>
-                           
+
                         </div>
                         <div class="col-4 text-center" id="profile-ipRecord">
-                           <button type="button" class="btn btn-outline-success btn-block"id="profile-FCButton"onclick="navigate('/flipChallenge/')">
-                           Start</button>
+                           <button type="button" class="btn btn-outline-success btn-block" id="profile-FCButton"
+                              onclick="navigate('/flipChallenge/')">
+                              Start</button>
                         </div>
                      </div>
                   </div>
                </div>
-             
-             </div>
-             <div class="tab-pane fade" id="list-connections" role="tabpanel"
-                aria-labelledby="list-connections-list">
-                <div class="card">
-                   <div class="card-body">
-                      <div class="row">
-                         <div class="col-8">
-                            Telegram :
-                         </div>
-                         <div class="col-4" id="telegramLoginButton">
-                            <script async data-userpic="false" data-telegram-login="IdenaCodesBot"
-                               data-size="medium" data-onauth="onTelegramAuth(user)"
-                               data-request-access="write"></script>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <br>
-                <div class="card">
-                   <div class="card-body">
-                      <div class="row">
-                         <div class="col-8">
-                            Discord :
-                         </div>
-                         <div class="col-4" id="discordLoginButton">
-                            <a type="button" class="btn btn-outline-light btn-sm"
-                               style="background-color:6c89e0; border:0;" href="/api/discord/auth.php"><i
-                               class="fab fa-discord m-1"></i>
-                            Connect to Discord</a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <br>
-                <div class="card">
-                   <div class="card-body">
-                      <div class="row">
-                         <div class="col-8">
-                            Twitter :
-                         </div>
-                         <div class="col-4" id="twitterLoginButton">
-                            <a type="button" class="btn btn-outline-light btn-sm"
-                               style="background-color:5bc0de; border:0;" href="/api/twitter/auth.php"><i
-                               class="fab fa-twitter m-1"></i>
-                            Connect to Twitter</a>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-             </div>
-             <div class="tab-pane fade" id="list-invoices" role="tabpanel" aria-labelledby="list-invoices-list">
-                <div class=" table-responsive">
-                   <table class="table table-striped">
-                      <thead>
-                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">info</th>
-                            <th scope="col">amount</th>
-                            <th scope="col">epoch</th>
-                            <th scope="col">options</th>
-                         </tr>
-                      </thead>
-                      <tbody id="content-invoicesTable">
-                      </tbody>
-                   </table>
-                </div>
-             </div>
-             <div class="tab-pane fade" id="list-reports" role="tabpanel" aria-labelledby="list-reports-list">
-                <div class="table-responsive">
-                   <ul class="list-group" id="content-reportsList">
-                   </ul>
-                </div>
-             </div>
-             <div class="tab-pane fade" id="list-history" role="tabpanel" aria-labelledby="list-history-list">
-                <div class="table-responsive">
-                   <table class="table table-striped">
-                      <thead>
-                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Event</th>
-                            <th scope="col">Time</th>
-                         </tr>
-                      </thead>
-                      <tbody id="content-historyTable">
-                      </tbody>
-                   </table>
-                </div>
-             </div>
-          </div>
-       </div>
-    </div>
- </div>
+
+            </div>
+            <div class="tab-pane fade" id="list-balance" role="tabpanel" aria-labelledby="list-balance">
+               <div class="row text-center mb-4">
+                  <div class="col">
+                     <div class="card">
+                        <div class="card-body">
+                           <h6 class="text-success">Balance</h6>
+                           <p>~<span id="settings-balance">0</span> iDNA</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col">
+                     <div class="card">
+                        <div class="card-body">
+                           <h6 class="text-info">Total Spent</h6>
+                           <p>~<span id="settings-totalSpent">0</span> iDNA</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col">
+                     <div class="card">
+                        <div class="card-body">
+                           <h6 class="text-danger">Current Epoch Charges</h6>
+                           <p>~<span id="settings-currentEpochCharges">0</span> iDNA</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class=" table-responsive">
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                           <th scope="col">#</th>
+                           <th scope="col">txHash</th>
+                           <th scope="col">amount</th>
+                           <th scope="col">time</th>
+                        </tr>
+                     </thead>
+                     <tbody id="content-inviteesTable">
+                     </tbody>
+                  </table>
+               </div>
+
+            </div>
+            <div class="tab-pane fade" id="list-connections" role="tabpanel" aria-labelledby="list-connections-list">
+               <div class="card">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-8">
+                           Telegram :
+                        </div>
+                        <div class="col-4" id="telegramLoginButton">
+                           <script async data-userpic="false" data-telegram-login="IdenaCodesBot" data-size="medium"
+                              data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <br>
+               <div class="card">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-8">
+                           Discord :
+                        </div>
+                        <div class="col-4" id="discordLoginButton">
+                           <a type="button" class="btn btn-outline-light btn-sm"
+                              style="background-color:6c89e0; border:0;" href="/api/discord/auth.php"><i
+                                 class="fab fa-discord m-1"></i>
+                              Connect to Discord</a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <br>
+               <div class="card">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-8">
+                           Twitter :
+                        </div>
+                        <div class="col-4" id="twitterLoginButton">
+                           <a type="button" class="btn btn-outline-light btn-sm"
+                              style="background-color:5bc0de; border:0;" href="/api/twitter/auth.php"><i
+                                 class="fab fa-twitter m-1"></i>
+                              Connect to Twitter</a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="tab-pane fade" id="list-invoices" role="tabpanel" aria-labelledby="list-invoices-list">
+               <div class=" table-responsive">
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                           <th scope="col">#</th>
+                           <th scope="col">info</th>
+                           <th scope="col">amount</th>
+                           <th scope="col">epoch</th>
+                           <th scope="col">options</th>
+                        </tr>
+                     </thead>
+                     <tbody id="content-invoicesTable">
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <div class="tab-pane fade" id="list-invitees" role="tabpanel" aria-labelledby="list-invitees-list">
+               <div class="row text-center mb-4">
+                  <div class="col-3">
+                     <div class="card">
+                        <div class="card-body">
+                           <h6 class="text-success">Total Invites</h6>
+                           <p class="m-0" id="settings-totalInvitees">0</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-6">
+                     <div class="card">
+                        <div class="card-body">
+                           <h6 class="text-info">Epoch <span id="settings-epochsNumber"></span></h6>
+                           <p class="m-0" id="settings-epochsTotal">0 / 0 / 0</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-3">
+                     <div class="card">
+                        <div class="card-body">
+                           <h6 class="text-danger">Total Failed</h6>
+                           <p class="m-0" id="settings-totalFailed">0</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <table class="table table-striped">
+                  <thead>
+                     <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">user id</th>
+                        <th scope="col">address</th>
+                        <th scope="col">status</th>
+                        <th scope="col">epoch</th>
+                        <th scope="col">validations</th>
+                     </tr>
+                  </thead>
+                  <tbody id="content-inviteesTable">
+                  </tbody>
+               </table>
+            </div>
+            <div class="tab-pane fade" id="list-reports" role="tabpanel" aria-labelledby="list-reports-list">
+               <div class="table-responsive">
+                  <ul class="list-group" id="content-reportsList">
+                  </ul>
+               </div>
+            </div>
+            <div class="tab-pane fade" id="list-history" role="tabpanel" aria-labelledby="list-history-list">
+               <div class="table-responsive">
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                           <th scope="col">#</th>
+                           <th scope="col">event</th>
+                           <th scope="col">time</th>
+                        </tr>
+                     </thead>
+                     <tbody id="content-historyTable">
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
