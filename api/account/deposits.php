@@ -28,19 +28,27 @@ if ($resultSQL == null) {
     die(json_encode($result));
 } else {
     $result->error = false;
-
     $deposits = array();
-
     while ($row = $resultSQL->fetch_assoc()) {
         $deposit = (object) array();
-        $deposit->id = $row['id'];
-        $deposit->txHash = $row['txHash'];
-        $deposit->amount = $row['amount'];
-        $deposit->time = $row['time'];
+        $deposit->id = $row[0];
+        $deposit->txHash = $row[1];
+        $deposit->amount = $row[2];
+        $deposit->time = $row[3];
         array_push($deposits, $deposit);
     }
-
     $result->deposits = $deposits;
 
+
+    $row = $conn->query("SELECT `address`,`balance` FROM `users` where `id` = '" . $loggedUserID . "' LIMIT 1;")->fetch_row();
+    $result->address = $row[0];
+    $result->balance = $row[1];
+    $result->totalSpent = $conn->query("SELECT COALESCE(SUM(amount),0) FROM `invoices` WHERE `paid` = 1 AND `userID` = '" . $loggedUserID . "'  ;")->fetch_row()[0];
+    $result->currentEpochCharges = $conn->query("SELECT COALESCE(SUM(amount),0) FROM `invoices` WHERE `epoch` = (SELECT `value` FROM `config` WHERE `key` = 'epoch') AND `userID` = '" . $loggedUserID . "'  ;")->fetch_row()[0];
+    $result->depositAddress = DEPOSITS_ADDRESS;
     die(json_encode($result));
 }
+
+
+
+
