@@ -31,7 +31,7 @@ function getstatus($address)
 
 $resultSQL = $conn->query("SELECT `address` from `users`;");
 while ($row = $resultSQL->fetch_assoc()) {
-    $conn->query("UPDATE `users` SET `status` = '".getstatus($row[0])."' WHERE `address` = '".$row[0]."'");
+    $conn->query("UPDATE `users` SET `status` = '".getstatus($row['address'])."' WHERE `address` = '".$row['address']."'");
 }
 
 
