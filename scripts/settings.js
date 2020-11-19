@@ -98,13 +98,13 @@ function loadDeposits() {
         document.getElementById("content-depositsTable").innerHTML += '<tr>' +
           '<th scope="row">' + deposit.id + '</th>' +
           '<td>' + deposit.txHash + '</td>' +
-          '<td>' + (deposit.amount).toFixed(2) + '</td>' +
+          '<td>' + parseFloat(deposit.amount).toFixed(2) + '</td>' +
           '<td>' + deposit.time + '</td>' +
           '</tr>';
       });
-      document.getElementById("settings-balance").innerHTML = (data.balance).toFixed(2);
-      document.getElementById("settings-totalSpent").innerHTML = (data.totalSpent).toFixed(2);
-      document.getElementById("settings-currentEpochCharges").innerHTML = (data.currentEpochCharges).toFixed(2);
+      document.getElementById("settings-balance").innerHTML = parseFloat(data.balance).toFixed(2);
+      document.getElementById("settings-totalSpent").innerHTML = parseFloat(data.totalSpent).toFixed(2);
+      document.getElementById("settings-currentEpochCharges").innerHTML = parseFloat(data.currentEpochCharges).toFixed(2);
       document.getElementById("settings-depositAddress").innerHTML = data.depositAddress;
     }
 

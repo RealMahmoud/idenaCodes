@@ -7,13 +7,13 @@ if (isset($_SESSION['CODES-Token'])) {
     $loggedUserID = $data[0];
     $banned = $data[1];
     if ($banned) {
-        
+
         $result->error = true;
         $result->reason = "Banned";
         die(json_encode($result));
     }
 } else {
-    
+
     $result->error = true;
     $result->reason = "Not logged in";
     die(json_encode($result));

@@ -21,8 +21,8 @@ function checkID() {
 
 function loadInviteList(limit = 10, skip = 0) {
     document.getElementById('usersList').innerHTML = '<div class="col mt-2 text-center">' +
-                '<h4>Loading</h4>' +
-                '</div>';
+        '<h4>Loading</h4>' +
+        '</div>';
     ajax_get("/api/app/getList.php?skip=" + skip + "&limit=" + limit, function (data) {
         data = JSON.parse(data);
         if (data.error) {
@@ -31,7 +31,7 @@ function loadInviteList(limit = 10, skip = 0) {
                 '</div>';
             return
         }
-
+        document.getElementById('usersList').innerHTML = '';
         data.users.forEach(user => {
             accountsList = '';
             if (user.accounts.length > 0) {
@@ -42,9 +42,6 @@ function loadInviteList(limit = 10, skip = 0) {
                 accountsList += '</div>';
 
             }
-
-
-
             document.getElementById('usersList').innerHTML += '<div class="col-4 mb-2 mt-2">' +
                 '<div class="card w-100" height="150px"">' +
                 '<div class=" row p-0">' +
