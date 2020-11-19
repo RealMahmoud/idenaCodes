@@ -20,6 +20,9 @@ function checkID() {
 }
 
 function loadInviteList(limit = 10, skip = 0) {
+    document.getElementById('usersList').innerHTML = '<div class="col mt-2 text-center">' +
+                '<h4>Loading</h4>' +
+                '</div>';
     ajax_get("/api/app/getList.php?skip=" + skip + "&limit=" + limit, function (data) {
         data = JSON.parse(data);
         if (data.error) {
