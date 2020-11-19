@@ -11,19 +11,19 @@ function loadInfo() {
       changeContent('status', data.status || ' - ');
       changeContent('address', data.address);
       changeContent('balance', data.balance);
-      changeContent('invitesSent', data.invitesSent);
+
 
       changeContent('username', data.username || ' - ');
       if (data.ip) {
         document.getElementById('profile-recordIPButton').disabled = true;
       }
-      if (!data.flipChallengeScore  == ' - ') {
+      if (!data.flipChallengeScore == ' - ') {
         document.getElementById('profile-FCButton').disabled = true;
       }
       if (!data.quizScore == ' - ') {
         document.getElementById('profile-quizButton').disabled = true;
       }
-      
+
 
       if (!data.accounts.includes('telegram')) {
         loadTelegram();
@@ -59,6 +59,61 @@ function recordIP() {
 
   });
 }
+
+
+function loadInvitees() {
+  ajax_get("/api/account/invitees.php", function (data) {
+    data = JSON.parse(data);
+    if (!data.error) {
+      data.invitees.forEach(invitee => {
+        document.getElementById("content-inviteesTable").innerHTML += '<tr>' +
+          '<th scope="row">' + invitee.id + '</th>' +
+          '<td>' + invitee.userID + '</td>' +
+          '<td>' + invitee.address + '</td>' +
+          '<td>' + invitee.status + '</td>' +
+          '<td>' + invitee.epoch + '</td>' +
+          '<td>' + invitee.validations + '</td>' +
+          '</tr>';
+      });
+      document.getElementById("settings-totalInvitees").innerHTML = data.totalInvitees;
+      document.getElementById("settings-epochsNumber").innerHTML = (data.currentEpoch - 1) + ' / ' + (data.currentEpoch - 2) + ' / ' + (data.currentEpoch - 3);
+      document.getElementById("settings-epochsTotal").innerHTML = data.totalValidation1 + ' / ' + data.totalValidation2 + ' / ' + data.totalValidation3;
+      document.getElementById("settings-totalFailed").innerHTML = data.totalFailed;
+      document.getElementById("content-inviteesCount").innerHTML = data.totalInvitees;
+      if (data.totalInvitees == '0') {
+        document.getElementById("list-invitees").innerHTML = "<h5 class='text-center'>No invitees found</h5>"
+      }
+    }
+
+  });
+
+}
+
+
+function loadDeposits() {
+  ajax_get("/api/account/deposits.php", function (data) {
+    data = JSON.parse(data);
+    if (!data.error) {
+      data.deposits.forEach(deposit => {
+        document.getElementById("content-depositsTable").innerHTML += '<tr>' +
+          '<th scope="row">' + deposit.id + '</th>' +
+          '<td>' + deposit.txHash + '</td>' +
+          '<td>' + parseFloat(deposit.amount) + '</td>' +
+          '<td>' + deposit.time + '</td>' +
+          '</tr>';
+      });
+      document.getElementById("settings-balance").innerHTML = parseFloat(data.balance);
+      document.getElementById("settings-totalSpent").innerHTML = parseFloat(data.totalSpent);
+      document.getElementById("settings-currentEpochCharges").innerHTML = parseFloat(data.currentEpochCharges);
+      document.getElementById("settings-depositAddress").innerHTML = data.depositAddress;
+    }
+
+  });
+
+}
+
+
+
 
 function loadInvoices() {
   ajax_get("/api/payments/invoices.php", function (data) {
@@ -510,6 +565,8 @@ function loadTelegram() {
 function viewSettingsPage() {
   loadInfo();
   loadInvoices();
+  loadInvitees();
+  loadDeposits();
   loadReports();
   loadHistory();
 }
