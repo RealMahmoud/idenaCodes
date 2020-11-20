@@ -97,9 +97,9 @@ function loadDeposits() {
       data.deposits.forEach(deposit => {
         document.getElementById("content-depositsTable").innerHTML += '<tr>' +
           '<th scope="row">' + deposit.id + '</th>' +
-          '<td>' + deposit.txHash + '</td>' +
+          '<td><a href="https://scan.idena.io/transaction/'+deposit.txHash+'">' + deposit.txHash.slice(0,30)+'...</a>' + '</td>' +
           '<td>' + parseFloat(deposit.amount).toFixed(2) + '</td>' +
-          '<td>' + deposit.time + '</td>' +
+          '<td>' + moment.utc(deposit.time).local().format('YYYY-MM-DD HH:mm A') + '</td>' +
           '</tr>';
       });
       document.getElementById("settings-balance").innerHTML = parseFloat(data.balance).toFixed(2);
@@ -172,7 +172,7 @@ function loadHistory() {
         document.getElementById("content-historyTable").innerHTML += '<tr>' +
           '<th scope="row">' + event.id + '</th>' +
           '<td>' + event.text + '</td>' +
-          '<td>' + event.time + '</td>' +
+          '<td>' + moment.utc(event.time).local().format('YYYY-MM-DD HH:mm A') + '</td>' +
           '</tr>';
       });
       document.getElementById("content-historyCount").innerHTML = count;
