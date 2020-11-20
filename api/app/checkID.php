@@ -6,6 +6,7 @@ $result = (object) array();
 if (isset($_SESSION['CODES-Token'])) {
     $data = $conn->query("SELECT `id`,`banned` FROM `users` WHERE `address` = (SELECT `address` FROM `auth_idena` WHERE `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
+    $conn->query("UPDATE `users` SET `lastseen` = CURDATE() WHERE `id` = '" . $loggedUserID . "';");
     $banned = $data[1];
     if ($banned) {
         $result->error = true;
@@ -55,8 +56,7 @@ if ($row == null) {
 
     $result->reports = $conn->query("SELECT COUNT(*) FROM `reports` WHERE `userID` = '" . $id . "' ;")->fetch_row()[0];
 
-
-    $loggedUserType = (int)$conn->query("SELECT `type` FROM `users` WHERE `id` = '" . $loggedUserID . "' ;")->fetch_row()[0];
+    $loggedUserType = (int) $conn->query("SELECT `type` FROM `users` WHERE `id` = '" . $loggedUserID . "' ;")->fetch_row()[0];
     if ($loggedUserType == 0) {
         $result->inviteAbility = false;
         $result->votingAbility = false;

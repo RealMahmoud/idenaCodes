@@ -6,9 +6,10 @@ $result = (object) array();
 if (isset($_SESSION['CODES-Token'])) {
     $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
+    $conn->query("UPDATE `users` SET `lastseen` = CURDATE() WHERE `id` = '" . $loggedUserID . "';");
     $banned = $data[1];
     if ($banned) {
- 
+
         $result->error = true;
         $result->reason = "Banned";
         die(json_encode($result));
@@ -19,8 +20,6 @@ if (isset($_SESSION['CODES-Token'])) {
     $result->reason = "Not logged in";
     die(json_encode($result));
 }
-
-
 
 $resultSQL = $conn->query("SELECT `id`,`txHash`,`amount`,`time` FROM `deposits` where `userID` = '" . $loggedUserID . "' LIMIT 50;");
 if ($resultSQL == null) {
@@ -39,7 +38,6 @@ if ($resultSQL == null) {
     }
     $result->deposits = $deposits;
 
-
     $row = $conn->query("SELECT `address`,`balance` FROM `users` where `id` = '" . $loggedUserID . "' LIMIT 1;")->fetch_row();
     $result->address = $row[0];
     $result->balance = $row[1];
@@ -48,7 +46,3 @@ if ($resultSQL == null) {
     $result->depositAddress = DEPOSITS_ADDRESS;
     die(json_encode($result));
 }
-
-
-
-

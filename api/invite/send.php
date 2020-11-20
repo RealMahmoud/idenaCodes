@@ -33,6 +33,7 @@ header('Content-Type: application/json');
 if (isset($_SESSION['CODES-Token'])) {
     $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
+    $conn->query("UPDATE `users` SET `lastseen` = CURDATE() WHERE `id` = '" . $loggedUserID . "';");
     $banned = $data[1];
     if ($banned) {
         $result->error = true;
@@ -40,12 +41,12 @@ if (isset($_SESSION['CODES-Token'])) {
         die(json_encode($result));
     }
 } else {
-    
+
     $result->error = true;
     $result->reason = "Not logged in";
     die(json_encode($result));
 }
-$type = $conn->query("SELECT `type` FROM `users` where `id` = '".$loggedUserID."' LIMIT 1 ;")->fetch_row()[0];
+$type = $conn->query("SELECT `type` FROM `users` where `id` = '" . $loggedUserID . "' LIMIT 1 ;")->fetch_row()[0];
 if ($type == 0) {
     $result->error = true;
     $result->reason = "Can't send invites";
@@ -61,7 +62,7 @@ $invite = htmlspecialchars($conn->real_escape_string($_POST['invite']));
 $forID = (int) $forID;
 
 if (!strlen($invite) == 64) {
-    
+
     $result->error = true;
     $result->reason = "invite is not valid";
     die(json_encode($result));
@@ -79,20 +80,20 @@ $resultInvitee = curl_get(API_BASE_URL . "/Identity/" . $address3);
 $resultInviteTxs = curl_get(API_BASE_URL . "/address/" . $address2 . "/txs?skip=0&limit=30");
 
 if (!isset($resultInvite['result']['state']) || !isset($resultInvitee['result']['state']) || !isset($resultInviteTxs['result'])) {
-    
+
     $result->error = true;
     $result->reason = "ERROR";
     die(json_encode($result));
 }
 if (!($resultInvite['result']['state'] == 'Invite') || !inviteable($resultInvitee['result']['state'])) {
-    
+
     $result->error = true;
     $result->reason = "ERROR";
     die(json_encode($result));
 }
 
 if (!(end($resultInviteTxs['result'])['type'] == "InviteTx") || !(strtolower(end($resultInviteTxs['result'])['from']) == $address1)) {
-    
+
     $result->error = true;
     $result->reason = "ERROR";
     die(json_encode($result));

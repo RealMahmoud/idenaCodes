@@ -7,15 +7,16 @@ session_start();
 if (isset($_SESSION['CODES-Token'])) {
     $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
+    $conn->query("UPDATE `users` SET `lastseen` = CURDATE() WHERE `id` = '" . $loggedUserID . "';");
     $banned = $data[1];
     if ($banned) {
-        
+
         $result->error = true;
         $result->reason = "Banned";
         die(json_encode($result));
     }
 } else {
-    
+
     $result->error = true;
     $result->reason = "Not logged in";
     die(json_encode($result));
@@ -37,19 +38,17 @@ function getClosest($search, $object)
     return $object[$closest];
 }
 
-
 $json = file_get_contents('php://input');
-$POSTDATA = (array)json_decode($json);
-
+$POSTDATA = (array) json_decode($json);
 
 $dates = file_get_contents("./dates.json");
 $datesArr = json_decode($dates, true);
 
 if (isset($POSTDATA['hash'])) {
     foreach ($POSTDATA as $key => $value) {
-        
+
         if (in_array($key, $keys)) {
-            
+
             $dataTG[] = $key . "=" . $value;
         }
     }

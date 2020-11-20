@@ -7,6 +7,7 @@ $result = (object) array();
 if (isset($_SESSION['CODES-Token'])) {
     $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
+    $conn->query("UPDATE `users` SET `lastseen` = CURDATE() WHERE `id` = '" . $loggedUserID . "';");
     $banned = $data[1];
     if ($banned) {
         $result->error = true;
@@ -27,8 +28,6 @@ $result->totalValidation2 = $conn->query("SELECT COUNT(*) FROM `invites` WHERE `
 $result->totalValidation3 = $conn->query("SELECT COUNT(*) FROM `invites` WHERE `epoch` = (SELECT `value` FROM `config` WHERE `key` = 'epoch') - 3 AND `userID` = '" . $loggedUserID . "' ;")->fetch_row()[0];
 $result->totalFailed = $conn->query("SELECT COUNT(*) FROM `invites` WHERE `validations` = 0 AND `epoch` != (SELECT `value` FROM `config` WHERE `key` = 'epoch') AND `userID` = '" . $loggedUserID . "' ;")->fetch_row()[0];
 
-
-
 $resultSQL = $conn->query("SELECT `id`, `forID`, `epoch`, `validations`, `address_3` FROM `invites` where `userID` = '" . $loggedUserID . "'  LIMIT 10;");
 if ($resultSQL == null) {
     $result->error = true;
@@ -46,7 +45,7 @@ if ($resultSQL == null) {
         $invitee->epoch = $row[2];
         $invitee->validations = $row[3];
         $invitee->address = $row[4];
-        $invitee->status = $conn->query("SELECT `status` FROM `users` WHERE `address` = '".$row[4]."' ;");
+        $invitee->status = $conn->query("SELECT `status` FROM `users` WHERE `address` = '" . $row[4] . "' ;");
         array_push($invitees, $invitee);
     }
     $result->invitees = $invitees;
