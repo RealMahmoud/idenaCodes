@@ -30,10 +30,10 @@ if ($resultSQL == null) {
     $deposits = array();
     while ($row = $resultSQL->fetch_assoc()) {
         $deposit = (object) array();
-        $deposit->id = $row[0];
-        $deposit->txHash = $row[1];
-        $deposit->amount = $row[2];
-        $deposit->time = $row[3];
+        $deposit->id = $row['id'];
+        $deposit->txHash = $row['txHash'];
+        $deposit->amount = $row['amount'];
+        $deposit->time = $row['time'];
         array_push($deposits, $deposit);
     }
     $result->deposits = $deposits;
