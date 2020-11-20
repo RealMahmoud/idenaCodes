@@ -37,7 +37,7 @@ function getPubKey($message, $signature)
     return $pubkey->encode("hex");
 }
 function getAccountType($status){
-    if($status == 'Human' || $status == 'Verified' || $status == 'Newbiew'){
+    if($status == 'Human' || $status == 'Verified' || $status == 'Newbie' || $status == 'Suspended' || $status == 'Candidate' || $status == 'Zombie'){
         return 1;
     }else{
         return 0;
