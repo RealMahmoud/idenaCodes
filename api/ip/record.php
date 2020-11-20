@@ -30,7 +30,7 @@ if (isset($conn->query("SELECT `ip` FROM `users` WHERE `id` = '" . $loggedUserID
 }
 
 if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
-    $ip = $_SERVER["HTTP_CF_CONNECTING_IP"];
+    $ip = htmlspecialchars($conn->real_escape_string($_SERVER["HTTP_CF_CONNECTING_IP"]));
 } else {
     $ip = $_SERVER['REMOTE_ADDR'];
 }
