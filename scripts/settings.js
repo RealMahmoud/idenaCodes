@@ -10,7 +10,7 @@ function loadInfo() {
       changeContent('id', data.id);
       changeContent('status', data.status || ' - ');
       changeContent('address', data.address);
-      changeContent('balance', data.balance);
+      changeContent('balance', parseFloat(data.balance).toFixed(2));
 
 
       changeContent('username', data.username || ' - ');
