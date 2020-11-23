@@ -10,21 +10,21 @@
                 <div class="row">
                     <div class="col-3">
                         <img class="rounded-circle border "
-                            style="background-color:#00000057; height: 150px; width: 150px;" id="content-image"
+                            style="background-color:#00000057; height: 150px; width: 150px;" id="profile-image"
                             src="/api/images/?id=1"/>
                     </div>
                     <div class="col-5 ">
-                        <p class="m-0">ID : <span id="content-id"></span></p>
-                        <p class="m-0">Status : <span id="content-status"></span></p>
-                        <p class="m-0">Joined : <span id="content-joined"></span></p>
-                        <p class="m-0">last Seen : <span id="content-lastSeen"></span></p>
-                        <p class="m-0">Reports : <span id="content-reports"></span></p>
+                        <p class="m-0">ID : <span id="profile-id"></span></p>
+                        <p class="m-0">Status : <span id="profile-status"></span></p>
+                        <p class="m-0">Joined : <span id="profile-joined"></span></p>
+                        <p class="m-0">last Seen : <span id="profile-lastSeen"></span></p>
+                        <p class="m-0">Reports : <span id="profile-reports"></span></p>
                     </div>
                     <div class="col-4">
-                        <p class="m-0">Flip Challenge Score : <span id="content-flipChallengeScore"></span></p>
-                        <p class="m-0">Quiz Score : <span id="content-quizScore"></span></p>
-                        <p class="m-0">Ip Count : <span id="content-ipCount"></span></p>
-                        <p class="m-0">Country : <span id="content-country"></span></p>
+                        <p class="m-0">Flip Challenge Score : <span id="profile-flipChallengeScore"></span></p>
+                        <p class="m-0">Quiz Score : <span id="profile-quizScore"></span></p>
+                        <p class="m-0">Ip Count : <span id="profile-ipCount"></span></p>
+                        <p class="m-0">Country : <span id="profile-country"></span></p>
                     </div>
                 </div>
 
@@ -33,7 +33,7 @@
 
             <div class="card card-body">
                 <div class="row">
-                    <div class="col" id="content-accountsList">
+                    <div class="col" id="profile-accountsList">
 
                     </div>
                 </div>
@@ -45,7 +45,7 @@
             <div class="d-none" id="profile-inviteCard">
                 <div class="card card-body">
                     <p class="m-0">Invite Panel </p>
-                    <input type="text" class="form-control m-2" id="content-inviteCode" placeholder="invite">
+                    <input type="text" class="form-control m-2" id="profile-inviteCode" placeholder="invite">
                     <button type="button" class="btn btn-outline-success btn-sm w-50 m-auto"
                         onclick="sendInvite();">Send</button>
                 </div>
@@ -57,7 +57,7 @@
                     <div class="row mt-0">
                         <button type="button" class="btn btn-outline-success btn-sm m-auto" id="profile-voteup" onclick="vote('up');" disabled><i
                                 class="fa fa-arrow-up"></i></button>
-                        <p class="m-0" id="content-votes">0</p>
+                        <p class="m-0" id="profile-votes">0</p>
                         <button type="button" class="btn btn-outline-danger btn-sm  m-auto" id="profile-votedown" onclick="vote('down');"disabled><i
                                 class="fa fa-arrow-down"></i></button>
                     </div>

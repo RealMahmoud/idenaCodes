@@ -12,8 +12,8 @@ Object.size = function (obj) {
 
 
 
-function changeContent(id, text) {
-    document.getElementById('content-' + id).innerHTML = text;
+function changeContentProfile(id, text) {
+    document.getElementById('profile-' + id).innerHTML = text;
 }
 
 function loadProfilePage() {
@@ -24,28 +24,28 @@ function viewProfilePage(){
         ajax_get('/api/app/checkID.php?id=' + Number(window.location.pathname.split('/')[2]), function (data) {
             data = JSON.parse(data);
             if (!data.error) {
-                changeContent('id', data.id);
-                changeContent('status', data.status);
-                changeContent('joined', timeConverter(data.joined));
-                changeContent('lastSeen', timeConverter(data.lastSeen));
-                changeContent('reports', data.reports);
+                changeContentProfile('id', data.id);
+                changeContentProfile('status', data.status);
+                changeContentProfile('joined', timeConverter(data.joined));
+                changeContentProfile('lastSeen', timeConverter(data.lastSeen));
+                changeContentProfile('reports', data.reports);
 
-                changeContent('flipChallengeScore', data.flipChallengeScore);
-                changeContent('quizScore', data.quizScore);
-                changeContent('votes', data.votes);
-                changeContent('ipCount', data.ipCount);
-                changeContent('country', data.country);
-                document.getElementById('content-image').src = '/api/images/?id=' + data.id;
+                changeContentProfile('flipChallengeScore', data.flipChallengeScore);
+                changeContentProfile('quizScore', data.quizScore);
+                changeContentProfile('votes', data.votes);
+                changeContentProfile('ipCount', data.ipCount);
+                changeContentProfile('country', data.country);
+                document.getElementById('profile-image').src = '/api/images/?id=' + data.id;
                 if (data.accounts.length > 0) {
-                    document.getElementById('content-accountsList').innerHTML = '<h5 class="m-0">Accounts connected</h5>';
+                    document.getElementById('profile-accountsList').innerHTML = '<h5 class="m-0">Accounts connected</h5>';
                     data.accounts.forEach(key => {
-                        document.getElementById('content-accountsList').innerHTML += '<dl>';
-                        document.getElementById('content-accountsList').innerHTML += '<dt class="">' + key.name + '</dt>';
-                        document.getElementById('content-accountsList').innerHTML += '<dd> - Creation Date : ' + timeConverter(key['creationTime']) + '</dd>';
-                        document.getElementById('content-accountsList').innerHTML += '</dl>';
+                        document.getElementById('profile-accountsList').innerHTML += '<dl>';
+                        document.getElementById('profile-accountsList').innerHTML += '<dt class="">' + key.name + '</dt>';
+                        document.getElementById('profile-accountsList').innerHTML += '<dd> - Creation Date : ' + timeConverter(key['creationTime']) + '</dd>';
+                        document.getElementById('profile-accountsList').innerHTML += '</dl>';
                     });
                 } else {
-                    document.getElementById('content-accountsList').innerHTML = '<h5 class="m-0">No accounts connected</h5>';
+                    document.getElementById('profile-accountsList').innerHTML = '<h5 class="m-0">No accounts connected</h5>';
                 }
                 document.getElementById('pageLoading').classList.add('d-none');
                 document.getElementById('pageContent').classList.remove('d-none');
@@ -89,7 +89,7 @@ function vote(type) {
             toastr.error('ERROR : '+data.reason);
         } else {
             
-            changeContent('votes', data.votes);
+            changeContentProfile('votes', data.votes);
             toastr.success('Vote successfully broadcasted');
         }
     })
@@ -97,7 +97,7 @@ function vote(type) {
 
 function sendInvite(){
     var formData = new FormData();
-    formData.append('invite', document.getElementById("profile-invite").value);
+    formData.append('invite', document.getElementById("profile-inviteCode").value);
     formData.append('forID', Number(window.location.pathname.split('/')[2]));
     ajax_post('/api/invite/send.php', formData, function (data) {
         data = JSON.parse(data);

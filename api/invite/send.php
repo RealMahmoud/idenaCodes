@@ -31,10 +31,12 @@ function privateKeyToAddress($privateKey)
 header('Content-Type: application/json');
 
 if (isset($_SESSION['CODES-Token'])) {
-    $data = $conn->query("SELECT `id`,`banned` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
+    $data = $conn->query("SELECT `id`,`banned`,`type` FROM `users` where `address` = (SELECT `address` FROM `auth_idena` where `token` = '" . $_SESSION['CODES-Token'] . "' AND `authenticated` = '1' ) LIMIT 1 ;")->fetch_row();
     $loggedUserID = $data[0];
-    $conn->query("UPDATE `users` SET `lastseen` = CURDATE() WHERE `id` = '" . $loggedUserID . "';");
     $banned = $data[1];
+    $loggedUserType = $data[2];
+    $conn->query("UPDATE `users` SET `lastseen` = CURDATE() WHERE `id` = '" . $loggedUserID . "';");
+
     if ($banned) {
         $result->error = true;
         $result->reason = "Banned";
@@ -78,31 +80,46 @@ $payload = $inviteeRow[1];
 $resultInvite = curl_get(API_BASE_URL . "/Identity/" . $address2);
 $resultInvitee = curl_get(API_BASE_URL . "/Identity/" . $address3);
 $resultInviteTxs = curl_get(API_BASE_URL . "/address/" . $address2 . "/txs?skip=0&limit=30");
-
-if (!isset($resultInvite['result']['state']) || !isset($resultInvitee['result']['state']) || !isset($resultInviteTxs['result'])) {
+if (isset($resultInvitee['error']['message'])) {
+    $inviteAble = true;
+} else {
+    $inviteAble = inviteable($resultInvitee['result']['state']);
+}
+if (!isset($resultInvite['result']['state']) || !isset($resultInviteTxs['result'])) {
 
     $result->error = true;
-    $result->reason = "ERROR";
+    $result->reason = "ERROR 1";
     die(json_encode($result));
 }
-if (!($resultInvite['result']['state'] == 'Invite') || !inviteable($resultInvitee['result']['state'])) {
+if (!($resultInvite['result']['state'] == 'Invite') || !$inviteAble) {
 
     $result->error = true;
-    $result->reason = "ERROR";
+    $result->reason = "ERROR 2";
     die(json_encode($result));
 }
-
-if (!(end($resultInviteTxs['result'])['type'] == "InviteTx") || !(strtolower(end($resultInviteTxs['result'])['from']) == $address1)) {
+function canInvite()
+{
+    global $loggedUserType;
+    global $resultInviteTxs;
+    global $address1;
+    if ((int)$loggedUserType == 3) {
+        return true;
+    } else {
+        return strtolower(end($resultInviteTxs['result'])['from']) == $address1;
+    }
+}
+if (!(end($resultInviteTxs['result'])['type'] == "InviteTx") || !canInvite()) {
 
     $result->error = true;
-    $result->reason = "ERROR";
+    $result->reason = "ERROR 3";
     die(json_encode($result));
 }
 
-$dna_activateInvite = json_encode(array("method" => "dna_activateInvite", "params" => ["key" => $invite, "to" => $address3, "payload" => $payload], "id" => 1, "key" => RPC_KEY));
+$dna_activateInvite = json_encode(array("method" => "dna_activateInvite", "params" => array(["key" => $invite, "to" => $address3, "payload" => $payload]), "id" => 1, "key" => RPC_KEY));
 $dna_activateInvite_result = curl_post(RPC_BASE_URL, $dna_activateInvite);
-
+/*
 $conn->query("INSERT INTO `invites`( `userID`, `forID`, `epoch`, `validations`, `address_1`, `address_2`, `address_3`) VALUES ('" . $loggedUserID . "','" . $forID . "','" . $epoch . "',0,'" . $address1 . "','" . $address2 . "','" . $address3 . "' );");
-
+*/
 $result->error = false;
+$result->reason = $dna_activateInvite_result;
 die(json_encode($result));
