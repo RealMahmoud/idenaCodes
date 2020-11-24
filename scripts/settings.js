@@ -17,10 +17,10 @@ function loadInfo() {
       if (data.ip) {
         document.getElementById('profile-recordIPButton').disabled = true;
       }
-      if (!data.flipChallengeScore == ' - ') {
+      if (data.flipChallengeScore !== ' - ') {
         document.getElementById('profile-FCButton').disabled = true;
       }
-      if (!data.quizScore == ' - ') {
+      if (data.quizScore !== ' - ') {
         document.getElementById('profile-quizButton').disabled = true;
       }
 

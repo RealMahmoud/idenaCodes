@@ -40,12 +40,12 @@ if ($resultSQL == null) {
 
     while ($row = $resultSQL->fetch_assoc()) {
         $invitee = (object) array();
-        $invitee->id = $row[0];
-        $invitee->userID = $row[1];
-        $invitee->epoch = $row[2];
-        $invitee->validations = $row[3];
-        $invitee->address = $row[4];
-        $invitee->status = $conn->query("SELECT `status` FROM `users` WHERE `address` = '" . $row[4] . "' ;");
+        $invitee->id = $row['id'];
+        $invitee->userID = $row['forID'];
+        $invitee->epoch = $row['epoch'];
+        $invitee->validations = $row['validations'];
+        $invitee->address = $row['address_3'];
+        $invitee->status = $conn->query("SELECT `status` FROM `users` WHERE `address` = '" . $row['address_3'] . "' ;")->fetch_row()[0];
         array_push($invitees, $invitee);
     }
     $result->invitees = $invitees;
