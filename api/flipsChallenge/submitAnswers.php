@@ -27,7 +27,7 @@ $answers = json_decode(file_get_contents('php://input'), true);
 
 $oldFlips = $conn->query("SELECT `flips`,`score` FROM `test_flips` where `userID` = '" . $loggedUserID . "' LIMIT 1;")->fetch_assoc();
 if ($oldFlips) {
-    if (isset($oldFlips[1])) {
+    if (isset($oldFlips['score'])) {
 
         $result->error = true;
         $result->reason = "Already submitted";
@@ -35,7 +35,7 @@ if ($oldFlips) {
     } else {
         $rightAnswers = 0;
         $totalFlips = 0;
-        foreach (json_decode($oldFlips[0]) as $flipID) {
+        foreach (json_decode($oldFlips['flips']) as $flipID) {
             $answer = $conn->query("SELECT `answer` FROM `flips` where `id` = '" . $flipID . "' LIMIT 1;")->fetch_assoc()['answer'];
             if (!is_bool(array_search($flipID, array_column($answers, 'id')))) {
                 if ($answer == $answers[array_search($flipID, array_column($answers, 'id'))]["answer"]) {
